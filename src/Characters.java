@@ -4,9 +4,11 @@ public class Characters {
     protected String name;
     protected String sex;
     protected String hair_length;
+    protected String skin_tone;
 
     //Make more indepth in seperate program. 
     protected boolean accessory;
+    
 
     //Constructor Methods
     public Characters(){
