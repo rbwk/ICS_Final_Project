@@ -12,6 +12,7 @@ public class Characters {
     public Characters(){
         name = null;
         sex = null;
+        hair_length = null;
     }
 
     //Behaviours
