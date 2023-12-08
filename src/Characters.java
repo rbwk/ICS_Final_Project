@@ -8,6 +8,7 @@ public class Characters {
 
     //Make more indepth in seperate program. 
     protected boolean accessory;
+    protected boolean bald;
     
 
     //Constructor Methods
