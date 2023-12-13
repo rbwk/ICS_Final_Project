@@ -2,14 +2,16 @@ public class Characters {
     
     //Characteristics (Maybe a menu for customizing characters)
     protected String name;
-    protected String sex;
-    protected String hair_length;
+    protected String gender;
+    protected String eye_color;
     protected String skin_tone;
-
-    //Make more indepth in seperate program. 
-    protected boolean accessory;
-    protected boolean bald;
+    protected String hair_color;
+    protected String hair_length;
     
+    protected boolean visible_teeth;
+    protected boolean facial_hear;
+    protected boolean glasses;
+    protected boolean hat;
 
     //Constructor Methods
     public Characters(){
