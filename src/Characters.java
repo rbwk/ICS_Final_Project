@@ -5,7 +5,7 @@ public class Characters {
     protected String gender;
     protected String eye_colour;
     protected String skin_tone;
-    protected String hair_color;
+    protected String hair_colour;
     protected boolean facial_hair;
     protected boolean glasses;
     protected boolean showing_teeth;
@@ -20,12 +20,12 @@ public class Characters {
         eye_colour = null;
         skin_tone = null;
         hair_colour = null;
-        facial_hair = null;
-        glasses = null;
-        showing_teeth = null;
-        wearing_hat = null;
+        facial_hair = false;
+        glasses = false;
+        showing_teeth = false;
+        wearing_hat = false;
         hair_length = null;
-        piercings = null;
+        piercings = false;
     }
 
     // Behaviours
