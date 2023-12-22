@@ -25,7 +25,7 @@ public class mainMenu {
 
 		exitButton = new JButton("Exit");
 		exitButton.setBounds(0, 330, 100, 30);
-		exitButton.addActionListener(new exitButton());
+		exitButton.addActionListener(new buttonClick());
 		f.add(exitButton);
 		
 
@@ -45,7 +45,6 @@ public class mainMenu {
 	
 	static class buttonClick implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			JButton clickedButton = (JButton) e.getSource();
-			
+			f.dispose();
 		}	}
 }

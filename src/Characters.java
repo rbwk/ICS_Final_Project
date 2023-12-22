@@ -3,29 +3,31 @@ public class Characters {
     // Characteristics (Maybe a menu for customizing characters)
     protected String name;
     protected String gender;
-    protected String eye_colour;
     protected String skin_tone;
-    protected String hair_colour;
-    protected boolean facial_hair;
-    protected boolean glasses;
+    protected String eye_color;
+    protected String hair_color;
+    protected String hair_length;
+
     protected boolean showing_teeth;
     protected boolean wearing_hat;
-    protected String hair_length;
+    protected boolean facial_hair;
     protected boolean piercings;
+    protected boolean glasses;
 
     // Constructor Methods
     public Characters() {
         name = null;
         gender = null;
-        eye_colour = null;
         skin_tone = null;
-        hair_colour = null;
-        facial_hair = false;
-        glasses = false;
+        eye_color = null;
+        hair_color = null;
+        hair_length = null;
+        
         showing_teeth = false;
         wearing_hat = false;
-        hair_length = null;
+        facial_hair = false;
         piercings = false;
+        glasses = false;
     }
 
     // Behaviours
@@ -45,12 +47,12 @@ public class Characters {
         return gender;
     }
 
-    public void setEyeColour(String newEyeColour) {
-        eye_colour = newEyeColour;
+    public void setEyeColour(String newEyeColor) {
+        eye_color = newEyeColor;
     }
 
     public String getEyeColour() {
-        return eye_colour;
+        return eye_color;
     }
 
     public void setSkinTone(String newSkinTone) {
@@ -61,12 +63,12 @@ public class Characters {
         return skin_tone;
     }
 
-    public void setHairColour(String newHairColour) {
-        hair_colour = newHairColour;
+    public void setHairColour(String newHairColor) {
+        hair_color = newHairColor;
     }
 
     public String getHairColour() {
-        return hair_colour;
+        return hair_color;
     }
 
     public void setFacialHair(boolean newFacialHair) {
