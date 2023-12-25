@@ -4,17 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class mainMenu {
+public class mainMenu{
 
-	static JPanel buttonPanel = new JPanel(new GridBagLayout());
+	static JPanel mainPanel = new JPanel(new GridBagLayout());
+	static JPanel leaderboardPanel = new JPanel(new GridBagLayout());
 	static GridBagConstraints constraints = new GridBagConstraints();
-	static JPanel blankPanel = new JPanel();
 
 	static JFrame f = new JFrame("Exciting Guess Who Game!!!"); // JFrame for the whole menu
-	static JButton startButton = new JButton(); // Button for starting the game
-	static JButton leaderboardButton = new JButton(); // Button for leaderboard
-	static JButton creditsButton = new JButton(); // Button for credits
-	static JButton exitButton = new JButton(); // Button for exiting the program
+	
 
 	public static void main(String[] args) throws InterruptedException {
 		setFrame();
@@ -24,34 +21,63 @@ public class mainMenu {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setMinimumSize(new Dimension(1000, 800));
 		f.setSize(1000, 600);
-		//f.setLayout(new GridLayout(3, 3));
+		
+		//f.setLayout(new GridLayout(1, 1));
+
+		mainScreen(); //Adding the main Menu
+		//leaderboardScreen();
+
+		f.setVisible(true);
+	}
+
+	public static void mainScreen() {
+
+		JButton startButton = new JButton(); // Button for starting the game
+		JButton leaderboardButton = new JButton(); // Button for leaderboard
+		JButton creditsButton = new JButton(); // Button for credits
+		JButton exitButton = new JButton(); // Button for exiting the program
 
 		startButton = new JButton("Start Game!");
 		startButton.addActionListener(new startButton());
-		startButton.setMaximumSize(new Dimension(20, 20));
+		//startButton.setMaximumSize(new Dimension(20, 20));
 		setConstrants(1, 10);
-		buttonPanel.add(startButton, constraints);
+		mainPanel.add(startButton, constraints);
+		
 
 		leaderboardButton = new JButton("Leaderboard");
 		leaderboardButton.addActionListener(new leaderboardButton());
 		setConstrants(1, 25);
-		buttonPanel.add(leaderboardButton, constraints);
+		mainPanel.add(leaderboardButton, constraints);
 
 		creditsButton = new JButton("Credits");
 		creditsButton.addActionListener(new creditsButton());
 		setConstrants(1, 40);
-		buttonPanel.add(creditsButton, constraints);
+		mainPanel.add(creditsButton, constraints);
 
 		exitButton = new JButton("Exit");
 		exitButton.addActionListener(new exitButton());
 		setConstrants(1, 55);
-		buttonPanel.add(exitButton, constraints);
+		mainPanel.add(exitButton, constraints);
 
-		//f.add(blankPanel);
-		f.add(buttonPanel);
+		ImageIcon logo = new ImageIcon("logo.png");
+		setConstrants(1, 0);
+		mainPanel.add(new JLabel(logo), constraints);
 
+		f.add(mainPanel);
+
+	}
+
+	public static void leaderboardScreen() {
 		
-		f.setVisible(true);
+		JButton backButton = new JButton();
+
+		backButton = new JButton("Back");
+		backButton.addActionListener(new backButton());
+		setConstrants(1, 25);
+		leaderboardPanel.add(backButton, constraints);
+		
+		f.add(leaderboardPanel);
+		leaderboardPanel.setVisible(false);
 	}
 
 	public static void componentResized() { // Make Better lock ratio method
@@ -75,7 +101,9 @@ public class mainMenu {
 
 	static class leaderboardButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Leaderboard");
+			mainPanel.setVisible(false);
+			leaderboardPanel.setVisible(true);
+
 		}
 	}
 
@@ -88,6 +116,13 @@ public class mainMenu {
 	static class exitButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			f.dispose();
+		}
+	}
+
+	static class backButton implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			mainPanel.setVisible(true);
+			leaderboardPanel.setVisible(false);
 		}
 	}
 
