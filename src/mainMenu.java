@@ -1,10 +1,12 @@
-import java.io.*;
-import java.util.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class mainMenu{
+
+	TextFileReader reader = new TextFileReader("questions.txt");
+	
 
 	static JPanel mainPanel = new JPanel(new GridBagLayout());
 	static JPanel leaderboardPanel = new JPanel(new GridBagLayout());
