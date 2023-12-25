@@ -22,6 +22,8 @@ public class mainMenu {
 
 	public static void setFrame() {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setMinimumSize(new Dimension(1000, 800));
+		f.setSize(1000, 600);
 		//f.setLayout(new GridLayout(3, 3));
 
 		startButton = new JButton("Start Game!");
@@ -48,8 +50,7 @@ public class mainMenu {
 		//f.add(blankPanel);
 		f.add(buttonPanel);
 
-		f.setMinimumSize(new Dimension(1000, 800));
-		f.setSize(1000, 600);
+		
 		f.setVisible(true);
 	}
 
