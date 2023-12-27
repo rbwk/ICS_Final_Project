@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.UIManager;
@@ -21,6 +23,8 @@ public class MainGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static JPanel mainScreen = new JPanel();
+	private static JPanel selectorScreen = new JPanel();
 
 	/**
 	 * Launch the application.
@@ -77,20 +81,35 @@ public class MainGUI extends JFrame {
 		layeredPane.setBackground(Color.DARK_GRAY);
 		layeredPane.setBounds(0, 0, 1920, 1080);
 		contentPane.add(layeredPane);
+		selectorScreen.setVisible(false);
 		
-		JPanel mainScreen = new JPanel();
+		///////////////////////////////////Selector Screen///////////////////////////////////
+	
+		selectorScreen.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(selectorScreen);
+		selectorScreen.setLayout(null);
+		
+		JButton btnBack = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBack.setContentAreaFilled(false);
+		btnBack.setBounds(1250, 20, 100, 100);
+		btnBack.addActionListener(new backSelectorButton());
+		selectorScreen.add(btnBack);
+		
+		///////////////////////////////////Main Screen///////////////////////////////////
+		
+
 		mainScreen.setBounds(0, 0, 1920, 1080);
 		layeredPane.add(mainScreen);
 		mainScreen.setLayout(null);
 	
 		JLabel lbLogo = new JLabel(new ImageIcon(MainGUI.class.getResource("/resources/logo.png")));
-		lbLogo.setBounds(300, 197, 800, 278);
+		lbLogo.setBounds(275, 197, 850, 278);
 		mainScreen.add(lbLogo);
 		
 		JButton btnStart = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/start_btn.png")));
-		//btnStart.setBorder(BorderFactory.createEmptyBorder());
 		btnStart.setContentAreaFilled(false);
 		btnStart.setBounds(410, 500, 550, 250);
+		btnStart.addActionListener(new startButton());
 		mainScreen.add(btnStart);
 		
 		JButton btnLeaderboard = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/leaderboard_btn.png")));
@@ -98,11 +117,25 @@ public class MainGUI extends JFrame {
 		btnLeaderboard.setBounds(970, 520, 100, 100);
 		mainScreen.add(btnLeaderboard);
 		
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, layeredPane, btnStart, lbLogo, btnLeaderboard, mainScreen}));
+		mainScreen.setVisible(true);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, layeredPane, btnStart, lbLogo, btnLeaderboard, mainScreen, selectorScreen, btnBack}));
 		
 	}
 	
 	private void createEvents() {
 		
+	}
+	
+	static class startButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			mainScreen.setVisible(false);
+			selectorScreen.setVisible(true);
+		}
+	}
+	static class backSelectorButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			mainScreen.setVisible(true);
+			selectorScreen.setVisible(false);
+		}
 	}
 }
