@@ -27,11 +27,11 @@ public class mainMenu{
 		f.setMinimumSize(new Dimension(1000, 800));
 		f.setSize(1000, 600);
 		
-		//f.setLayout(new GridLayout(1, 1));
+		f.setLayout(new GridLayout(1, 1));
 
 		//f.add(mainlayer);
 		mainScreen(); //Adding the main Menu
-		f.setLayeredPane(mainlayer);
+		//f.setLayeredPane(mainlayer);
 		//leaderboardScreen();
 
 		f.setVisible(true);
@@ -70,8 +70,8 @@ public class mainMenu{
 		setConstrants(1, 0);
 		mainPanel.add(new JLabel(logo), constraints);
 
-		mainlayer.add(mainPanel);
-		mainlayer.setPosition(mainPanel, 0);
+		f.add(mainPanel);
+		//mainlayer.setPosition(mainPanel, 0);
 
 	}
 

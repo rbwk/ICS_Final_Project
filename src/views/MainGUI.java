@@ -1,25 +1,21 @@
 package views;
 
 import java.awt.EventQueue;
-import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.io.IOException;
+
 import javax.swing.UIManager;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JDesktopPane;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import java.awt.BorderLayout;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Rectangle;
-import java.awt.List;
+import javax.swing.JLayeredPane;
 
 public class MainGUI extends JFrame {
 
@@ -49,9 +45,10 @@ public class MainGUI extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public MainGUI() {
-		setBounds(new Rectangle(0, 0, 1000, 600));
+	public MainGUI() throws IOException {
+		
 		
 		initComponents();
 		createEvents();
@@ -59,38 +56,49 @@ public class MainGUI extends JFrame {
 
 	}
 	
-	private void initComponents() {
+	private void initComponents() throws IOException {
+		
+		setBackground(Color.WHITE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setUndecorated(true);
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/resources/icon_logo.png"))); //Create the icon image 
 		setTitle("Exiting Guess Who Game !!!");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 500);
+		setBounds(0, 0, 1920, 1080);
 		contentPane = new JPanel();
-		contentPane.setBackground(UIManager.getColor("Button.background"));
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.setLayout(null);
 		
-		JDesktopPane desktopPane = new JDesktopPane();
-		desktopPane.setLayout(new BorderLayout(0, 0));
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBackground(Color.DARK_GRAY);
+		layeredPane.setBounds(0, 0, 1920, 1080);
+		contentPane.add(layeredPane);
 		
 		JPanel mainScreen = new JPanel();
-		mainScreen.setBackground(Color.DARK_GRAY);
-		desktopPane.add(mainScreen);
-		mainScreen.setLayout(new BorderLayout(0, 0));
+		mainScreen.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(mainScreen);
+		mainScreen.setLayout(null);
+	
+		JLabel lbLogo = new JLabel(new ImageIcon(MainGUI.class.getResource("/resources/logo.png")));
+		lbLogo.setBounds(300, 197, 800, 278);
+		mainScreen.add(lbLogo);
 		
-		JLabel logoLabel = new JLabel("");
-		logoLabel.setBounds(new Rectangle(0, 0, 600, 300));
-		logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		mainScreen.add(logoLabel, BorderLayout.NORTH);
-		logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		ImageIcon logo = new ImageIcon("/resources/logo.png");
-		Image scaledlogo = logo.getImage().getScaledInstance(logoLabel.getWidth(), logoLabel.getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon logoimage = new ImageIcon(scaledlogo);
-		logoLabel.setIcon(logoimage);
-		contentPane.add(desktopPane);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, desktopPane, mainScreen, logoLabel}));
+		JButton btnStart = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/start_btn.png")));
+		//btnStart.setBorder(BorderFactory.createEmptyBorder());
+		btnStart.setContentAreaFilled(false);
+		btnStart.setBounds(410, 500, 550, 250);
+		mainScreen.add(btnStart);
+		
+		JButton btnLeaderboard = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/leaderboard_btn.png")));
+		btnLeaderboard.setContentAreaFilled(false);
+		btnLeaderboard.setBounds(970, 520, 100, 100);
+		mainScreen.add(btnLeaderboard);
+		
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, layeredPane, btnStart, lbLogo, btnLeaderboard, mainScreen}));
 		
 	}
 	
