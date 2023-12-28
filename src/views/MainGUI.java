@@ -18,9 +18,12 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class MainGUI extends JFrame {
 
+	private static JFrame frame = new JFrame();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JPanel mainScreen = new JPanel();
@@ -38,7 +41,7 @@ public class MainGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainGUI frame = new MainGUI();
+					//MainGUI frame = new MainGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,7 +73,7 @@ public class MainGUI extends JFrame {
 		setTitle("Exiting Guess Who Game !!!");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1920, 1080);
+		frame.setBounds(0, 0, 1920, 1080);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(null);
@@ -95,6 +98,22 @@ public class MainGUI extends JFrame {
 		btnBack.addActionListener(new backSelectorButton());
 		selectorScreen.add(btnBack);
 		
+		JButton btnPVP = new JButton("Local Player Versus Player");
+		btnPVP.setFont(new Font("Trebuchet MS", Font.PLAIN, 22));
+		btnPVP.setHorizontalAlignment(SwingConstants.LEFT);
+		btnPVP.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/pvp_btn.png")));
+		btnPVP.setBounds(300, 250, 500, 150);
+		btnPVP.setContentAreaFilled(false);
+		selectorScreen.add(btnPVP);
+		
+		JButton btnPVC = new JButton("Local Player Versus Computer");
+		btnPVC.setFont(new Font("Trebuchet MS", Font.PLAIN, 22));
+		btnPVC.setHorizontalAlignment(SwingConstants.LEFT);
+		btnPVC.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/pvc_btn.png")));
+		btnPVC.setBounds(300, 500, 500, 150);
+		btnPVC.setContentAreaFilled(false);
+		selectorScreen.add(btnPVC);
+		
 		///////////////////////////////////Main Screen///////////////////////////////////
 		
 
@@ -116,9 +135,9 @@ public class MainGUI extends JFrame {
 		btnLeaderboard.setContentAreaFilled(false);
 		btnLeaderboard.setBounds(970, 520, 100, 100);
 		mainScreen.add(btnLeaderboard);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, layeredPane, btnStart, lbLogo, btnLeaderboard, mainScreen, selectorScreen, btnBack, btnPVP}));
 		
 		mainScreen.setVisible(true);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, layeredPane, btnStart, lbLogo, btnLeaderboard, mainScreen, selectorScreen, btnBack}));
 		
 	}
 	
@@ -138,4 +157,10 @@ public class MainGUI extends JFrame {
 			selectorScreen.setVisible(false);
 		}
 	}
+	static class exitButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			frame.dispose();
+		}
+	}
+
 }
