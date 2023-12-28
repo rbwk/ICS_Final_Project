@@ -23,7 +23,6 @@ import java.awt.Font;
 
 public class MainGUI extends JFrame {
 
-	private static JFrame frame = new JFrame();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JPanel mainScreen = new JPanel();
@@ -41,7 +40,7 @@ public class MainGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//MainGUI frame = new MainGUI();
+					MainGUI frame = new MainGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +72,7 @@ public class MainGUI extends JFrame {
 		setTitle("Exiting Guess Who Game !!!");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(0, 0, 1920, 1080);
+		setBounds(0, 0, 1920, 1080);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(null);
@@ -85,6 +84,37 @@ public class MainGUI extends JFrame {
 		layeredPane.setBounds(0, 0, 1920, 1080);
 		contentPane.add(layeredPane);
 		selectorScreen.setVisible(false);
+		
+		///////////////////////////////////Main Screen///////////////////////////////////
+		
+
+		mainScreen.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(mainScreen);
+		mainScreen.setLayout(null);
+		
+			JLabel lbLogo = new JLabel(new ImageIcon(MainGUI.class.getResource("/resources/logo.png")));
+			lbLogo.setBounds(275, 197, 850, 278);
+			mainScreen.add(lbLogo);
+			
+			JButton btnStart = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/start_btn.png")));
+			btnStart.setContentAreaFilled(false);
+			btnStart.setBounds(410, 500, 550, 250);
+			btnStart.addActionListener(new startButton());
+			mainScreen.add(btnStart);
+			
+			JButton btnLeaderboard = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/leaderboard_btn.png")));
+			btnLeaderboard.setContentAreaFilled(false);
+			btnLeaderboard.setBounds(970, 520, 100, 100);
+			//mainScreen.add(btnLeaderboard);
+			
+			JButton btnExit = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
+			btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {dispose();}});	
+			btnExit.setContentAreaFilled(false);
+			btnExit.setBounds(1250, 20, 100, 100);
+			mainScreen.add(btnExit);
+
+			mainScreen.setVisible(true);
 		
 		///////////////////////////////////Selector Screen///////////////////////////////////
 	
@@ -98,7 +128,7 @@ public class MainGUI extends JFrame {
 		btnBack.addActionListener(new backSelectorButton());
 		selectorScreen.add(btnBack);
 		
-		JButton btnPVP = new JButton("Local Player Versus Player");
+		JButton btnPVP = new JButton("    Local Player Versus Player");
 		btnPVP.setFont(new Font("Trebuchet MS", Font.PLAIN, 22));
 		btnPVP.setHorizontalAlignment(SwingConstants.LEFT);
 		btnPVP.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/pvp_btn.png")));
@@ -106,7 +136,7 @@ public class MainGUI extends JFrame {
 		btnPVP.setContentAreaFilled(false);
 		selectorScreen.add(btnPVP);
 		
-		JButton btnPVC = new JButton("Local Player Versus Computer");
+		JButton btnPVC = new JButton("    Local Player Versus Computer");
 		btnPVC.setFont(new Font("Trebuchet MS", Font.PLAIN, 22));
 		btnPVC.setHorizontalAlignment(SwingConstants.LEFT);
 		btnPVC.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/pvc_btn.png")));
@@ -114,30 +144,15 @@ public class MainGUI extends JFrame {
 		btnPVC.setContentAreaFilled(false);
 		selectorScreen.add(btnPVC);
 		
-		///////////////////////////////////Main Screen///////////////////////////////////
+		selectorScreen.setVisible(false);
 		
-
-		mainScreen.setBounds(0, 0, 1920, 1080);
-		layeredPane.add(mainScreen);
-		mainScreen.setLayout(null);
-	
-		JLabel lbLogo = new JLabel(new ImageIcon(MainGUI.class.getResource("/resources/logo.png")));
-		lbLogo.setBounds(275, 197, 850, 278);
-		mainScreen.add(lbLogo);
+		///////////////////////////////////Leaderboard Screen///////////////////////////////////
 		
-		JButton btnStart = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/start_btn.png")));
-		btnStart.setContentAreaFilled(false);
-		btnStart.setBounds(410, 500, 550, 250);
-		btnStart.addActionListener(new startButton());
-		mainScreen.add(btnStart);
 		
-		JButton btnLeaderboard = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/leaderboard_btn.png")));
-		btnLeaderboard.setContentAreaFilled(false);
-		btnLeaderboard.setBounds(970, 520, 100, 100);
-		mainScreen.add(btnLeaderboard);
+		///////////////////////////////////Universal///////////////////////////////////
+		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, layeredPane, btnStart, lbLogo, btnLeaderboard, mainScreen, selectorScreen, btnBack, btnPVP}));
-		
-		mainScreen.setVisible(true);
+
 		
 	}
 	
@@ -157,10 +172,6 @@ public class MainGUI extends JFrame {
 			selectorScreen.setVisible(false);
 		}
 	}
-	static class exitButton implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			frame.dispose();
-		}
-	}
+
 
 }
