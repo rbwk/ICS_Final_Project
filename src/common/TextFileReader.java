@@ -40,31 +40,36 @@ public class TextFileReader {
         this.glasses = new ArrayList<>();
     }
 
-    public void readFile() {
+    public void readFile() { //Very Disgusting way but it works so don't complain
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                name.add(line);
-                line = reader.readLine();
-                gender.add(line);
-                line = reader.readLine();
-                skin_tone.add(line);
-                line = reader.readLine();
-                eye_color.add(line);
-                line = reader.readLine();
-                hair_color.add(line);
-                line = reader.readLine();
-                hair_length.add(line);
-                line = reader.readLine();
-                showing_teeth.add(Boolean.parseBoolean(line));
-                line = reader.readLine();
-                wearing_hat.add(Boolean.parseBoolean(line));
-                line = reader.readLine();
-                facial_hair.add(Boolean.parseBoolean(line));
-                line = reader.readLine();
-                piercings.add(Boolean.parseBoolean(line));
-                line = reader.readLine();
-                glasses.add(Boolean.parseBoolean(line));
+            	if(filePath == "data.txt") {
+            		name.add(line);
+                    line = reader.readLine();
+                    gender.add(line);
+                    line = reader.readLine();
+                    skin_tone.add(line);
+                    line = reader.readLine();
+                    eye_color.add(line);
+                    line = reader.readLine();
+                    hair_color.add(line);
+                    line = reader.readLine();
+                    hair_length.add(line);
+                    line = reader.readLine();
+                    showing_teeth.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    wearing_hat.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    facial_hair.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    piercings.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    glasses.add(Boolean.parseBoolean(line));
+            	}else {
+            		
+            	}
+                
             }
         } catch (IOException e) {
             e.printStackTrace();
