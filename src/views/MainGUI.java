@@ -72,7 +72,7 @@ public class MainGUI extends JFrame {
 																													// the
 																													// icon
 																													// image
-		setTitle("Exiting Guess Who Game !!!");
+		setTitle("Exciting Guess Who Game !!!");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1920, 1080);
