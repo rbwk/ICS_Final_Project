@@ -21,6 +21,8 @@ public class TextFileReader {
     protected List<Boolean> facial_hair = new ArrayList<Boolean>(Arrays.asList(true));
     protected List<Boolean> piercings = new ArrayList<Boolean>(Arrays.asList(true));
     protected List<Boolean> glasses = new ArrayList<Boolean>(Arrays.asList(true));
+
+    protected ArrayList<String> questions;
     
 
     public TextFileReader(String filePath) {
@@ -38,6 +40,8 @@ public class TextFileReader {
         this.facial_hair = new ArrayList<>();
         this.piercings = new ArrayList<>();
         this.glasses = new ArrayList<>();
+
+        this.questions = new ArrayList<>();
     }
 
     public void readFile() { //Very Disgusting way but it works so don't complain
@@ -66,8 +70,8 @@ public class TextFileReader {
                     piercings.add(Boolean.parseBoolean(line));
                     line = reader.readLine();
                     glasses.add(Boolean.parseBoolean(line));
-            	}else {
-            		
+            	}else if(filePath == "questions.txt"){
+            		questions.add(line);
             	}
                 
             }
@@ -97,5 +101,6 @@ public class TextFileReader {
     public List<Boolean> getpiercings() {return piercings;}
     
     public List<Boolean> getglasses() {return glasses;}
-    
+
+    public ArrayList<String> getQuestions() {return questions;}
 }

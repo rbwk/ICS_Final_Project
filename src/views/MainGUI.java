@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.UIManager;
-import javax.swing.BorderFactory;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
