@@ -9,7 +9,7 @@ public class Initialization {
     private static final String p1Path = "src\\resources\\p1_characters_remaining.txt"; // Path to player 1 character storage file.
     private static final String p2Path = "src\\resources\\p2_characters_remaining.txt"; // Path to player 2 character storage file
 
-    public static void main(String[] args) {
+    public static void initializeGame() {
         TextFileReader reader = new TextFileReader(statePath);
         if (!reader.readInitializationState()) {
             characters = new ArrayList<>();
