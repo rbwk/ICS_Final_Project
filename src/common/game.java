@@ -10,7 +10,8 @@ public class game {
     protected static ArrayList<GameCharacter> p2_characters; // Player 2 list of remaining characters
 	
     public static void main(String[] args) {
-
+        characters = new ArrayList<>();
+        questions = new ArrayList<>();
         // Initialize TextFileReader for characters
         TextFileReader characterReader = new TextFileReader("data.txt");
         characterReader.readFile();
@@ -36,6 +37,13 @@ public class game {
         TextFileReader questionReader = new TextFileReader("questions.txt");
         questionReader.readFile();
         questions = questionReader.getQuestions();
+
+        // Testing Object Creation
+        for (int i = 0; i < characters.size(); i++) {
+            System.out.println(characters.get(i).getName());
+        }
+        
+        
     }
 
 }
