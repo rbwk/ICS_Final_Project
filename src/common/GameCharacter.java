@@ -120,6 +120,19 @@ public class GameCharacter {
     public boolean getPiercings() {
         return piercings;
     }
+    public String toFileString() {
+        return name + "\n" + 
+               gender + "\n" + 
+               skin_tone + "\n" + 
+               eye_color + "\n" + 
+               hair_color + "\n" + 
+               String.valueOf(showing_teeth) + "\n" + 
+               String.valueOf(wearing_hat) + "\n" + 
+               String.valueOf(facial_hair) + "\n" + 
+               String.valueOf(piercings) + "\n" + 
+               String.valueOf(glasses) + "\n" + 
+               hair_length;
+    }
 
 }
 
