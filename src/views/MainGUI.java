@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,10 +16,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import common.TextFileReader;
 
 public class MainGUI extends JFrame {
 
@@ -35,8 +39,11 @@ public class MainGUI extends JFrame {
 	private static JPanel questionPanel = new JPanel();
 	private static JPanel scorePanel = new JPanel();
 	private static JPanel gamePanel = new JPanel();
-	private static JButton[][] characterButtons = new JButton[4][6];
+	private static JButton[] characterButtons = new JButton[24]; //Use 1D Array as the data is 1d and easier to switch between 
 	private static JTable table;
+	
+	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
+	private static ArrayList<String> Characters = new ArrayList<String>(); //Testing Purposes only
 
 	/**
 	 * Launch the application.
@@ -66,8 +73,12 @@ public class MainGUI extends JFrame {
 	 */
 	public MainGUI() throws IOException {
 
+		characterReader.readFile();  //Testing Purposes only
+		Characters = characterReader.getname();  //Testing Purposes only
+		
 		initComponents();
 		createEvents();
+		
 
 	}
 
@@ -96,6 +107,8 @@ public class MainGUI extends JFrame {
 		layeredPane.setBounds(0, 0, 1920, 1080);
 		contentPane.add(layeredPane);
 		selectorPanel.setVisible(false);
+		
+
 
 		/////////////////////////////////// Exit
 		/////////////////////////////////// Panel///////////////////////////////////
@@ -105,25 +118,21 @@ public class MainGUI extends JFrame {
 		layeredPane.add(exitPanel);
 		exitPanel.setLayout(null);
 		exitPanel.setVisible(false);
-
+		
 		JButton btnBackMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
 		btnBackMenu.addActionListener(new backMenuButton());
 		btnBackMenu.setContentAreaFilled(false);
 		btnBackMenu.setBounds(330, 0, 75, 75);
 		exitPanel.add(btnBackMenu);
-
+		
 		JButton btnExit = new JButton("EXIT TO DESKTOP");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnExit.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {dispose();}});
 		btnExit.setBorderPainted(false);
 		btnExit.setBackground(new Color(250, 128, 114));
 		btnExit.setFont(new Font("STXihei", Font.PLAIN, 31));
 		btnExit.setBounds(50, 210, 300, 50);
 		exitPanel.add(btnExit);
-
+		
 		JButton btnLeaderboard = new JButton("LEADERBOARD");
 		btnLeaderboard.setBackground(Color.LIGHT_GRAY);
 		btnLeaderboard.setBorderPainted(false);
@@ -131,7 +140,7 @@ public class MainGUI extends JFrame {
 		btnLeaderboard.setFont(new Font("STXihei", Font.PLAIN, 31));
 		btnLeaderboard.addActionListener(new leaderboardButton());
 		exitPanel.add(btnLeaderboard);
-
+		
 		JButton btnCredits = new JButton("CREDITS");
 		btnCredits.setBackground(Color.LIGHT_GRAY);
 		btnCredits.setBorderPainted(false);
@@ -139,6 +148,8 @@ public class MainGUI extends JFrame {
 		btnCredits.setFont(new Font("STXihei", Font.PLAIN, 31));
 		btnCredits.addActionListener(new creditsButton());
 		exitPanel.add(btnCredits);
+							
+
 
 		/////////////////////////////////// Main
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -232,25 +243,31 @@ public class MainGUI extends JFrame {
 		difficultyPanel.setLayout(null);
 		difficultyPanel.setVisible(false);
 
-		JButton btnEasy = new JButton("Easy");
-		btnEasy.setBounds(300, 250, 600, 150);
+		JButton btnEasy = new JButton("    Easy");
+		btnEasy.setBounds(400, 150, 500, 150);
 		btnEasy.setContentAreaFilled(false);
-		btnEasy.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		btnEasy.setFont(new Font("Trebuchet MS", Font.PLAIN, 34));
 		btnEasy.addActionListener(new EasyButton());
+		btnEasy.setHorizontalAlignment(SwingConstants.LEFT);
+		btnEasy.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/easy_btn.png")));
 		difficultyPanel.add(btnEasy);
 
-		JButton btnMed = new JButton("Medium");
-		btnMed.setBounds(300, 500, 600, 150);
-		btnMed.setContentAreaFilled(false);
-		btnMed.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
-		btnMed.addActionListener(new MedButton());
-		difficultyPanel.add(btnMed);
+		JButton btnMid = new JButton("    Medium");
+		btnMid.setBounds(400, 400, 500, 150);
+		btnMid.setContentAreaFilled(false);
+		btnMid.setFont(new Font("Trebuchet MS", Font.PLAIN, 34));
+		btnMid.addActionListener(new MedButton());
+		btnMid.setHorizontalAlignment(SwingConstants.LEFT);
+		btnMid.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/mid_btn.png")));
+		difficultyPanel.add(btnMid);
 
-		JButton btnHard = new JButton("Hard");
-		btnHard.setBounds(300, 750, 600, 160);
+		JButton btnHard = new JButton("    Hard");
+		btnHard.setBounds(400, 650, 500, 160);
 		btnHard.setContentAreaFilled(false);
-		btnHard.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		btnHard.setFont(new Font("Trebuchet MS", Font.PLAIN, 34));
 		btnHard.addActionListener(new HardButton());
+		btnHard.setHorizontalAlignment(SwingConstants.LEFT);
+		btnHard.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/hard_btn.png")));
 		difficultyPanel.add(btnHard);
 
 		JButton btnBackDifficulty = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
@@ -258,12 +275,8 @@ public class MainGUI extends JFrame {
 		btnBackDifficulty.setBounds(1250, 20, 100, 100);
 		btnBackDifficulty.addActionListener(new BackDifficultyButton());
 		difficultyPanel.add(btnBackDifficulty);
-
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { exitPanel, contentPane, layeredPane,
-				btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit,
-				btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMed, btnHard,
-				btnBackDifficulty }));
-
+		
+		
 		/////////////////////////////////// Game
 		/////////////////////////////////// Screen///////////////////////////////////
 
@@ -272,32 +285,52 @@ public class MainGUI extends JFrame {
 		gamePanel.setLayout(null);
 		gamePanel.setVisible(false);
 
-		charactersPanel.setBounds(0, 0, 600, 400);
-		layeredPane.add(charactersPanel);
+		JButton btnBackGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBackGame.setContentAreaFilled(false);
+		btnBackGame.setBounds(1250, 20, 100, 100);
+		btnBackGame.addActionListener(new backGameButton());
+		gamePanel.add(btnBackGame);
+		
+		charactersPanel.setBackground(Color.PINK);
+		charactersPanel.setBounds(0, 0, 1000, 600);
 		charactersPanel.setLayout(null);
-		charactersPanel.setVisible(false);
-
-		// for (int i = 0; i < 4; i++) {
-		// for (int j = 0; j < 6; j++) {
-		// charactersPanel.add(characterButtons[i][j]);
-		// characterButtons[i][j].setBackground(Color.decode("#FFFFFF"));
-
-		// }
-		// } idk why this doesn't work
-
-		scorePanel.setBounds(600, 0, 400, 800);
-		layeredPane.add(scorePanel);
-		scorePanel.setLayout(null);
-		scorePanel.setVisible(false);
-
-		questionPanel.setBounds(0, 400, 1000, 400);
-		layeredPane.add(questionPanel);
-		questionPanel.setLayout(null);
-		questionPanel.setVisible(false);
-
+		charactersPanel.setVisible(true);
 		gamePanel.add(charactersPanel);
+		
+		/////////////////////////////////// Adding Characters ///////////////////////////////////
+		int num = 0;
+		for(int x = 0; x < 4; x++) { for(int y = 0; y < 6; y++) {
+			
+			characterButtons[num] = new JButton();
+			characterButtons[num].setBorderPainted(false);
+			characterButtons[num].setText(Characters.get(num));  //Testing Purposes only
+			int ylocation = 5+(x)*150;
+			int xlocation = 15+(y)*170;
+			characterButtons[num].setBounds(xlocation,ylocation,120,140);
+			characterButtons[num].setHorizontalAlignment(SwingConstants.CENTER);
+			charactersPanel.add(characterButtons[num]);
+			System.out.println(num+" "+"x: "+xlocation+" y:"+ylocation);
+			num++;
+			
+		}	}
+		
+		scorePanel.setBackground(Color.ORANGE);
+		scorePanel.setBounds(1000, 0, 440, 900);
+		scorePanel.setLayout(null);
+		scorePanel.setVisible(true);
 		gamePanel.add(scorePanel);
+		
+		questionPanel.setBackground(Color.MAGENTA);
+		questionPanel.setBounds(0, 600, 1000, 300);
+		questionPanel.setLayout(null);
+		questionPanel.setVisible(true);
 		gamePanel.add(questionPanel);
+		
+		
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { exitPanel, contentPane, layeredPane,
+				btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit,
+				btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMid, btnHard,
+				btnBackDifficulty }));
 	}
 
 	private void createEvents() {
@@ -392,6 +425,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
 			gamePanel.setVisible(true);
+
 		}
 	}
 
@@ -399,6 +433,13 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
 			gamePanel.setVisible(true);
+		}
+	}
+
+	static class backGameButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			gamePanel.setVisible(false);
+			mainPanel.setVisible(true);
 		}
 	}
 }
