@@ -66,14 +66,7 @@ public class QuestionHandling {
         // Initialize TextFileReader for questions   (CURRENTLY UNUSED)
         //TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt");
         //questionReader.readFile();
-        //questions = questionReader.getQuestions();
-
-
-        // Testing Object Creation
-        for (int i = 0; i < characters.size(); i++) {
-            System.out.println(characters.get(i).getName());
-        }       
-                
+        //questions = questionReader.getQuestions();                
  
             /**
              * Group of if statements responsible for question handling.
@@ -87,8 +80,6 @@ public class QuestionHandling {
              * that was not implemented here.
              * 
             */
-        playerQuestion = "Does the person have facial hair?";
-        result = "false";
         //First Question
         if(playerQuestion.equals("Is the person a male?")){
             // Iterator of characters array to remove objects without outofbounds error.
