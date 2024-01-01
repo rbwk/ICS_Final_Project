@@ -21,4 +21,12 @@ public class TextFileWriter {
             e.printStackTrace();
         }
     }
+    
+    public void writeInitializationState(boolean state) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(String.valueOf(state));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
