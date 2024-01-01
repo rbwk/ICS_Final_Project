@@ -36,6 +36,7 @@ public class MainGUI extends JFrame {
 	private static JPanel scorePanel = new JPanel();
 	private static JPanel gamePanel = new JPanel();
 	private static JButton[][] characterButtons = new JButton[4][6];
+	private static JTable table;
 
 	/**
 	 * Launch the application.
@@ -157,7 +158,7 @@ public class MainGUI extends JFrame {
 		btnStart.addActionListener(new startButton());
 		mainPanel.add(btnStart);
 
-		JButton btnMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
+		JButton btnMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/menu_btn.png")));
 		btnMenu.addActionListener(new menuButton());
 		btnMenu.setContentAreaFilled(false);
 		btnMenu.setBounds(1250, 20, 100, 100);
