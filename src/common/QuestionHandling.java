@@ -25,7 +25,7 @@ public class QuestionHandling {
         }
     }
 
-    public static void main(String[] args) {
+    public static void handleQuestions() {
         characters = new ArrayList<>();
         //questions = new ArrayList<>();
         String playerAsking = questionAsked[1];
