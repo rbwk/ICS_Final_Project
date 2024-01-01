@@ -34,6 +34,7 @@ public class MainGUI extends JFrame {
 	private static JPanel exitPanel = new JPanel();
 	private static JPanel creditsPanel = new JPanel();
 	private static JPanel difficultyPanel = new JPanel();
+	private static JPanel gameExitPanel = new JPanel();
 
 	private static JPanel charactersPanel = new JPanel();
 	private static JPanel questionPanel = new JPanel();
@@ -87,6 +88,7 @@ public class MainGUI extends JFrame {
 		setBackground(Color.WHITE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setUndecorated(true);
+		
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/resources/icon_logo.png"))); // Create
 																													// the
@@ -275,7 +277,32 @@ public class MainGUI extends JFrame {
 		btnBackDifficulty.setBounds(1250, 20, 100, 100);
 		btnBackDifficulty.addActionListener(new BackDifficultyButton());
 		difficultyPanel.add(btnBackDifficulty);
-		
+
+		/////////////////////////////////// Game Exit Panel ///////////////////////////////////
+
+		gameExitPanel.setBackground(Color.GRAY);
+		gameExitPanel.setBounds(500, 300, 500, 300);
+		layeredPane.add(gameExitPanel);
+		gameExitPanel.setLayout(null);
+		gameExitPanel.setVisible(false);
+
+		JLabel persuasionText = new JLabel("  Are you sure leaving mid game???");
+		persuasionText.setBounds(0,0,500,175);
+		persuasionText.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
+		gameExitPanel.add(persuasionText);
+
+		JButton btnBackGameMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
+		btnBackGameMenu.addActionListener(new backGameMenuButton());
+		btnBackGameMenu.setContentAreaFilled(false);
+		btnBackGameMenu.setBounds(300, 150, 100, 100);
+		gameExitPanel.add(btnBackGameMenu);
+
+		JButton btnLeaveGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/accept_btn.png")));
+		btnLeaveGame.setBackground(new Color(250, 128, 114));
+		btnLeaveGame.addActionListener(new backGameButton());
+		btnLeaveGame.setBounds(100,150,100,100);
+		btnLeaveGame.setBorderPainted(false);
+		gameExitPanel.add(btnLeaveGame);
 		
 		/////////////////////////////////// Game
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -288,7 +315,7 @@ public class MainGUI extends JFrame {
 		JButton btnBackGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
 		btnBackGame.setContentAreaFilled(false);
 		btnBackGame.setBounds(1250, 20, 100, 100);
-		btnBackGame.addActionListener(new backGameButton());
+		btnBackGame.addActionListener(new menuGameButton());
 		gamePanel.add(btnBackGame);
 		
 		charactersPanel.setBackground(Color.PINK);
@@ -325,6 +352,8 @@ public class MainGUI extends JFrame {
 		questionPanel.setLayout(null);
 		questionPanel.setVisible(true);
 		gamePanel.add(questionPanel);
+
+
 		
 		
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { exitPanel, contentPane, layeredPane,
@@ -436,8 +465,33 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	static class menuGameButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			characterButtons[15].setVisible(false);
+			characterButtons[16].setVisible(false);
+			characterButtons[17].setVisible(false);
+			characterButtons[21].setVisible(false);
+			characterButtons[22].setVisible(false);
+			characterButtons[23].setVisible(false);
+			gameExitPanel.setVisible(true);
+		}
+	}
+	
+	static class backGameMenuButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
+			characterButtons[21].setVisible(true);
+			characterButtons[22].setVisible(true);
+			characterButtons[23].setVisible(true);
+			gameExitPanel.setVisible(false);
+		}
+	}
+
 	static class backGameButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			gameExitPanel.setVisible(false);
 			gamePanel.setVisible(false);
 			mainPanel.setVisible(true);
 		}
