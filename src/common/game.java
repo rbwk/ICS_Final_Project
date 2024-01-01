@@ -9,6 +9,9 @@ public class game {
     protected static ArrayList<GameCharacter> p1_characters; // Player 1 list of remaining characters
     protected static ArrayList<GameCharacter> p2_characters; // Player 2 list of remaining characters
     protected static String questionAsked; // The question passed to this program
+    protected static String Player1Character; // The character that p1 chose
+    protected static String Player2Character; // The character that p2 chose
+
 
     public static void setQuestionAsked(String question) {
         questionAsked = question;
@@ -67,7 +70,14 @@ public class game {
              * that was not implemented here.
              * 
             */
-        
+        if(questionAsked.equals("Is the person a male?")){
+            for (int i = 0; i < characters.size(); i++) {
+                if((characters.get(i).getGender()).equals("Female")){
+                    characters.remove(i);
+                }
+            }       
+
+        }
      
     }
 }
