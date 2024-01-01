@@ -7,7 +7,7 @@ public class QuestionHandling {
 	//protected static int diff; // Difficulty level (CURRENTLY UNUSED)
     //protected static ArrayList<String> questions; // List of questions (CURRENTLY UNUSED)
     protected static ArrayList<GameCharacter> characters; // Players list of remaining characters.
-    protected static String[] questionAsked = new String[3];; // The array housing the question and the player asking, passed into this class.
+    protected static String[] questionAsked = new String[3]; // The array housing the question and the player asking, passed into this class.
     protected static String playerQuestion; // The question storage.
     protected static String playerAsking; // The player who asked the question.
     protected static String result; // Determines if the question asked is true or false
