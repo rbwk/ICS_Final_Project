@@ -4,37 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class game {
-	protected static int diff; // Difficulty level
-    protected static ArrayList<String> questions; // List of questions
-    protected static ArrayList<GameCharacter> characters; // List of characters
-    protected static ArrayList<GameCharacter> p1_characters; // Player 1 list of remaining characters
-    protected static ArrayList<GameCharacter> p2_characters; // Player 2 list of remaining characters
-    protected static String[] questionAsked = new String[3];; // The array housing the question and the player asking, passed into this class
-    protected static String playerQuestion; // The question storage
-    protected static String playerAsking; // The player who asked the question
-    protected static String Player1Character; // The character that p1 chose
-    protected static String Player2Character; // The character that p2 chose
+	//protected static int diff; // Difficulty level (CURRENTLY UNUSED)
+    //protected static ArrayList<String> questions; // List of questions (CURRENTLY UNUSED)
+    protected static ArrayList<GameCharacter> characters; // Players list of remaining characters.
+    protected static String[] questionAsked = new String[3];; // The array housing the question and the player asking, passed into this class.
+    protected static String playerQuestion; // The question storage.
+    protected static String playerAsking; // The player who asked the question.
     protected static String result; // Determines if the question asked is true or false
-
-    /**
-     * Sets the list of remaining characters for Player 1.
-     * @param p1Characters The list of GameCharacter objects for Player 1.
-     */
-    public static void setP1Characters(ArrayList<GameCharacter> p1Characters) {
-        p1_characters = p1Characters;
-    }
-
-    /**
-     * Sets the list of remaining characters for Player 2.
-     * @param p2Characters The list of GameCharacter objects for Player 2.
-     */
-    public static void setP2Characters(ArrayList<GameCharacter> p2Characters) {
-        p2_characters = p2Characters;
-    }
+    protected static String CharacterPath; // Path of the players characters remaining, determined by who asked the question.
 
     /**
      * Sets the questions asked array to the question and the player asking
-     * @param question The array containing the question asked and the user that asked it
+     * @param question The array containing the question asked and the user that asked it, along with whether 
+     *                 the answer to the question is true or false
      */
     public static void setQuestionAsked(String[] question) {
         for(int i=0; i<3;i++){
@@ -45,12 +27,25 @@ public class game {
 
     public static void main(String[] args) {
         characters = new ArrayList<>();
-        questions = new ArrayList<>();
+        //questions = new ArrayList<>();
+        String playerAsking = questionAsked[1];
+        String result = questionAsked[2];
+        String playerQuestion = questionAsked[0];
+        playerAsking = "1";
+        String CharacterPath = "";
+
+        if(playerAsking.equals("1")){
+            CharacterPath = "src\\resources\\p1_characters_remaining.txt";
+        }
+        else if(playerAsking.equals("2")){
+            CharacterPath = "src\\resources\\p2_characters_remaining.txt";
+        }
         // Initialize TextFileReader for characters
-        TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt");
+        TextFileReader characterReader = new TextFileReader(CharacterPath);
         characterReader.readFile();
 
-        // Create GameCharacter objects and add them to the characters list
+        
+        // Dumping the users GameCharacter objects and add them to the players character list
         for (int i = 0; i < characterReader.getname().size(); i++) {
             GameCharacter character = new GameCharacter();
             character.setName(characterReader.getname().get(i));
@@ -66,23 +61,19 @@ public class game {
             character.setGlasses(characterReader.getglasses().get(i));
             characters.add(character);
         }
+        
 
-        // Initialize TextFileReader for questions
-        TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt");
-        questionReader.readFile();
-        questions = questionReader.getQuestions();
+        // Initialize TextFileReader for questions   (CURRENTLY UNUSED)
+        //TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt");
+        //questionReader.readFile();
+        //questions = questionReader.getQuestions();
 
 
-        // Separating the question and the user asking
-        String playerAsking = questionAsked[1];
-        String result = questionAsked[2];
         // Testing Object Creation
         for (int i = 0; i < characters.size(); i++) {
             System.out.println(characters.get(i).getName());
         }       
-        for (int i = 0; i < questions.size(); i++) {
-            System.out.println(questions.get(i));
-        }        
+                
  
             /**
              * Group of if statements responsible for question handling.
@@ -96,97 +87,519 @@ public class game {
              * that was not implemented here.
              * 
             */
-
-
-        if(playerAsking.equals("1")){
-
-            //First Question
-            if(playerQuestion.equals("Is the person a male?")){
-                // Iterator of characters array to remove objects without outofbounds error.
-                if(result.equals("true")){
-                    Iterator<GameCharacter> iterator = characters.iterator();
-                    while (iterator.hasNext()) {
-                        GameCharacter character = iterator.next();
-                        if (character.getGender().equals("female")) {
-                            iterator.remove();
-                        }
+        playerQuestion = "Does the person have facial hair?";
+        result = "false";
+        //First Question
+        if(playerQuestion.equals("Is the person a male?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            if(result.equals("true")){
+                Iterator<GameCharacter> iterator = characters.iterator();
+                while (iterator.hasNext()) {
+                    GameCharacter character = iterator.next();
+                    if (character.getGender().equals("female")) {
+                        iterator.remove();
                     }
                 }
-                if(result.equals("false")){
-                    Iterator<GameCharacter> iterator = characters.iterator();
-                    while (iterator.hasNext()) {
-                        GameCharacter character = iterator.next();
-                        if (character.getGender().equals("male")) {
-                            iterator.remove();
-                        }
+                writeCharactersToFile(CharacterPath);
+
+            }
+            if(result.equals("false")){
+                Iterator<GameCharacter> iterator = characters.iterator();
+                while (iterator.hasNext()) {
+                    GameCharacter character = iterator.next();
+                    if (character.getGender().equals("male")) {
+                        iterator.remove();
                     }
-                }   
+                }
+                writeCharactersToFile(CharacterPath);
+
             }  
-            //Second Question
-            if(playerQuestion.equals("Is the person a female?")){
-                // Iterator of characters array to remove objects without outofbounds error.
-                if(result.equals("true")){
-                    Iterator<GameCharacter> iterator = characters.iterator();
-                    while (iterator.hasNext()) {
-                        GameCharacter character = iterator.next();
-                        if (character.getGender().equals("male")) {
-                            iterator.remove();
-                        }
+        }  
+        //Second Question
+        if(playerQuestion.equals("Is the person a female?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            if(result.equals("true")){
+                Iterator<GameCharacter> iterator = characters.iterator();
+                while (iterator.hasNext()) {
+                    GameCharacter character = iterator.next();
+                    if (character.getGender().equals("male")) {
+                        iterator.remove();
                     }
                 }
+                writeCharactersToFile(CharacterPath);
+
+            }
+            if(result.equals("false")){
+                Iterator<GameCharacter> iterator = characters.iterator();
+                while (iterator.hasNext()) {
+                    GameCharacter character = iterator.next();
+                    if (character.getGender().equals("female")) {
+                        iterator.remove();
+                    }
+                }
+                writeCharactersToFile(CharacterPath);
+            }   
+        } 
+        
+        //Third Question
+        if(playerQuestion.equals("Is the eye colour brown?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("green")) {
+                        iterator.remove();
+                    }
+                    if (character.getEyeColour().equals("blue")) {
+                        iterator.remove();
+                    }  
+                }
                 if(result.equals("false")){
-                    Iterator<GameCharacter> iterator = characters.iterator();
-                    while (iterator.hasNext()) {
-                        GameCharacter character = iterator.next();
-                        if (character.getGender().equals("female")) {
-                            iterator.remove();
-                        }
-                    }
-                }   
-            } 
-            if(playerQuestion.equals("Is the eye colour brown?")){
-                // Iterator of characters array to remove objects without outofbounds error.
-                Iterator<GameCharacter> iterator = characters.iterator();
-                while (iterator.hasNext()) {
-                    GameCharacter character = iterator.next();
-                    if (character.getEyeColour().equals("green")) {
-                        iterator.remove();
-                    }
-                    if (character.getEyeColour().equals("blue")) {
-                        iterator.remove();
-                    }
-                }    
-            } 
-            if(playerQuestion.equals("Is the eye colour green?")){
-                // Iterator of characters array to remove objects without outofbounds error.
-                Iterator<GameCharacter> iterator = characters.iterator();
-                while (iterator.hasNext()) {
                     GameCharacter character = iterator.next();
                     if (character.getEyeColour().equals("brown")) {
                         iterator.remove();
                     }
-                    if (character.getEyeColour().equals("blue")) {
-                        iterator.remove();
-                    }
-
-                }    
-            } 
-            if(playerQuestion.equals("Is the eye colour blue?")){
-                // Iterator of characters array to remove objects without outofbounds error.
-                Iterator<GameCharacter> iterator = characters.iterator();
-                while (iterator.hasNext()) {
-                    GameCharacter character = iterator.next();
-                    if (character.getEyeColour().equals("green")) {
-                        iterator.remove();
-                    }
-                    if (character.getEyeColour().equals("brown")) {
-                        iterator.remove();
-                    }
-
                 }
             }
-             
+            writeCharactersToFile(CharacterPath);    
+        } 
+
+        //Fourth Question
+        if(playerQuestion.equals("Is the eye colour green?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("brown")) {
+                        iterator.remove();
+                    }
+                    if (character.getEyeColour().equals("blue")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("green")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath); 
+        } 
+
+        //Fifth Question
+        if(playerQuestion.equals("Is the eye colour blue?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("green")) {
+                        iterator.remove();
+                    }
+                    if (character.getEyeColour().equals("brown")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("blue")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
         }
+
+        // Sixth Question
+        if(playerQuestion.equals("Does the person have a light skin tone?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getSkinTone().equals("dark")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getSkinTone().equals("light")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Seventh Question
+        if(playerQuestion.equals("Does the person have a dark skin tone?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getSkinTone().equals("light")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getSkinTone().equals("dark")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Eighth Question
+        if(playerQuestion.equals("Is the hair colour black?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("brown")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("blonde")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("ginger")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("white")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("black")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+        
+        // Ninth Question
+        if(playerQuestion.equals("Is the hair colour brown?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("black")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("blonde")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("ginger")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("white")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("brown")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Tenth Question
+        if(playerQuestion.equals("Is the hair colour ginger?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("brown")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("blonde")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("black")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("white")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("ginger")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Eleventh Question
+        if(playerQuestion.equals("Is the hair colour white/no hair?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("brown")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("blonde")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("ginger")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("black")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("white")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Twelfth Question
+        if(playerQuestion.equals("Is the hair colour blonde?")){
+            // Iterator of characters array to remove objects without outofbounds error.
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("brown")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("black")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("ginger")) {
+                        iterator.remove();
+                    }  
+                    if (character.getHairColour().equals("white")) {
+                        iterator.remove();
+                    }  
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairColour().equals("blonde")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Thirteenth Question
+        if(playerQuestion.equals("Does the person have facial hair?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                GameCharacter character = iterator.next();
+                boolean istrue = character.getFacialHair();
+
+                if (result.equals("true") && !istrue) {
+                    iterator.remove();
+                } else if (result.equals("false") && istrue) {
+                    iterator.remove();
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Fourteenth Question
+        if(playerQuestion.equals("Is the person wearing glasses?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                GameCharacter character = iterator.next();
+                boolean istrue = character.getGlasses();
+
+                if (result.equals("true") && !istrue) {
+                    iterator.remove();
+                } else if (result.equals("false") && istrue) {
+                    iterator.remove();
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Fifteenth Question
+        if(playerQuestion.equals("Is the person showing their teeth?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                GameCharacter character = iterator.next();
+                boolean istrue = character.getShowingTeeth();
+
+                if (result.equals("true") && !istrue) {
+                    iterator.remove();
+                } else if (result.equals("false") && istrue) {
+                    iterator.remove();
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Sixteenth Question
+        if(playerQuestion.equals("Is the person wearing a hat?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                GameCharacter character = iterator.next();
+                boolean istrue = character.getWearingHat();
+
+                if (result.equals("true") && !istrue) {
+                    iterator.remove();
+                } else if (result.equals("false") && istrue) {
+                    iterator.remove();
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Seventeenth Question
+        if(playerQuestion.equals("Does the person have short hair?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("long")) {
+                        iterator.remove();
+                    } 
+                    if (character.getHairLength().equals("tied")) {
+                        iterator.remove();
+                    }
+                    if (character.getHairLength().equals("bald")) {
+                        iterator.remove();
+                    } 
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("short")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Eighteenth Question
+        if(playerQuestion.equals("Does the person have their hair tied up?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("long")) {
+                        iterator.remove();
+                    }
+                    if (character.getHairLength().equals("short")) {
+                        iterator.remove();
+                    }
+                    if (character.getHairLength().equals("bald")) {
+                        iterator.remove();
+                    } 
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("tied")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Ninteenth Question
+        if(playerQuestion.equals("Does the person have long hair?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("tied")) {
+                        iterator.remove();
+                    }
+                    if (character.getHairLength().equals("short")) {
+                        iterator.remove();
+                    }
+                    if (character.getHairLength().equals("bald")) {
+                        iterator.remove();
+                    } 
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("long")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Twentieth Question
+        if(playerQuestion.equals("Is the person bald?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                if(result.equals("true")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("tied")) {
+                        iterator.remove();
+                    }
+
+                    if (character.getHairLength().equals("short")) {
+                        iterator.remove();
+                    }
+                    if (character.getHairLength().equals("long")) {
+                        iterator.remove();
+                    } 
+                }
+                if(result.equals("false")){
+                    GameCharacter character = iterator.next();
+                    if (character.getHairLength().equals("bald")) {
+                        iterator.remove();
+                    }
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }
+
+        // Twenty First Question
+        if(playerQuestion.equals("Does the person have an ear piercing?")){
+            Iterator<GameCharacter> iterator = characters.iterator();
+            while (iterator.hasNext()) {
+                GameCharacter character = iterator.next();
+                boolean istrue = character.getPiercings();
+                if (result.equals("true") && !istrue) {
+                    iterator.remove();
+                } else if (result.equals("false") && istrue) {
+                    iterator.remove();
+                }
+            }
+            writeCharactersToFile(CharacterPath);
+        }           
            
     }
+    public static void writeCharactersToFile(String filePath) {
+        TextFileWriter writer = new TextFileWriter(filePath);
+        ArrayList<String> characterStrings = new ArrayList<>();
+
+        for (GameCharacter character : characters) {
+            characterStrings.add(character.toFileString());
+        }
+
+        writer.writeFile(characterStrings);
+    }
+
 }
