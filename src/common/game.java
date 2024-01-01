@@ -9,21 +9,40 @@ public class game {
     protected static ArrayList<GameCharacter> characters; // List of characters
     protected static ArrayList<GameCharacter> p1_characters; // Player 1 list of remaining characters
     protected static ArrayList<GameCharacter> p2_characters; // Player 2 list of remaining characters
-    protected static String[] questionAsked = new String[2];; // The question passed to this program
+    protected static String[] questionAsked = new String[3];; // The array housing the question and the player asking, passed into this class
+    protected static String playerQuestion; // The question storage
+    protected static String playerAsking; // The player who asked the question
     protected static String Player1Character; // The character that p1 chose
     protected static String Player2Character; // The character that p2 chose
+    protected static String result; // Determines if the question asked is true or false
 
+    /**
+     * Sets the list of remaining characters for Player 1.
+     * @param p1Characters The list of GameCharacter objects for Player 1.
+     */
+    public static void setP1Characters(ArrayList<GameCharacter> p1Characters) {
+        p1_characters = p1Characters;
+    }
 
+    /**
+     * Sets the list of remaining characters for Player 2.
+     * @param p2Characters The list of GameCharacter objects for Player 2.
+     */
+    public static void setP2Characters(ArrayList<GameCharacter> p2Characters) {
+        p2_characters = p2Characters;
+    }
+
+    /**
+     * Sets the questions asked array to the question and the player asking
+     * @param question The array containing the question asked and the user that asked it
+     */
     public static void setQuestionAsked(String[] question) {
-        for(int i=0; i<2;i++){
+        for(int i=0; i<3;i++){
             questionAsked[i] = question[i];
 
         }
     }
 
-    public static String[] getQuestionAsked() {
-        return questionAsked;
-    }
     public static void main(String[] args) {
         characters = new ArrayList<>();
         questions = new ArrayList<>();
@@ -53,6 +72,10 @@ public class game {
         questionReader.readFile();
         questions = questionReader.getQuestions();
 
+
+        // Separating the question and the user asking
+        String playerAsking = questionAsked[1];
+        String result = questionAsked[2];
         // Testing Object Creation
         for (int i = 0; i < characters.size(); i++) {
             System.out.println(characters.get(i).getName());
@@ -74,13 +97,96 @@ public class game {
              * 
             */
 
-        // Iterator of characters array to remove objects without outofbounds error.
-        Iterator<GameCharacter> iterator = characters.iterator();
-        while (iterator.hasNext()) {
-            GameCharacter character = iterator.next();
-            if (character.getGender().equals("female")) {
-                iterator.remove();
+
+        if(playerAsking.equals("1")){
+
+            //First Question
+            if(playerQuestion.equals("Is the person a male?")){
+                // Iterator of characters array to remove objects without outofbounds error.
+                if(result.equals("true")){
+                    Iterator<GameCharacter> iterator = characters.iterator();
+                    while (iterator.hasNext()) {
+                        GameCharacter character = iterator.next();
+                        if (character.getGender().equals("female")) {
+                            iterator.remove();
+                        }
+                    }
+                }
+                if(result.equals("false")){
+                    Iterator<GameCharacter> iterator = characters.iterator();
+                    while (iterator.hasNext()) {
+                        GameCharacter character = iterator.next();
+                        if (character.getGender().equals("male")) {
+                            iterator.remove();
+                        }
+                    }
+                }   
+            }  
+            //Second Question
+            if(playerQuestion.equals("Is the person a female?")){
+                // Iterator of characters array to remove objects without outofbounds error.
+                if(result.equals("true")){
+                    Iterator<GameCharacter> iterator = characters.iterator();
+                    while (iterator.hasNext()) {
+                        GameCharacter character = iterator.next();
+                        if (character.getGender().equals("male")) {
+                            iterator.remove();
+                        }
+                    }
+                }
+                if(result.equals("false")){
+                    Iterator<GameCharacter> iterator = characters.iterator();
+                    while (iterator.hasNext()) {
+                        GameCharacter character = iterator.next();
+                        if (character.getGender().equals("female")) {
+                            iterator.remove();
+                        }
+                    }
+                }   
+            } 
+            if(playerQuestion.equals("Is the eye colour brown?")){
+                // Iterator of characters array to remove objects without outofbounds error.
+                Iterator<GameCharacter> iterator = characters.iterator();
+                while (iterator.hasNext()) {
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("green")) {
+                        iterator.remove();
+                    }
+                    if (character.getEyeColour().equals("blue")) {
+                        iterator.remove();
+                    }
+                }    
+            } 
+            if(playerQuestion.equals("Is the eye colour green?")){
+                // Iterator of characters array to remove objects without outofbounds error.
+                Iterator<GameCharacter> iterator = characters.iterator();
+                while (iterator.hasNext()) {
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("brown")) {
+                        iterator.remove();
+                    }
+                    if (character.getEyeColour().equals("blue")) {
+                        iterator.remove();
+                    }
+
+                }    
+            } 
+            if(playerQuestion.equals("Is the eye colour blue?")){
+                // Iterator of characters array to remove objects without outofbounds error.
+                Iterator<GameCharacter> iterator = characters.iterator();
+                while (iterator.hasNext()) {
+                    GameCharacter character = iterator.next();
+                    if (character.getEyeColour().equals("green")) {
+                        iterator.remove();
+                    }
+                    if (character.getEyeColour().equals("brown")) {
+                        iterator.remove();
+                    }
+
+                }
             }
-        }     
+             
+        }
+           
     }
 }
