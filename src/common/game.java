@@ -1,6 +1,7 @@
 package common;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class game {
 	protected static int diff; // Difficulty level
@@ -8,19 +9,21 @@ public class game {
     protected static ArrayList<GameCharacter> characters; // List of characters
     protected static ArrayList<GameCharacter> p1_characters; // Player 1 list of remaining characters
     protected static ArrayList<GameCharacter> p2_characters; // Player 2 list of remaining characters
-    protected static String questionAsked; // The question passed to this program
+    protected static String[] questionAsked = new String[2];; // The question passed to this program
     protected static String Player1Character; // The character that p1 chose
     protected static String Player2Character; // The character that p2 chose
 
 
-    public static void setQuestionAsked(String question) {
-        questionAsked = question;
+    public static void setQuestionAsked(String[] question) {
+        for(int i=0; i<2;i++){
+            questionAsked[i] = question[i];
+
+        }
     }
 
-    public static String getQuestionAsked() {
+    public static String[] getQuestionAsked() {
         return questionAsked;
     }
-
     public static void main(String[] args) {
         characters = new ArrayList<>();
         questions = new ArrayList<>();
@@ -70,14 +73,17 @@ public class game {
              * that was not implemented here.
              * 
             */
-        if(questionAsked.equals("Is the person a male?")){
-            for (int i = 0; i < characters.size(); i++) {
-                if((characters.get(i).getGender()).equals("Female")){
-                    characters.remove(i);
-                }
-            }       
-
+        questionAsked[0] = "Is the person a male?";
+        Iterator<GameCharacter> iterator = characters.iterator();
+        while (iterator.hasNext()) {
+            GameCharacter character = iterator.next();
+            if (character.getGender().equals("female")) {
+                iterator.remove(); // Safely remove the character
+            }
         }
+        for (int i = 0; i < characters.size(); i++) {
+            System.out.println(characters.get(i).getName());
+        }   
      
     }
 }
