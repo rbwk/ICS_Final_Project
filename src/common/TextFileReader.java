@@ -174,4 +174,12 @@ public class TextFileReader {
     public ArrayList<String> getQuestions() {
         return questions;
     }
+    public boolean readInitializationState() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line = reader.readLine();
+            return line != null && Boolean.parseBoolean(line);
+        } catch (IOException e) {
+            return false; // Default to false if an error occurs
+        }
+    }
 }
