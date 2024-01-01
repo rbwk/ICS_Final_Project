@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JTable;
 
 public class MainGUI extends JFrame {
 
@@ -30,6 +31,7 @@ public class MainGUI extends JFrame {
 	private static JPanel leaderboardPanel = new JPanel();
 	private static JPanel exitPanel = new JPanel();
 	private static JPanel creditsPanel = new JPanel();
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -132,6 +134,7 @@ public class MainGUI extends JFrame {
 		
 		
 		
+		
 
 		/////////////////////////////////// Main
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -151,7 +154,7 @@ public class MainGUI extends JFrame {
 		btnStart.addActionListener(new startButton());
 		mainPanel.add(btnStart);
 
-		JButton btnMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
+		JButton btnMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/menu_btn.png")));
 		btnMenu.addActionListener(new menuButton());
 		btnMenu.setContentAreaFilled(false);
 		btnMenu.setBounds(1250, 20, 100, 100);
@@ -219,7 +222,7 @@ public class MainGUI extends JFrame {
 		difficultyPanel.setBounds(0, 0, 1920, 1080);
 		layeredPane.add(difficultyPanel);
 		difficultyPanel.setLayout(null);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{exitPanel, contentPane, layeredPane, btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit, btnLeaderboard, btnCredits, creditsPanel, difficultyPanel}));
+		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{exitPanel, contentPane, layeredPane, btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit, btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, table}));
 
 	}
 
