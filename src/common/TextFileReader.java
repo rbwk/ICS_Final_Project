@@ -48,7 +48,7 @@ public class TextFileReader {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (filePath == "src\\data.txt") {
+                if (filePath == "src\\resources\\data.txt") {
                     name.add(line);
                     line = reader.readLine();
                     gender.add(line);
@@ -71,7 +71,7 @@ public class TextFileReader {
                     line = reader.readLine();
                     piercings.add(Boolean.parseBoolean(line));
 
-                } else if (filePath == "src\\questions.txt") {
+                } else if (filePath == "src\\resources\\questions.txt") {
                     questions.add(line);
                 }
 
