@@ -6,17 +6,16 @@ import javax.swing.*;
 
 import common.TextFileReader;
 
-public class mainMenu{
+public class mainMenu {
 
 	TextFileReader reader = new TextFileReader("questions.txt");
-	
+
 	static JLayeredPane mainlayer = new JLayeredPane();
 	static JPanel mainPanel = new JPanel(new GridBagLayout());
 	static JPanel leaderboardPanel = new JPanel(new GridBagLayout());
 	static GridBagConstraints constraints = new GridBagConstraints();
 
 	static JFrame f = new JFrame("Exciting Guess Who Game!!!"); // JFrame for the whole menu
-	
 
 	public static void main(String[] args) throws InterruptedException {
 		setFrame();
@@ -26,13 +25,13 @@ public class mainMenu{
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setMinimumSize(new Dimension(1000, 800));
 		f.setSize(1000, 600);
-		
+
 		f.setLayout(new GridLayout(1, 1));
 
-		//f.add(mainlayer);
-		mainScreen(); //Adding the main Menu
-		//f.setLayeredPane(mainlayer);
-		//leaderboardScreen();
+		// f.add(mainlayer);
+		mainScreen(); // Adding the main Menu
+		// f.setLayeredPane(mainlayer);
+		// leaderboardScreen();
 
 		f.setVisible(true);
 	}
@@ -46,10 +45,9 @@ public class mainMenu{
 
 		startButton = new JButton("Start Game!");
 		startButton.addActionListener(new startButton());
-		//startButton.setMaximumSize(new Dimension(20, 20));
+		// startButton.setMaximumSize(new Dimension(20, 20));
 		setConstrants(1, 10);
 		mainPanel.add(startButton, constraints);
-		
 
 		leaderboardButton = new JButton("Leaderboard");
 		leaderboardButton.addActionListener(new leaderboardButton());
@@ -71,21 +69,21 @@ public class mainMenu{
 		mainPanel.add(new JLabel(logo), constraints);
 
 		f.add(mainPanel);
-		//mainlayer.setPosition(mainPanel, 0);
+		// mainlayer.setPosition(mainPanel, 0);
 
 	}
 
 	public static void leaderboardScreen() {
-		
+
 		JButton backButton = new JButton();
 
 		backButton = new JButton("Back");
 		backButton.addActionListener(new backButton());
 		setConstrants(1, 25);
 		leaderboardPanel.add(backButton, constraints);
-		
-		//mainlayer.add(leaderboardPanel);
-		//leaderboardPanel.setVisible(false);
+
+		// mainlayer.add(leaderboardPanel);
+		// leaderboardPanel.setVisible(false);
 	}
 
 	public static void componentResized() { // Make Better lock ratio method
@@ -109,9 +107,10 @@ public class mainMenu{
 
 	static class leaderboardButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			//mainPanel.setVisible(false);
-			//leaderboardPanel.setVisible(true);
-			mainlayer.moveToFront(leaderboardPanel);;
+			// mainPanel.setVisible(false);
+			// leaderboardPanel.setVisible(true);
+			mainlayer.moveToFront(leaderboardPanel);
+			;
 
 		}
 	}
@@ -128,7 +127,7 @@ public class mainMenu{
 		}
 	}
 
-	static class backButton implements ActionListener{
+	static class backButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			mainPanel.setVisible(true);
 			leaderboardPanel.setVisible(false);
