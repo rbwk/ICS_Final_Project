@@ -73,17 +73,14 @@ public class game {
              * that was not implemented here.
              * 
             */
-        questionAsked[0] = "Is the person a male?";
+
+        // Iterator of characters array to remove objects without outofbounds error.
         Iterator<GameCharacter> iterator = characters.iterator();
         while (iterator.hasNext()) {
             GameCharacter character = iterator.next();
             if (character.getGender().equals("female")) {
-                iterator.remove(); // Safely remove the character
+                iterator.remove();
             }
-        }
-        for (int i = 0; i < characters.size(); i++) {
-            System.out.println(characters.get(i).getName());
-        }   
-     
+        }     
     }
 }
