@@ -3,3 +3,12 @@ local Player vs Player
 GUI - Friendly
 All Questions - Recommended and a menu for all
 Levels of AI - Easy, Medium, Hard
+
+
+
+
+
+For logic: 
+
+For passing questions asked to the game.java file, make an array, have the question asked and then an integer 1 or 2 depending on the player who asked the question, and then in 
+game.java we will split the array into the question and who asked it to differentiate. 
