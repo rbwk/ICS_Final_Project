@@ -16,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -41,7 +40,6 @@ public class MainGUI extends JFrame {
 	private static JPanel scorePanel = new JPanel();
 	private static JPanel gamePanel = new JPanel();
 	private static JButton[] characterButtons = new JButton[24]; //Use 1D Array as the data is 1d and easier to switch between 
-	private static JTable table;
 	
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
 	private static ArrayList<String> Characters = new ArrayList<String>(); //Testing Purposes only
