@@ -28,6 +28,8 @@ public class MainGUI extends JFrame {
 	private static JPanel mainPanel = new JPanel();
 	private static JPanel selectorPanel = new JPanel();
 	private static JPanel leaderboardPanel = new JPanel();
+	private static JPanel exitPanel = new JPanel();
+	private static JPanel creditsPanel = new JPanel();
 
 	/**
 	 * Launch the application.
@@ -87,6 +89,49 @@ public class MainGUI extends JFrame {
 		layeredPane.setBounds(0, 0, 1920, 1080);
 		contentPane.add(layeredPane);
 		selectorPanel.setVisible(false);
+		
+		
+		///////////////////////////////////Exit Panel///////////////////////////////////
+		
+		exitPanel.setBackground(Color.GRAY);
+		exitPanel.setBounds(485, 250, 400, 300);
+		layeredPane.add(exitPanel);
+		exitPanel.setLayout(null);
+		exitPanel.setVisible(false);
+		
+		JButton btnBackMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBackMenu.addActionListener(new backMenuButton());
+		btnBackMenu.setContentAreaFilled(false);
+		btnBackMenu.setBounds(330, 0, 75, 75);
+		exitPanel.add(btnBackMenu);
+		
+		JButton btnExit = new JButton("EXIT TO DESKTOP");
+		btnExit.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {dispose();}});
+		btnExit.setBorderPainted(false);
+		btnExit.setBackground(new Color(250, 128, 114));
+		btnExit.setFont(new Font("STXihei", Font.PLAIN, 31));
+		btnExit.setBounds(50, 210, 300, 50);
+		exitPanel.add(btnExit);
+		
+		JButton btnLeaderboard = new JButton("LEADERBOARD");
+		btnLeaderboard.setBackground(Color.LIGHT_GRAY);
+		btnLeaderboard.setBorderPainted(false);
+		btnLeaderboard.setBounds(50, 60, 300, 50);
+		btnLeaderboard.setFont(new Font("STXihei", Font.PLAIN, 31));
+		btnLeaderboard.addActionListener(new leaderboardButton());
+		exitPanel.add(btnLeaderboard);
+		
+		JButton btnCredits = new JButton("CREDITS");
+		btnCredits.setBackground(Color.LIGHT_GRAY);
+		btnCredits.setBorderPainted(false);
+		btnCredits.setBounds(50, 135, 300, 50);
+		btnCredits.setFont(new Font("STXihei", Font.PLAIN, 31));
+		btnCredits.addActionListener(new creditsButton());
+		exitPanel.add(btnCredits);
+		
+		
+		
+		
 
 		/////////////////////////////////// Main
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -97,31 +142,20 @@ public class MainGUI extends JFrame {
 		mainPanel.setVisible(true);
 
 		JLabel lbLogo = new JLabel(new ImageIcon(MainGUI.class.getResource("/resources/logo.png")));
-		lbLogo.setBounds(275, 197, 850, 278);
+		lbLogo.setBounds(275, 230, 850, 278);
 		mainPanel.add(lbLogo);
 
 		JButton btnStart = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/start_btn.png")));
 		btnStart.setContentAreaFilled(false);
-		btnStart.setBounds(410, 500, 550, 250);
+		btnStart.setBounds(410, 550, 550, 250);
 		btnStart.addActionListener(new startButton());
 		mainPanel.add(btnStart);
 
-		JButton btnLeaderboard = new JButton(
-				new ImageIcon(MainGUI.class.getResource("/resources/leaderboard_btn.png")));
-		btnLeaderboard.setContentAreaFilled(false);
-		btnLeaderboard.setBounds(600, 725, 100, 100);
-		btnLeaderboard.addActionListener(new leaderboardButton());
-		mainPanel.add(btnLeaderboard);
-
-		JButton btnExit = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnExit.setContentAreaFilled(false);
-		btnExit.setBounds(1250, 20, 100, 100);
-		mainPanel.add(btnExit);
+		JButton btnMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
+		btnMenu.addActionListener(new menuButton());
+		btnMenu.setContentAreaFilled(false);
+		btnMenu.setBounds(1250, 20, 100, 100);
+		mainPanel.add(btnMenu);
 
 		/////////////////////////////////// Selector
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -166,9 +200,26 @@ public class MainGUI extends JFrame {
 		btnBackLeaderboard.setBounds(1250, 20, 100, 100);
 		btnBackLeaderboard.addActionListener(new backLeaderboardButton());
 		leaderboardPanel.add(btnBackLeaderboard);
-
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { contentPane, layeredPane, btnStart, lbLogo,
-				btnLeaderboard, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel }));
+		
+		/////////////////////////////////// Credits
+		/////////////////////////////////// Screen///////////////////////////////////
+		
+		creditsPanel.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(creditsPanel);
+		creditsPanel.setLayout(null);
+		creditsPanel.setVisible(false);
+		
+		JButton btnBackCredits = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBackCredits.setContentAreaFilled(false);
+		btnBackCredits.setBounds(1250, 20, 100, 100);
+		btnBackCredits.addActionListener(new backLeaderboardButton());
+		creditsPanel.add(btnBackCredits);
+		
+		JPanel difficultyPanel = new JPanel();
+		difficultyPanel.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(difficultyPanel);
+		difficultyPanel.setLayout(null);
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{exitPanel, contentPane, layeredPane, btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit, btnLeaderboard, btnCredits, creditsPanel, difficultyPanel}));
 
 	}
 
@@ -187,6 +238,15 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			mainPanel.setVisible(false);
 			leaderboardPanel.setVisible(true);
+			exitPanel.setVisible(false);
+		}
+	}
+	
+	static class creditsButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			mainPanel.setVisible(false);
+			creditsPanel.setVisible(true);
+			exitPanel.setVisible(false);
 		}
 	}
 
@@ -203,5 +263,23 @@ public class MainGUI extends JFrame {
 			leaderboardPanel.setVisible(false);
 		}
 	}
-
+	
+	static class backCreditsButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			mainPanel.setVisible(true);
+			creditsPanel.setVisible(false);
+		}
+	}
+	
+	static class backMenuButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			exitPanel.setVisible(false);
+		}
+	}
+	
+	static class menuButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			exitPanel.setVisible(true);
+		}
+	}
 }
