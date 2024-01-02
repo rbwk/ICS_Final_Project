@@ -24,14 +24,12 @@ public class QuestionHandling {
 
         }
     }
-
     public static void handleQuestions() {
         characters = new ArrayList<>();
         //questions = new ArrayList<>();
         String playerAsking = questionAsked[1];
         String result = questionAsked[2];
         String playerQuestion = questionAsked[0];
-        playerAsking = "1";
         String CharacterPath = "";
 
         if(playerAsking.equals("1")){
