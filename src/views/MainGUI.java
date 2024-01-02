@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
@@ -24,6 +26,8 @@ import javax.swing.border.Border;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import common.TextFileReader;
+import javax.swing.JList;
+import javax.swing.DefaultComboBoxModel;
 
 public class MainGUI extends JFrame {
 
@@ -75,8 +79,8 @@ public class MainGUI extends JFrame {
 	 */
 	public MainGUI() throws IOException {
 
-		characterReader.readFile();  //Testing Purposes only
-		Characters = characterReader.getname();  //Testing Purposes only
+		//characterReader.readFile();  //Testing Purposes only
+		//Characters = characterReader.getname();  //Testing Purposes only
 		
 		initComponents();
 		createEvents();
@@ -111,7 +115,117 @@ public class MainGUI extends JFrame {
 		contentPane.add(layeredPane);
 		selectorPanel.setVisible(false);
 		
+		/////////////////////////////////// Game Exit Panel ///////////////////////////////////
 
+		gameExitPanel.setBackground(Color.GRAY);
+		gameExitPanel.setBounds(500, 400, 500, 200);
+		layeredPane.add(gameExitPanel);
+		gameExitPanel.setLayout(null);
+		gameExitPanel.setVisible(false);
+
+		JLabel persuasionText = new JLabel("  Are you sure leaving mid game???");
+		persuasionText.setBounds(0,0,500,100);
+		persuasionText.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
+		gameExitPanel.add(persuasionText);
+
+		JButton btnBackGameMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
+		btnBackGameMenu.addActionListener(new backGameMenuButton());
+		btnBackGameMenu.setContentAreaFilled(false);
+		btnBackGameMenu.setBounds(300, 90, 100, 100);
+		gameExitPanel.add(btnBackGameMenu);
+
+		JButton btnLeaveGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/accept_btn.png")));
+		btnLeaveGame.setBackground(new Color(250, 128, 114));
+		btnLeaveGame.addActionListener(new backGameButton());
+		btnLeaveGame.setBounds(100,90,100,100);
+		btnLeaveGame.setBorderPainted(false);
+		gameExitPanel.add(btnLeaveGame);
+		
+		/////////////////////////////////// Game
+		/////////////////////////////////// Screen///////////////////////////////////
+
+		gamePanel.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(gamePanel);
+		gamePanel.setLayout(null);
+		gamePanel.setVisible(false);
+
+		JButton btnBackGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBackGame.setContentAreaFilled(false);
+		btnBackGame.setBounds(1320, 20, 100, 100);
+		btnBackGame.addActionListener(new menuGameButton());
+		gamePanel.add(btnBackGame);
+		
+		charactersPanel.setBackground(Color.PINK);
+		charactersPanel.setBounds(0, 0, 1000, 800);
+		charactersPanel.setLayout(null);
+		charactersPanel.setVisible(true);
+		gamePanel.add(charactersPanel);
+		
+		/////////////////////////////////// Adding Characters ///////////////////////////////////
+		int num = 0;
+		for(int x = 0; x < 4; x++) { for(int y = 0; y < 6; y++) {
+			
+			characterButtons[num] = new JButton();
+			characterButtons[num].setBorderPainted(false);
+			//characterButtons[num].setText(Characters.get(num));  //Testing Purposes only
+			int ylocation = 15+(x)*200;
+			int xlocation = 15+(y)*170;
+			characterButtons[num].setBounds(xlocation,ylocation,120,170);
+			characterButtons[num].setHorizontalAlignment(SwingConstants.CENTER);
+			charactersPanel.add(characterButtons[num]);
+			num++;
+			
+		}	}
+
+		/////////////////////////////////// Score Screen ///////////////////////////////////
+		
+		scorePanel.setBackground(Color.ORANGE);
+		scorePanel.setBounds(1000, 0, 440, 900);
+		scorePanel.setLayout(null);
+		scorePanel.setVisible(true);
+		gamePanel.add(scorePanel);
+
+		JLabel titleScore = new JLabel("SCORE");
+		titleScore.setFont(new Font("STXihei", Font.PLAIN, 52));
+		titleScore.setBounds(130, 50, 200, 50);
+		scorePanel.add(titleScore);
+
+		JLabel actualScore = new JLabel("12345");
+		actualScore.setFont(new Font("STXihei", Font.PLAIN, 52));
+		actualScore.setBounds(90,120,250,70);
+		Border blackline = BorderFactory.createLineBorder(Color.black);
+		actualScore.setBorder(blackline);
+		actualScore.setHorizontalAlignment(SwingConstants.CENTER);
+		scorePanel.add(actualScore);
+
+		JLabel player_character = new JLabel("Your Character");
+		player_character.setHorizontalAlignment(SwingConstants.CENTER);
+		player_character.setBounds(65,220,300,400);
+		player_character.setBorder(blackline);
+		scorePanel.add(player_character);
+
+		enemyPanel.setBackground(Color.RED);
+		enemyPanel.setBounds(45,650,340,220);
+		scorePanel.add(enemyPanel);
+
+		
+		questionPanel.setBackground(Color.MAGENTA);
+		questionPanel.setBounds(0, 800, 1000, 100);
+		questionPanel.setLayout(null);
+		questionPanel.setVisible(true);
+		gamePanel.add(questionPanel);
+		
+		String[] data = {"Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10"};
+		JComboBox<String> questionList = new JComboBox<>(data);
+		questionList.setBounds(10, 11, 980, 80);
+		questionList.setFont(new Font("STXihei", Font.PLAIN, 32));
+		questionPanel.add(questionList);
+
+
+		
+		
+		
+		
 
 		/////////////////////////////////// Exit
 		/////////////////////////////////// Panel///////////////////////////////////
@@ -278,114 +392,7 @@ public class MainGUI extends JFrame {
 		btnBackDifficulty.setBounds(1250, 20, 100, 100);
 		btnBackDifficulty.addActionListener(new BackDifficultyButton());
 		difficultyPanel.add(btnBackDifficulty);
-
-		/////////////////////////////////// Game Exit Panel ///////////////////////////////////
-
-		gameExitPanel.setBackground(Color.GRAY);
-		gameExitPanel.setBounds(500, 300, 500, 300);
-		layeredPane.add(gameExitPanel);
-		gameExitPanel.setLayout(null);
-		gameExitPanel.setVisible(false);
-
-		JLabel persuasionText = new JLabel("  Are you sure leaving mid game???");
-		persuasionText.setBounds(0,0,500,175);
-		persuasionText.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
-		gameExitPanel.add(persuasionText);
-
-		JButton btnBackGameMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/exit_btn.png")));
-		btnBackGameMenu.addActionListener(new backGameMenuButton());
-		btnBackGameMenu.setContentAreaFilled(false);
-		btnBackGameMenu.setBounds(300, 150, 100, 100);
-		gameExitPanel.add(btnBackGameMenu);
-
-		JButton btnLeaveGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/accept_btn.png")));
-		btnLeaveGame.setBackground(new Color(250, 128, 114));
-		btnLeaveGame.addActionListener(new backGameButton());
-		btnLeaveGame.setBounds(100,150,100,100);
-		btnLeaveGame.setBorderPainted(false);
-		gameExitPanel.add(btnLeaveGame);
-		
-		/////////////////////////////////// Game
-		/////////////////////////////////// Screen///////////////////////////////////
-
-		gamePanel.setBounds(0, 0, 1920, 1080);
-		layeredPane.add(gamePanel);
-		gamePanel.setLayout(null);
-		gamePanel.setVisible(false);
-
-		JButton btnBackGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
-		btnBackGame.setContentAreaFilled(false);
-		btnBackGame.setBounds(1320, 20, 100, 100);
-		btnBackGame.addActionListener(new menuGameButton());
-		gamePanel.add(btnBackGame);
-		
-		charactersPanel.setBackground(Color.PINK);
-		charactersPanel.setBounds(0, 0, 1000, 600);
-		charactersPanel.setLayout(null);
-		charactersPanel.setVisible(true);
-		gamePanel.add(charactersPanel);
-		
-		/////////////////////////////////// Adding Characters ///////////////////////////////////
-		int num = 0;
-		for(int x = 0; x < 4; x++) { for(int y = 0; y < 6; y++) {
-			
-			characterButtons[num] = new JButton();
-			characterButtons[num].setBorderPainted(false);
-			characterButtons[num].setText(Characters.get(num));  //Testing Purposes only
-			int ylocation = 5+(x)*150;
-			int xlocation = 15+(y)*170;
-			characterButtons[num].setBounds(xlocation,ylocation,120,140);
-			characterButtons[num].setHorizontalAlignment(SwingConstants.CENTER);
-			charactersPanel.add(characterButtons[num]);
-			num++;
-			
-		}	}
-
-		/////////////////////////////////// Score Screen ///////////////////////////////////
-		
-		scorePanel.setBackground(Color.ORANGE);
-		scorePanel.setBounds(1000, 0, 440, 900);
-		scorePanel.setLayout(null);
-		scorePanel.setVisible(true);
-		gamePanel.add(scorePanel);
-
-		JLabel titleScore = new JLabel("SCORE");
-		titleScore.setFont(new Font("STXihei", Font.PLAIN, 52));
-		titleScore.setBounds(130, 50, 200, 50);
-		scorePanel.add(titleScore);
-
-		JLabel actualScore = new JLabel("12345");
-		actualScore.setFont(new Font("STXihei", Font.PLAIN, 52));
-		actualScore.setBounds(90,120,250,70);
-		Border blackline = BorderFactory.createLineBorder(Color.black);
-		actualScore.setBorder(blackline);
-		actualScore.setHorizontalAlignment(SwingConstants.CENTER);
-		scorePanel.add(actualScore);
-
-		JLabel player_character = new JLabel("Your Character");
-		player_character.setHorizontalAlignment(SwingConstants.CENTER);
-		player_character.setBounds(65,220,300,400);
-		player_character.setBorder(blackline);
-		scorePanel.add(player_character);
-
-		enemyPanel.setBackground(Color.RED);
-		enemyPanel.setBounds(45,650,340,220);
-		scorePanel.add(enemyPanel);
-
-		
-		questionPanel.setBackground(Color.MAGENTA);
-		questionPanel.setBounds(0, 600, 1000, 300);
-		questionPanel.setLayout(null);
-		questionPanel.setVisible(true);
-		gamePanel.add(questionPanel);
-
-
-		
-		
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { exitPanel, contentPane, layeredPane,
-				btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit,
-				btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMid, btnHard,
-				btnBackDifficulty }));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{exitPanel, contentPane, layeredPane, btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit, btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMid, btnHard, btnBackDifficulty, questionList}));
 	}
 
 	private void createEvents() {
@@ -484,9 +491,6 @@ public class MainGUI extends JFrame {
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
-			characterButtons[21].setVisible(true);
-			characterButtons[22].setVisible(true);
-			characterButtons[23].setVisible(true);
 
 		}
 	}
@@ -498,9 +502,6 @@ public class MainGUI extends JFrame {
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
-			characterButtons[21].setVisible(true);
-			characterButtons[22].setVisible(true);
-			characterButtons[23].setVisible(true);
 		}
 	}
 
@@ -509,9 +510,6 @@ public class MainGUI extends JFrame {
 			characterButtons[15].setVisible(false);
 			characterButtons[16].setVisible(false);
 			characterButtons[17].setVisible(false);
-			characterButtons[21].setVisible(false);
-			characterButtons[22].setVisible(false);
-			characterButtons[23].setVisible(false);
 			gameExitPanel.setVisible(true);
 		}
 	}
@@ -521,9 +519,6 @@ public class MainGUI extends JFrame {
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
-			characterButtons[21].setVisible(true);
-			characterButtons[22].setVisible(true);
-			characterButtons[23].setVisible(true);
 			gameExitPanel.setVisible(false);
 		}
 	}
