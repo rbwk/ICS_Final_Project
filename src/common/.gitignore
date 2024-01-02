@@ -2,6 +2,6 @@
 /TextFileWriter.class
 /game.class
 /GameCharacter.class
-/QuestionHandling.class
 /Initialization.class
 /ValidateQuestion.class
+/QuestionHandler.class

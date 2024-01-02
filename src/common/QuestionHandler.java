@@ -3,7 +3,7 @@ package common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class QuestionHandling {
+public class QuestionHandler {
 	//protected static int diff; // Difficulty level (CURRENTLY UNUSED)
     //protected static ArrayList<String> questions; // List of questions (CURRENTLY UNUSED)
     private static ArrayList<GameCharacter> characters; // Players list of remaining characters.
