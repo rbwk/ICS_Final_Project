@@ -27,6 +27,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import common.Initialization;
 import common.TextFileReader;
+import common.game;
 
 public class MainGUI extends JFrame 	{
 
@@ -567,6 +568,8 @@ public class MainGUI extends JFrame 	{
 	static class confirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(questionList.getSelectedItem());
+			//String question = questionList.getSelectedItem();
+			//game.checkAnswer(questionList.getSelectedItem(), 1);
 		}
 	}
 }
