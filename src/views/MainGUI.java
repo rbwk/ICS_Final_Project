@@ -46,7 +46,7 @@ public class MainGUI extends JFrame 	{
 	private static JPanel gamePanel = new JPanel();
 	private static JPanel enemyPanel = new JPanel();
 	private static JButton[] characterButtons = new JButton[24]; //Use 1D Array as the data is 1d and easier to switch between 
-	//JComboBox<String> questionList = new JComboBox<>();
+	private static JComboBox<String> questionList = new JComboBox<>();
 	
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
 	private static TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
@@ -397,15 +397,16 @@ public class MainGUI extends JFrame 	{
 		questionPanel.setVisible(true);
 		gamePanel.add(questionPanel);
 		
-		JComboBox<String> questionList = new JComboBox<>(data);
-		questionList.setSelectedItem(data);
+		for(int i = 0; i < data.length; i++) {questionList.addItem(data[i]);}
 		questionList.setBounds(10, 11, 820, 80);
 		questionList.setFont(new Font("STXihei", Font.PLAIN, 32));
+		questionList.getSelectedItem();
 		questionPanel.add(questionList);
 
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.setBounds(840,11,150,80);
 		btnConfirm.setFont(new Font("STXihei", Font.PLAIN, 30));
+		btnConfirm.addActionListener(new confirmButton());
 		questionPanel.add(btnConfirm);
 
 		
@@ -565,7 +566,7 @@ public class MainGUI extends JFrame 	{
 
 	static class confirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
+			System.out.println(questionList.getSelectedItem());
 		}
 	}
 }
