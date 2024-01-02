@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
@@ -26,8 +25,6 @@ import javax.swing.border.Border;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import common.TextFileReader;
-import javax.swing.JList;
-import javax.swing.DefaultComboBoxModel;
 
 public class MainGUI extends JFrame {
 
@@ -49,7 +46,11 @@ public class MainGUI extends JFrame {
 	private static JButton[] characterButtons = new JButton[24]; //Use 1D Array as the data is 1d and easier to switch between 
 	
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
+	private static TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
 	private static ArrayList<String> Characters = new ArrayList<String>(); //Testing Purposes only
+	private static ArrayList<String> Questions = new ArrayList<String>(); //Testing Purposes only
+	private static String[] data;
+	
 
 	/**
 	 * Launch the application.
@@ -79,8 +80,12 @@ public class MainGUI extends JFrame {
 	 */
 	public MainGUI() throws IOException {
 
-		//characterReader.readFile();  //Testing Purposes only
-		//Characters = characterReader.getname();  //Testing Purposes only
+		characterReader.readFile();  //Testing Purposes only
+		questionReader.readFile(); //Testing Purposes only
+
+		Characters = characterReader.getname();  //Testing Purposes only
+		Questions = questionReader.getQuestions(); //Testing Purposes only
+		data = Questions.toArray(new String[Questions.size()]);
 		
 		initComponents();
 		createEvents();
@@ -167,7 +172,7 @@ public class MainGUI extends JFrame {
 			
 			characterButtons[num] = new JButton();
 			characterButtons[num].setBorderPainted(false);
-			//characterButtons[num].setText(Characters.get(num));  //Testing Purposes only
+			characterButtons[num].setText(Characters.get(num));  //Testing Purposes only
 			int ylocation = 15+(x)*200;
 			int xlocation = 15+(y)*170;
 			characterButtons[num].setBounds(xlocation,ylocation,120,170);
@@ -208,18 +213,23 @@ public class MainGUI extends JFrame {
 		enemyPanel.setBounds(45,650,340,220);
 		scorePanel.add(enemyPanel);
 
-		
+		/////////////////////////////////// Question Screen ///////////////////////////////////
+
 		questionPanel.setBackground(Color.MAGENTA);
 		questionPanel.setBounds(0, 800, 1000, 100);
 		questionPanel.setLayout(null);
 		questionPanel.setVisible(true);
 		gamePanel.add(questionPanel);
 		
-		String[] data = {"Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10"};
 		JComboBox<String> questionList = new JComboBox<>(data);
-		questionList.setBounds(10, 11, 980, 80);
+		questionList.setBounds(10, 11, 820, 80);
 		questionList.setFont(new Font("STXihei", Font.PLAIN, 32));
 		questionPanel.add(questionList);
+
+		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.setBounds(840,11,150,80);
+		btnConfirm.setFont(new Font("STXihei", Font.PLAIN, 30));
+		questionPanel.add(btnConfirm);
 
 
 		
