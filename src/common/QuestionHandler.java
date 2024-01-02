@@ -24,6 +24,8 @@ public class QuestionHandler {
 
         }
     }
+
+    // Fills player characterlists with the new remaining characters after a question has been processed.
     public static void handleQuestions() {
         characters = new ArrayList<>();
         //questions = new ArrayList<>();
@@ -38,7 +40,27 @@ public class QuestionHandler {
         else if(playerAsking.equals("2")){
             CharacterPath = "src\\resources\\p2_characters_remaining.txt";
         }
-        getCharacters(CharacterPath);
+        // Initialize TextFileReader for characters
+        TextFileReader characterReader = new TextFileReader(CharacterPath);
+        characterReader.readFile();
+
+
+        // Dumping the users GameCharacter objects and add them to the players character list
+        for (int i = 0; i < characterReader.getname().size(); i++) {
+            GameCharacter character = new GameCharacter();
+            character.setName(characterReader.getname().get(i));
+            character.setGender(characterReader.getgender().get(i));
+            character.setEyeColour(characterReader.geteye_color().get(i));
+            character.setSkinTone(characterReader.getskin_tone().get(i));
+            character.setHairColour(characterReader.gethair_color().get(i));
+            character.setFacialHair(characterReader.getfacial_hair().get(i));
+            character.setGlasses(characterReader.getglasses().get(i));
+            character.setShowingTeeth(characterReader.getshowing_teeth().get(i));
+            character.setWearingHat(characterReader.getwearing_hat().get(i));
+            character.setHairLength(characterReader.gethair_length().get(i));
+            character.setPiercings(characterReader.getpiercings().get(i));
+            characters.add(character);
+        }
         
 
         // Initialize TextFileReader for questions   (CURRENTLY UNUSED)
@@ -570,6 +592,8 @@ public class QuestionHandler {
 
         writer.writeFile(characterStrings);
     }
+
+    // Checks the question asked by user and returns the true or false statement depending on the result.
     public static boolean checkQuestion(String playerQuestion, int player){
         if(player == 1){
             getCharacters("src\\resources\\p2choice.txt");
@@ -577,6 +601,7 @@ public class QuestionHandler {
         if(player == 2){
             getCharacters("src\\resources\\p1choice.txt");
         }
+        
         //First Question
         if(playerQuestion.equals("Is the person a male?")){
             // Iterator of characters array to remove objects without outofbounds error.
@@ -867,14 +892,13 @@ public class QuestionHandler {
         return false;
     }
 
-    private static void getCharacters(String path) {
 
-        // Initialize TextFileReader for characters
-        TextFileReader characterReader = new TextFileReader(CharacterPath);
+    // For checkQuestion method, handleQuestions method has its own file reader.
+    private static void getCharacters(String path) {
+        characters = new ArrayList<>();
+        TextFileReader characterReader = new TextFileReader(path);
         characterReader.readFile();
 
-        
-        // Dumping the users GameCharacter objects and add them to the players character list
         for (int i = 0; i < characterReader.getname().size(); i++) {
             GameCharacter character = new GameCharacter();
             character.setName(characterReader.getname().get(i));

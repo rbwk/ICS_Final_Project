@@ -71,10 +71,11 @@ public class TextFileReader {
                     line = reader.readLine();
                     piercings.add(Boolean.parseBoolean(line));
 
-                } else if (filePath == "src\\resources\\questions.txt") {
+                } 
+                if (filePath == "src\\resources\\questions.txt") {
                     questions.add(line);
                 }
-                else if (filePath == "src\\resources\\p1_characters_remaining.txt") {
+                if (filePath == "src\\resources\\p1_characters_remaining.txt") {
                     name.add(line);
                     line = reader.readLine();
                     gender.add(line);
@@ -97,7 +98,7 @@ public class TextFileReader {
                     line = reader.readLine();
                     piercings.add(Boolean.parseBoolean(line));
                 }
-                else if (filePath == "src\\resources\\p2_characters_remaining.txt") {
+                if (filePath == "src\\resources\\p2_characters_remaining.txt") {
                     name.add(line);
                     line = reader.readLine();
                     gender.add(line);
@@ -120,7 +121,7 @@ public class TextFileReader {
                     line = reader.readLine();
                     piercings.add(Boolean.parseBoolean(line));
                 }
-                else if (filePath == "src\\resources\\p2choice.txt") {
+                if (filePath == "src\\resources\\p2choice.txt") {
                     name.add(line);
                     line = reader.readLine();
                     gender.add(line);
@@ -143,7 +144,7 @@ public class TextFileReader {
                     line = reader.readLine();
                     piercings.add(Boolean.parseBoolean(line));
                 }
-                else if (filePath == "src\\resources\\p1choice.txt") {
+                if (filePath == "src\\resources\\p1choice.txt") {
                     name.add(line);
                     line = reader.readLine();
                     gender.add(line);
