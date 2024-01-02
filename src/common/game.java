@@ -86,6 +86,7 @@ public class game {
         String[] arrayQuestion = { question, Strplayer, Stresult };
         QuestionHandler.setQuestionAsked(arrayQuestion);
         QuestionHandler.handleQuestions();
+        QuestionListHandler.updateQuestionsList(question, player, result);
     }
 
     // Passthrough methods to Initialization.java methods.

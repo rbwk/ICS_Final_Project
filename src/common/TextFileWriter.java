@@ -35,4 +35,14 @@ public class TextFileWriter {
             e.printStackTrace();
         }
     }
+    public void writeQuestions(List<String> questions) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (String question : questions) {
+                writer.write(question);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -75,6 +75,12 @@ public class TextFileReader {
                 if (filePath == "src\\resources\\questions.txt") {
                     questions.add(line);
                 }
+                if (filePath == "src\\resources\\p2_questions_remaining.txt") {
+                    questions.add(line);
+                }
+                if (filePath == "src\\resources\\p1_questions_remaining.txt") {
+                    questions.add(line);
+                }
                 if (filePath == "src\\resources\\p1_characters_remaining.txt") {
                     name.add(line);
                     line = reader.readLine();

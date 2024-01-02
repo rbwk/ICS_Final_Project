@@ -10,7 +10,8 @@ public class Initialization {
     private static final String p2Path = "src\\resources\\p2_characters_remaining.txt"; // Path to player 2 character storage file
     private static final String p2ChoicePath = "src\\resources\\p2choice.txt"; // Path to player 2 character storage file
     private static final String p1ChoicePath = "src\\resources\\p1choice.txt"; // Path to player 2 character storage file
-
+    private static final String p1QuestionsPath = "src\\resources\\p1_questions_remaining.txt"; // Path to player 1 character storage file.
+    private static final String p2QuestionsPath = "src\\resources\\p2_questions_remaining.txt"; // Path to player 1 character storage file.
 
     public static void initializeGame() {
         TextFileReader reader = new TextFileReader(statePath);
@@ -19,10 +20,25 @@ public class Initialization {
             initializeCharacters(characterPath);
             writeCharactersToFile(p1Path);
             writeCharactersToFile(p2Path);
-
+            initializeQuestions();
             TextFileWriter writer = new TextFileWriter(statePath);
             writer.writeInitializationState(true);
         }
+    }
+
+
+    private static void initializeQuestions() {
+        // Initialize TextFileReader for questions
+        TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt");
+        questionReader.readFile();
+        ArrayList<String> questions = questionReader.getQuestions();
+
+        // Write questions to player 1 and player 2 files
+        TextFileWriter writerP1 = new TextFileWriter(p1QuestionsPath);
+        writerP1.writeQuestions(questions);
+
+        TextFileWriter writerP2 = new TextFileWriter(p2QuestionsPath);
+        writerP2.writeQuestions(questions);
     }
 
     // Filling the character array with all the character objects
@@ -59,16 +75,21 @@ public class Initialization {
         writer.writeFile(characterStrings);
     }
     public static void resetGame() {
-        TextFileWriter writer = new TextFileWriter(p1Path); // Path to the character data file
+        TextFileWriter writer = new TextFileWriter(p1Path); // Path to player 1's remaining characters file
         writer.clearFile();
-        writer = new TextFileWriter(p2Path); // Path to player 2's character file
+        writer = new TextFileWriter(p2Path); // Path to player 2's remaining characters file
         writer.clearFile();
-        writer = new TextFileWriter(p2ChoicePath); // Path to player 2's character file
+        writer = new TextFileWriter(p2ChoicePath); // Path to player 2's character choice file
         writer.clearFile();
-        writer = new TextFileWriter(p1ChoicePath); // Path to player 2's character file
+        writer = new TextFileWriter(p1ChoicePath); // Path to player 1's character choice file
         writer.clearFile();
-        writer = new TextFileWriter(statePath);
+        writer = new TextFileWriter(statePath);  // Path to the state check file
         writer.clearFile();
+        writer = new TextFileWriter(p1QuestionsPath);  // Path to player 1's questions file
+        writer.clearFile();
+        writer = new TextFileWriter(p2QuestionsPath); // Path to player 2's questions file
+        writer.clearFile();
+
     }
 
 }
