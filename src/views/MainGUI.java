@@ -46,6 +46,7 @@ public class MainGUI extends JFrame 	{
 	private static JPanel gamePanel = new JPanel();
 	private static JPanel enemyPanel = new JPanel();
 	private static JButton[] characterButtons = new JButton[24]; //Use 1D Array as the data is 1d and easier to switch between 
+	//JComboBox<String> questionList = new JComboBox<>();
 	
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
 	private static TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
@@ -397,6 +398,7 @@ public class MainGUI extends JFrame 	{
 		gamePanel.add(questionPanel);
 		
 		JComboBox<String> questionList = new JComboBox<>(data);
+		questionList.setSelectedItem(data);
 		questionList.setBounds(10, 11, 820, 80);
 		questionList.setFont(new Font("STXihei", Font.PLAIN, 32));
 		questionPanel.add(questionList);
@@ -555,10 +557,15 @@ public class MainGUI extends JFrame 	{
 	static class charactersButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JButton clickedButton = (JButton) e.getSource();
-
 			clickedButton.getText();
 			System.out.println(clickedButton.getText());
 
+		}
+	}
+
+	static class confirmButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 	}
 }
