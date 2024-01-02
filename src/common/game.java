@@ -87,4 +87,12 @@ public class game {
         QuestionHandler.setQuestionAsked(arrayQuestion);
         QuestionHandler.handleQuestions();
     }
+
+    // Passthrough methods to Initialization.java methods.
+    public static void restartGame(){
+        Initialization.resetGame();
+    }
+    public static void initializeGame(){
+        Initialization.initializeGame();
+    }
 }

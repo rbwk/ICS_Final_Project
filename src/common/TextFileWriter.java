@@ -29,4 +29,10 @@ public class TextFileWriter {
             e.printStackTrace();
         }
     }
+    public void clearFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

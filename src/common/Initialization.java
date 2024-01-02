@@ -8,6 +8,9 @@ public class Initialization {
     private static final String characterPath = "src\\resources\\data.txt"; // Path to the base character attribute txt file.
     private static final String p1Path = "src\\resources\\p1_characters_remaining.txt"; // Path to player 1 character storage file.
     private static final String p2Path = "src\\resources\\p2_characters_remaining.txt"; // Path to player 2 character storage file
+    private static final String p2ChoicePath = "src\\resources\\p2choice.txt"; // Path to player 2 character storage file
+    private static final String p1ChoicePath = "src\\resources\\p1choice.txt"; // Path to player 2 character storage file
+
 
     public static void initializeGame() {
         TextFileReader reader = new TextFileReader(statePath);
@@ -54,6 +57,18 @@ public class Initialization {
         }
 
         writer.writeFile(characterStrings);
+    }
+    public static void resetGame() {
+        TextFileWriter writer = new TextFileWriter(p1Path); // Path to the character data file
+        writer.clearFile();
+        writer = new TextFileWriter(p2Path); // Path to player 2's character file
+        writer.clearFile();
+        writer = new TextFileWriter(p2ChoicePath); // Path to player 2's character file
+        writer.clearFile();
+        writer = new TextFileWriter(p1ChoicePath); // Path to player 2's character file
+        writer.clearFile();
+        writer = new TextFileWriter(statePath);
+        writer.clearFile();
     }
 
 }
