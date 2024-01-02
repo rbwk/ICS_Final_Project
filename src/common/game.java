@@ -80,7 +80,7 @@ public class game {
             path = "src\\resources\\p1choice.txt";
         }
         characterStore(path);
-        boolean result = ValidateQuestion.checkQuestion(question, value);
+        boolean result = QuestionHandler.checkQuestion(question, value);
         String Stresult = String.valueOf(result);
         String Strplayer = String.valueOf(player);
         String[] arrayQuestion = { question, Strplayer, Stresult };
