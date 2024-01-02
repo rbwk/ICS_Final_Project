@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
@@ -39,6 +41,7 @@ public class MainGUI extends JFrame {
 	private static JPanel questionPanel = new JPanel();
 	private static JPanel scorePanel = new JPanel();
 	private static JPanel gamePanel = new JPanel();
+	private static JPanel enemyPanel = new JPanel();
 	private static JButton[] characterButtons = new JButton[24]; //Use 1D Array as the data is 1d and easier to switch between 
 	
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
@@ -337,12 +340,38 @@ public class MainGUI extends JFrame {
 			num++;
 			
 		}	}
+
+		/////////////////////////////////// Score Screen ///////////////////////////////////
 		
 		scorePanel.setBackground(Color.ORANGE);
 		scorePanel.setBounds(1000, 0, 440, 900);
 		scorePanel.setLayout(null);
 		scorePanel.setVisible(true);
 		gamePanel.add(scorePanel);
+
+		JLabel titleScore = new JLabel("SCORE");
+		titleScore.setFont(new Font("STXihei", Font.PLAIN, 52));
+		titleScore.setBounds(130, 50, 200, 50);
+		scorePanel.add(titleScore);
+
+		JLabel actualScore = new JLabel("12345");
+		actualScore.setFont(new Font("STXihei", Font.PLAIN, 52));
+		actualScore.setBounds(90,120,250,70);
+		Border blackline = BorderFactory.createLineBorder(Color.black);
+		actualScore.setBorder(blackline);
+		actualScore.setHorizontalAlignment(SwingConstants.CENTER);
+		scorePanel.add(actualScore);
+
+		JLabel player_character = new JLabel("Your Character");
+		player_character.setHorizontalAlignment(SwingConstants.CENTER);
+		player_character.setBounds(65,220,300,400);
+		player_character.setBorder(blackline);
+		scorePanel.add(player_character);
+
+		enemyPanel.setBackground(Color.RED);
+		enemyPanel.setBounds(45,650,340,220);
+		scorePanel.add(enemyPanel);
+
 		
 		questionPanel.setBackground(Color.MAGENTA);
 		questionPanel.setBounds(0, 600, 1000, 300);
@@ -452,6 +481,12 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
 			gamePanel.setVisible(true);
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
+			characterButtons[21].setVisible(true);
+			characterButtons[22].setVisible(true);
+			characterButtons[23].setVisible(true);
 
 		}
 	}
@@ -460,6 +495,12 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
 			gamePanel.setVisible(true);
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
+			characterButtons[21].setVisible(true);
+			characterButtons[22].setVisible(true);
+			characterButtons[23].setVisible(true);
 		}
 	}
 
