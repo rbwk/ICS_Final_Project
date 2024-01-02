@@ -120,6 +120,52 @@ public class TextFileReader {
                     line = reader.readLine();
                     piercings.add(Boolean.parseBoolean(line));
                 }
+                else if (filePath == "src\\resources\\p2choice.txt") {
+                    name.add(line);
+                    line = reader.readLine();
+                    gender.add(line);
+                    line = reader.readLine();
+                    eye_color.add(line);
+                    line = reader.readLine();
+                    skin_tone.add(line);
+                    line = reader.readLine();
+                    hair_color.add(line);
+                    line = reader.readLine();
+                    facial_hair.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    glasses.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    showing_teeth.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    wearing_hat.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    hair_length.add(line);
+                    line = reader.readLine();
+                    piercings.add(Boolean.parseBoolean(line));
+                }
+                else if (filePath == "src\\resources\\p1choice.txt") {
+                    name.add(line);
+                    line = reader.readLine();
+                    gender.add(line);
+                    line = reader.readLine();
+                    eye_color.add(line);
+                    line = reader.readLine();
+                    skin_tone.add(line);
+                    line = reader.readLine();
+                    hair_color.add(line);
+                    line = reader.readLine();
+                    facial_hair.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    glasses.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    showing_teeth.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    wearing_hat.add(Boolean.parseBoolean(line));
+                    line = reader.readLine();
+                    hair_length.add(line);
+                    line = reader.readLine();
+                    piercings.add(Boolean.parseBoolean(line));
+                }
 
             }
         } catch (IOException e) {
@@ -179,7 +225,7 @@ public class TextFileReader {
             String line = reader.readLine();
             return line != null && Boolean.parseBoolean(line);
         } catch (IOException e) {
-            return false; // Default to false if an error occurs
+            return false; // Default to false if file was empty
         }
     }
 }
