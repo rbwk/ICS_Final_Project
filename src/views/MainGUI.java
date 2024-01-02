@@ -49,7 +49,7 @@ public class MainGUI extends JFrame {
 	private static TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
 	private static ArrayList<String> Characters = new ArrayList<String>(); //Testing Purposes only
 	private static ArrayList<String> Questions = new ArrayList<String>(); //Testing Purposes only
-	private static String[] data;
+	private static String[] data; //Testing Purposes only
 	
 
 	/**
@@ -85,7 +85,7 @@ public class MainGUI extends JFrame {
 
 		Characters = characterReader.getname();  //Testing Purposes only
 		Questions = questionReader.getQuestions(); //Testing Purposes only
-		data = Questions.toArray(new String[Questions.size()]);
+		data = Questions.toArray(new String[Questions.size()]); //Testing Purposes only
 		
 		initComponents();
 		createEvents();
