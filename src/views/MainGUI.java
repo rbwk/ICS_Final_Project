@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -350,6 +351,7 @@ public class MainGUI extends JFrame 	{
 			int xlocation = 15+(y)*170;
 			characterButtons[num].setBounds(xlocation,ylocation,120,170);
 			characterButtons[num].setHorizontalAlignment(SwingConstants.CENTER);
+			characterButtons[num].addActionListener(new charactersButton());
 			charactersPanel.add(characterButtons[num]);
 			num++;
 			
@@ -547,6 +549,16 @@ public class MainGUI extends JFrame 	{
 			gamePanel.setVisible(false);
 			mainPanel.setVisible(true);
 			Initialization.resetGame();
+		}
+	}
+
+	static class charactersButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			JButton clickedButton = (JButton) e.getSource();
+
+			clickedButton.getText();
+			System.out.println(clickedButton.getText());
+
 		}
 	}
 }
