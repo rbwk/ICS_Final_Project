@@ -123,15 +123,15 @@ public class GameCharacter {
     public String toFileString() {
         return name + "\n" + 
                gender + "\n" + 
-               skin_tone + "\n" + 
                eye_color + "\n" + 
+               skin_tone + "\n" + 
                hair_color + "\n" + 
+               String.valueOf(facial_hair) + "\n" + 
+               String.valueOf(glasses) + "\n" + 
                String.valueOf(showing_teeth) + "\n" + 
                String.valueOf(wearing_hat) + "\n" + 
-               String.valueOf(facial_hair) + "\n" + 
-               String.valueOf(piercings) + "\n" + 
-               String.valueOf(glasses) + "\n" + 
-               hair_length;
+               hair_length + "\n" + 
+               String.valueOf(piercings);
     }
 
 }

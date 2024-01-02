@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class QuestionHandling {
 	//protected static int diff; // Difficulty level (CURRENTLY UNUSED)
     //protected static ArrayList<String> questions; // List of questions (CURRENTLY UNUSED)
-    protected static ArrayList<GameCharacter> characters; // Players list of remaining characters.
+    private static ArrayList<GameCharacter> characters; // Players list of remaining characters.
     protected static String[] questionAsked = new String[3]; // The array housing the question and the player asking, passed into this class.
     protected static String playerQuestion; // The question storage.
     protected static String playerAsking; // The player who asked the question.
@@ -50,15 +50,15 @@ public class QuestionHandling {
             GameCharacter character = new GameCharacter();
             character.setName(characterReader.getname().get(i));
             character.setGender(characterReader.getgender().get(i));
-            character.setSkinTone(characterReader.getskin_tone().get(i));
             character.setEyeColour(characterReader.geteye_color().get(i));
+            character.setSkinTone(characterReader.getskin_tone().get(i));
             character.setHairColour(characterReader.gethair_color().get(i));
-            character.setHairLength(characterReader.gethair_length().get(i));
+            character.setFacialHair(characterReader.getfacial_hair().get(i));
+            character.setGlasses(characterReader.getglasses().get(i));
             character.setShowingTeeth(characterReader.getshowing_teeth().get(i));
             character.setWearingHat(characterReader.getwearing_hat().get(i));
-            character.setFacialHair(characterReader.getfacial_hair().get(i));
+            character.setHairLength(characterReader.gethair_length().get(i));
             character.setPiercings(characterReader.getpiercings().get(i));
-            character.setGlasses(characterReader.getglasses().get(i));
             characters.add(character);
         }
         

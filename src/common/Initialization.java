@@ -31,15 +31,15 @@ public class Initialization {
             GameCharacter character = new GameCharacter();
             character.setName(characterReader.getname().get(i));
             character.setGender(characterReader.getgender().get(i));
-            character.setSkinTone(characterReader.getskin_tone().get(i));
             character.setEyeColour(characterReader.geteye_color().get(i));
+            character.setSkinTone(characterReader.getskin_tone().get(i));
             character.setHairColour(characterReader.gethair_color().get(i));
-            character.setHairLength(characterReader.gethair_length().get(i));
+            character.setFacialHair(characterReader.getfacial_hair().get(i));
+            character.setGlasses(characterReader.getglasses().get(i));
             character.setShowingTeeth(characterReader.getshowing_teeth().get(i));
             character.setWearingHat(characterReader.getwearing_hat().get(i));
-            character.setFacialHair(characterReader.getfacial_hair().get(i));
+            character.setHairLength(characterReader.gethair_length().get(i));
             character.setPiercings(characterReader.getpiercings().get(i));
-            character.setGlasses(characterReader.getglasses().get(i));
             characters.add(character);
         }
     }
