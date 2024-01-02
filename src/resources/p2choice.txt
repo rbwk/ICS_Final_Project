@@ -1,0 +1,11 @@
+Daniel
+male
+green
+light
+ginger
+true
+false
+false
+false
+tied
+false

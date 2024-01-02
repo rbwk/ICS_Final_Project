@@ -24,9 +24,10 @@ import javax.swing.border.Border;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import common.Initialization;
 import common.TextFileReader;
 
-public class MainGUI extends JFrame {
+public class MainGUI extends JFrame 	{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -50,7 +51,6 @@ public class MainGUI extends JFrame {
 	private static ArrayList<String> Characters = new ArrayList<String>(); //Testing Purposes only
 	private static ArrayList<String> Questions = new ArrayList<String>(); //Testing Purposes only
 	private static String[] data; //Testing Purposes only
-	
 
 	/**
 	 * Launch the application.
@@ -421,6 +421,7 @@ public class MainGUI extends JFrame {
 			mainPanel.setVisible(false);
 			difficultyPanel.setVisible(true);
 			exitPanel.setVisible(false);
+			Initialization.initializeGame();
 		}
 	}
 
@@ -545,6 +546,7 @@ public class MainGUI extends JFrame {
 			gameExitPanel.setVisible(false);
 			gamePanel.setVisible(false);
 			mainPanel.setVisible(true);
+			Initialization.resetGame();
 		}
 	}
 }

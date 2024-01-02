@@ -1,0 +1,11 @@
+Eric
+male
+blue
+light
+black
+false
+false
+false
+false
+short
+false

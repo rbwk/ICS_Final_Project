@@ -14,6 +14,7 @@ public class Initialization {
     private static final String p2QuestionsPath = "src\\resources\\p2_questions_remaining.txt"; // Path to player 1 character storage file.
 
     public static void initializeGame() {
+        System.out.println("Initialized"); //For Checking Purposes
         TextFileReader reader = new TextFileReader(statePath);
         if (!reader.readInitializationState()) {
             characters = new ArrayList<>();
