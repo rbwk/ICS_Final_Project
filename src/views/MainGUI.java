@@ -312,7 +312,7 @@ public class MainGUI extends JFrame {
 
 		JButton btnBackGame = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
 		btnBackGame.setContentAreaFilled(false);
-		btnBackGame.setBounds(1250, 20, 100, 100);
+		btnBackGame.setBounds(1320, 20, 100, 100);
 		btnBackGame.addActionListener(new menuGameButton());
 		gamePanel.add(btnBackGame);
 		
@@ -334,7 +334,6 @@ public class MainGUI extends JFrame {
 			characterButtons[num].setBounds(xlocation,ylocation,120,140);
 			characterButtons[num].setHorizontalAlignment(SwingConstants.CENTER);
 			charactersPanel.add(characterButtons[num]);
-			System.out.println(num+" "+"x: "+xlocation+" y:"+ylocation);
 			num++;
 			
 		}	}
@@ -368,6 +367,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			mainPanel.setVisible(false);
 			difficultyPanel.setVisible(true);
+			exitPanel.setVisible(false);
 		}
 	}
 
