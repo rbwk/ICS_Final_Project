@@ -1,6 +1,7 @@
 package common;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class game {
 
@@ -95,5 +96,35 @@ public class game {
     }
     public static void initializeGame(){
         Initialization.initializeGame();
+    }
+
+    /**
+     * Method to handle enemy players character guess, thus determining endgame and who wins.
+     * 
+     * @param guess
+     * @param asked
+     * @return // Returns True/False value
+     */
+    public static boolean endGame(String guess, int asked){
+        String path = new String();
+
+        if(asked == 1){
+            path = "src\\resources\\p2choice.txt";
+        }
+        if(asked == 2) {
+            path = "src\\resources\\p1choice.txt";
+        }
+        characterStore(path);
+        Iterator<GameCharacter> iterator = characters.iterator();
+        GameCharacter character = iterator.next();
+        if (character.getName().equals(guess)) {
+
+            return true;
+        } else {     
+
+            return false;
+
+        }
+
     }
 }
