@@ -50,7 +50,8 @@ public class MainGUI extends JFrame 	{
 	private static JComboBox<String> questionList = new JComboBox<>();
 	
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
-	private static TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
+	//private static TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
+	private static TextFileReader p1_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt"); 
 	private static ArrayList<String> Characters = new ArrayList<String>(); //Testing Purposes only
 	private static ArrayList<String> Questions = new ArrayList<String>(); //Testing Purposes only
 	private static String[] data; //Testing Purposes only
@@ -84,11 +85,10 @@ public class MainGUI extends JFrame 	{
 	public MainGUI() throws IOException {
 
 		characterReader.readFile();  //Testing Purposes only
-		questionReader.readFile(); //Testing Purposes only
+		p1_questions.readFile(); //Testing Purposes only
 
 		Characters = characterReader.getname();  //Testing Purposes only
-		Questions = questionReader.getQuestions(); //Testing Purposes only
-		data = Questions.toArray(new String[Questions.size()]); //Testing Purposes only
+		Questions = p1_questions.getQuestions();
 		
 		initComponents();
 		createEvents();
@@ -398,10 +398,11 @@ public class MainGUI extends JFrame 	{
 		questionPanel.setVisible(true);
 		gamePanel.add(questionPanel);
 		
-		for(int i = 0; i < data.length; i++) {questionList.addItem(data[i]);}
+
 		questionList.setBounds(10, 11, 820, 80);
 		questionList.setFont(new Font("STXihei", Font.PLAIN, 32));
 		questionList.getSelectedItem();
+		questionList.removeAllItems();
 		questionPanel.add(questionList);
 
 		JButton btnConfirm = new JButton("Confirm");
@@ -428,6 +429,10 @@ public class MainGUI extends JFrame 	{
 			difficultyPanel.setVisible(true);
 			exitPanel.setVisible(false);
 			Initialization.initializeGame();
+			p1_questions.readFile();
+			Questions = p1_questions.getQuestions(); //Testing Purposes only
+			data = Questions.toArray(new String[Questions.size()]);
+			for(int i = 0; i < data.length; i++) {questionList.addItem(data[i]);}
 		}
 	}
 
@@ -560,7 +565,6 @@ public class MainGUI extends JFrame 	{
 		public void actionPerformed(ActionEvent e) {
 			JButton clickedButton = (JButton) e.getSource();
 			clickedButton.getText();
-			System.out.println(clickedButton.getText());
 
 		}
 	}
@@ -568,8 +572,14 @@ public class MainGUI extends JFrame 	{
 	static class confirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(questionList.getSelectedItem());
-			//String question = questionList.getSelectedItem();
-			//game.checkAnswer(questionList.getSelectedItem(), 1);
+			String question = questionList.getSelectedItem().toString();
+			game.checkAnswer(question, 1);
+			questionList.removeAllItems();
+			TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt"); //Prob change this later if found another solution
+			check_questions.readFile();
+			Questions = check_questions.getQuestions();
+			data = Questions.toArray(new String[Questions.size()]);
+			for(int i = 0; i < data.length; i++) {questionList.addItem(data[i]);}
 		}
 	}
 }
