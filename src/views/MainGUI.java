@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -39,14 +40,18 @@ public class MainGUI extends JFrame 	{
 	private static JPanel creditsPanel = new JPanel();
 	private static JPanel difficultyPanel = new JPanel();
 	private static JPanel gameExitPanel = new JPanel();
+	private static JPanel playerselectionPanel = new JPanel();
 
 	private static JPanel charactersPanel = new JPanel();
 	private static JPanel questionPanel = new JPanel();
 	private static JPanel scorePanel = new JPanel();
 	private static JPanel gamePanel = new JPanel();
 	private static JPanel enemyPanel = new JPanel();
+	private static JButton[] selectionCharacterButtons = new JButton[24];
 	private static JButton[] characterButtons = new JButton[24]; //Use 1D Array as the data is 1d and easier to switch between 
 	private static JComboBox<String> questionList = new JComboBox<>();
+	private static String fileName;
+	private static JLabel player_character = new JLabel();
 	
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); //Testing Purposes only
 	//private static TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
@@ -335,7 +340,6 @@ public class MainGUI extends JFrame 	{
 		btnBackGame.addActionListener(new menuGameButton());
 		gamePanel.add(btnBackGame);
 		
-		charactersPanel.setBackground(Color.PINK);
 		charactersPanel.setBounds(0, 0, 1000, 800);
 		charactersPanel.setLayout(null);
 		charactersPanel.setVisible(true);
@@ -349,7 +353,6 @@ public class MainGUI extends JFrame 	{
 			characterButtons[num] = new JButton();
 			characterButtons[num].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
 			characterButtons[num].setBorderPainted(false);
-			characterButtons[num].setText(name);  //Testing Purposes only
 			int ylocation = 15+(x)*200;
 			int xlocation = 15+(y)*170;
 			characterButtons[num].setBounds(xlocation,ylocation,120,170);
@@ -362,7 +365,6 @@ public class MainGUI extends JFrame 	{
 
 		/////////////////////////////////// Score Screen ///////////////////////////////////
 		
-		scorePanel.setBackground(Color.ORANGE);
 		scorePanel.setBounds(1000, 0, 440, 900);
 		scorePanel.setLayout(null);
 		scorePanel.setVisible(true);
@@ -381,7 +383,7 @@ public class MainGUI extends JFrame 	{
 		actualScore.setHorizontalAlignment(SwingConstants.CENTER);
 		scorePanel.add(actualScore);
 
-		JLabel player_character = new JLabel("Your Character");
+		
 		player_character.setHorizontalAlignment(SwingConstants.CENTER);
 		player_character.setBounds(65,220,300,400);
 		player_character.setBorder(blackline);
@@ -393,7 +395,6 @@ public class MainGUI extends JFrame 	{
 
 		/////////////////////////////////// Question Screen ///////////////////////////////////
 
-		questionPanel.setBackground(Color.MAGENTA);
 		questionPanel.setBounds(0, 800, 1000, 100);
 		questionPanel.setLayout(null);
 		questionPanel.setVisible(true);
@@ -411,13 +412,43 @@ public class MainGUI extends JFrame 	{
 		btnConfirm.setFont(new Font("STXihei", Font.PLAIN, 30));
 		btnConfirm.addActionListener(new confirmButton());
 		questionPanel.add(btnConfirm);
+		
+		/////////////////////////////////// Character Selection Screen ///////////////////////////////////
+
+		
+		playerselectionPanel.setBounds(0, 0, 1980, 1080);
+		layeredPane.add(playerselectionPanel);
+		playerselectionPanel.setLayout(null);
+		playerselectionPanel.setVisible(false);
+
+		JButton btnCharacterConfirm = new JButton("Confirm Character");
+		btnCharacterConfirm.setFont(new Font("STXihei", Font.PLAIN, 30));
+		btnCharacterConfirm.setBounds(500, 800, 400, 100);
+		btnCharacterConfirm.addActionListener(new characterConfirmButton());
+		playerselectionPanel.add(btnCharacterConfirm);
+
+		/////////////////////////////////// Adding Characters ///////////////////////////////////
+		int num1 = 0;
+		for(int x = 0; x < 4; x++) { for(int y = 0; y < 6; y++) {
+			String name = Characters.get(num1);
+			String namepicture = "/resources/characters/"+name+".png";
+			selectionCharacterButtons[num1] = new JButton();
+			selectionCharacterButtons[num1].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+			int ylocation = 15+(x)*200;
+			int xlocation = 140+(y)*200;
+			selectionCharacterButtons[num1].setBounds(xlocation,ylocation,120,170);
+			selectionCharacterButtons[num1].setHorizontalAlignment(SwingConstants.CENTER);
+			selectionCharacterButtons[num1].addActionListener(new charactersButton());
+			selectionCharacterButtons[num1].setHideActionText(true);
+			playerselectionPanel.add(selectionCharacterButtons[num1]);
+			num1++;
+		}	}
+
 
 		
 		
 		
-		
-		
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{exitPanel, contentPane, layeredPane, btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit, btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMid, btnHard, btnBackDifficulty, questionList}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{exitPanel, contentPane, layeredPane, btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit, btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMid, btnHard, btnBackDifficulty, questionList, playerselectionPanel}));
 	}
 
 	private void createEvents() {
@@ -517,7 +548,8 @@ public class MainGUI extends JFrame 	{
 	static class PVPButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
-			gamePanel.setVisible(true);
+			playerselectionPanel.setVisible(true);
+			//gamePanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
@@ -528,7 +560,8 @@ public class MainGUI extends JFrame 	{
 	static class PVCButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
-			gamePanel.setVisible(true);
+			playerselectionPanel.setVisible(true);
+			//gamePanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
@@ -565,8 +598,21 @@ public class MainGUI extends JFrame 	{
 	static class charactersButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JButton clickedButton = (JButton) e.getSource();
-			clickedButton.getText();
+			String FilePath = clickedButton.getIcon().toString();
+			File file = new File(FilePath);
+			fileName = file.getName();
+			int index = fileName.lastIndexOf(".png");
+			fileName = fileName.substring(0, index); //The actual name of the character
+		}
+	}
 
+	static class characterConfirmButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			System.out.println(fileName);
+			playerselectionPanel.setVisible(false);
+			gamePanel.setVisible(true);
+			String namepicture = "/resources/characters/"+fileName+".png";
+			player_character.setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
 		}
 	}
 
