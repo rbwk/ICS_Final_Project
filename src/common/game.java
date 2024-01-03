@@ -3,9 +3,13 @@ package common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import AI.MainAI;
+
 public class game {
 
     private static ArrayList<GameCharacter> characters; // Character array.
+    private static MainAI aiPlayer; // AI player instance
+
     public static void main(String[] args){
         characterChoice(1,"Eric");
         characterChoice(2,"Daniel");
@@ -98,6 +102,13 @@ public class game {
         Initialization.initializeGame();
     }
 
+    // Call method in gui code if game is being initialized against AI player, and pass difficulty chosen.
+    public void startAI(int difficulty) {
+        // Initialize the AI if playing against AI
+        aiPlayer = new MainAI(difficulty); 
+
+    }
+
     /**
      * Method to handle enemy players character guess, thus determining endgame and who wins.
      * 
@@ -118,7 +129,9 @@ public class game {
         Iterator<GameCharacter> iterator = characters.iterator();
         GameCharacter character = iterator.next();
         if (character.getName().equals(guess)) {
-
+            if(asked == 2) {
+                updateAICharacters();
+            }
             return true;
         } else {     
 
@@ -127,4 +140,35 @@ public class game {
         }
 
     }
+
+    public static void updateAICharacters() {
+        String aiCharactersFilePath = "src\\resources\\p2_characters_remaining.txt"; // AI characters file
+        TextFileReader characterReader = new TextFileReader(aiCharactersFilePath);
+        characterReader.readFile();
+        ArrayList<GameCharacter> aiRemainingCharacters = new ArrayList<>();
+
+        for (int i = 0; i < characterReader.getname().size(); i++) {
+            GameCharacter character = new GameCharacter();
+            character.setName(characterReader.getname().get(i));
+            character.setGender(characterReader.getgender().get(i));
+            character.setEyeColour(characterReader.geteye_color().get(i));
+            character.setSkinTone(characterReader.getskin_tone().get(i));
+            character.setHairColour(characterReader.gethair_color().get(i));
+            character.setFacialHair(characterReader.getfacial_hair().get(i));
+            character.setGlasses(characterReader.getglasses().get(i));
+            character.setShowingTeeth(characterReader.getshowing_teeth().get(i));
+            character.setWearingHat(characterReader.getwearing_hat().get(i));
+            character.setHairLength(characterReader.gethair_length().get(i));
+            character.setPiercings(characterReader.getpiercings().get(i));
+            aiRemainingCharacters.add(character);
+        }
+
+        aiPlayer.updateRemainingCharacters(aiRemainingCharacters);
+    }
+
+    // So the instance of aiPlayer can be used elsewhere.
+    public static MainAI getAiPlayer() {
+        return aiPlayer;
+    }
+
 }
