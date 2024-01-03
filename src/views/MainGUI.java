@@ -344,18 +344,20 @@ public class MainGUI extends JFrame 	{
 		/////////////////////////////////// Adding Characters ///////////////////////////////////
 		int num = 0;
 		for(int x = 0; x < 4; x++) { for(int y = 0; y < 6; y++) {
-			
+			String name = Characters.get(num);
+			String namepicture = "/resources/characters/"+name+".png";
 			characterButtons[num] = new JButton();
+			characterButtons[num].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
 			characterButtons[num].setBorderPainted(false);
-			characterButtons[num].setText(Characters.get(num));  //Testing Purposes only
+			characterButtons[num].setText(name);  //Testing Purposes only
 			int ylocation = 15+(x)*200;
 			int xlocation = 15+(y)*170;
 			characterButtons[num].setBounds(xlocation,ylocation,120,170);
 			characterButtons[num].setHorizontalAlignment(SwingConstants.CENTER);
 			characterButtons[num].addActionListener(new charactersButton());
+			characterButtons[num].setHideActionText(true);
 			charactersPanel.add(characterButtons[num]);
 			num++;
-			
 		}	}
 
 		/////////////////////////////////// Score Screen ///////////////////////////////////
