@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
@@ -42,6 +43,8 @@ public class MainGUI extends JFrame {
 	private static JPanel difficultyPanel = new JPanel();
 	private static JPanel gameExitPanel = new JPanel();
 	private static JPanel playerselectionPanel = new JPanel();
+	private static JPanel namePanel1 = new JPanel();
+	private static JPanel namePanel2 = new JPanel();
 
 	private static JPanel charactersPanel = new JPanel();
 	private static JPanel questionPanel = new JPanel();
@@ -227,6 +230,52 @@ public class MainGUI extends JFrame {
 		btnPVC.setBounds(300, 500, 600, 150);
 		btnPVC.setContentAreaFilled(false);
 		selectorPanel.add(btnPVC);
+
+		/////////////////////////////////// Get Name
+		/////////////////////////////////// Screen///////////////////////////////////
+		namePanel1.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(namePanel1);
+		namePanel1.setLayout(null);
+		namePanel1.setVisible(false);
+
+		JLabel enterNameLabel1 = new JLabel("Enter Player 1's Name");
+		enterNameLabel1.setBounds(760, 250, 400, 100);
+		enterNameLabel1.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
+		namePanel1.add(enterNameLabel1);
+
+		JTextField nameTextField1 = new JTextField(20);
+		nameTextField1.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		nameTextField1.setBounds(760, 400, 400, 50);
+		namePanel1.add(nameTextField1);
+
+		JButton enterButton1 = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/enter_btn.png")));
+		enterButton1.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		enterButton1.setContentAreaFilled(true);
+		enterButton1.setBounds(810, 600, 300, 100);
+		enterButton1.addActionListener(new enterButton1());
+		namePanel1.add(enterButton1);
+
+		namePanel2.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(namePanel2);
+		namePanel2.setLayout(null);
+		namePanel2.setVisible(false);
+
+		JLabel enterNameLabel2 = new JLabel("Enter Player 2's Name");
+		enterNameLabel2.setBounds(760, 250, 400, 100);
+		enterNameLabel2.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
+		namePanel2.add(enterNameLabel2);
+
+		JTextField nameTextField2 = new JTextField(20);
+		nameTextField2.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		nameTextField2.setBounds(760, 400, 400, 50);
+		namePanel2.add(nameTextField2);
+
+		JButton enterButton2 = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/enter_btn.png")));
+		enterButton2.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		enterButton2.setContentAreaFilled(true);
+		enterButton2.setBounds(810, 600, 300, 100);
+		enterButton2.addActionListener(new enterButton2());
+		namePanel2.add(enterButton2);
 
 		/////////////////////////////////// Leaderboard
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -565,11 +614,12 @@ public class MainGUI extends JFrame {
 	static class PVCButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
-			playerselectionPanel.setVisible(true);
-			// gamePanel.setVisible(true);
-			characterButtons[15].setVisible(true);
-			characterButtons[16].setVisible(true);
-			characterButtons[17].setVisible(true);
+			namePanel1.setVisible(true);
+			// playerselectionPanel.setVisible(true);
+			// // gamePanel.setVisible(true);
+			// characterButtons[15].setVisible(true);
+			// characterButtons[16].setVisible(true);
+			// characterButtons[17].setVisible(true);
 		}
 	}
 
@@ -617,8 +667,6 @@ public class MainGUI extends JFrame {
 			playerselectionPanel.setVisible(false);
 			gamePanel.setVisible(true);
 			String namepicture = "/resources/characters/" + fileName + ".png";
-			// player_character.setIcon(new
-			// ImageIcon(MainGUI.class.getResource(namepicture)));
 			ImageIcon imageIcon = new ImageIcon(MainGUI.class.getResource(namepicture));
 			Image image = imageIcon.getImage();
 			Image newimg = image.getScaledInstance(283, 375, java.awt.Image.SCALE_SMOOTH);
@@ -647,6 +695,24 @@ public class MainGUI extends JFrame {
 			for (int i = 0; i < data.length; i++) {
 				questionList.addItem(data[i]);
 			}
+		}
+	}
+
+	static class enterButton1 implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			namePanel1.setVisible(false);
+			namePanel2.setVisible(true); // if pvc, don't show second name panel screen
+		}
+	}
+
+	static class enterButton2 implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			namePanel2.setVisible(false);
+			playerselectionPanel.setVisible(true);
+			// gamePanel.setVisible(true);
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
 		}
 	}
 }
