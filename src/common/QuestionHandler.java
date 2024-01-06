@@ -321,7 +321,7 @@ public class QuestionHandler {
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("black")) {
-                        iterator.remove();
+                        iterator.remove();  
                     }  
                     if (character.getHairColour().equals("white")) {
                         iterator.remove();

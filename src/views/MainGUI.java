@@ -45,12 +45,26 @@ public class MainGUI extends JFrame {
 	private static JPanel playerselectionPanel = new JPanel();
 	private static JPanel namePanel1 = new JPanel();
 	private static JPanel namePanel2 = new JPanel();
+	private static JPanel player1_nextPanel = new JPanel(); //Panel that shows during player 2 to 1 commision
+	private static JPanel player2_nextPanel = new JPanel(); //Panel that shows during player 1 to 2 commision
+
+	private static boolean pvpMode = false; //Recognizing if player selected PVP or PVE Mode
+	private static String p1_character = null; //Setting the character that Player 1 chose
+	private static String p2_character = null; //Setting the character that Player 2 chose
+	private static boolean p1_ongoing = true; //Variable the set if the player 1 is controlling or player 2
+	private static boolean p2_select = false; //Recognizing if player 2 need to set character that is being guessed by player 1
+	private static String p1_questionAsked = null;
+	private static String p2_questionAsked = null;
+	private static boolean result;
 
 	private static JPanel charactersPanel = new JPanel();
 	private static JPanel questionPanel = new JPanel();
 	private static JPanel scorePanel = new JPanel();
 	private static JPanel gamePanel = new JPanel();
 	private static JPanel enemyPanel = new JPanel();
+	private static JPanel opAskPanel = new JPanel(); //Panel where the opposition askes u the question and u have to answer it 
+	private static JLabel opQuestion = new JLabel();
+	private static JLabel questioning = new JLabel("Are you sure about that?");
 	private static JButton[] selectionCharacterButtons = new JButton[24];
 	private static JButton[] characterButtons = new JButton[24]; // Use 1D Array as the data is 1d and easier to switch
 																	// between
@@ -346,6 +360,45 @@ public class MainGUI extends JFrame {
 		btnBackDifficulty.addActionListener(new BackDifficultyButton());
 		difficultyPanel.add(btnBackDifficulty);
 
+		/////////////////////////////////// Player 1 Select Next ///////////////////////////////////
+
+		player1_nextPanel.setBounds( 0, 0, 1920, 1080);
+		layeredPane.add(player1_nextPanel);
+		player1_nextPanel.setLayout(null);
+		player1_nextPanel.setVisible(false);
+
+		JLabel wait_for_player_1 = new JLabel("Player 1, Please press Confirm to go to the next Screen");
+		player1_nextPanel.add(wait_for_player_1);
+		wait_for_player_1.setBounds( 300, 200, 800, 400);
+		wait_for_player_1.setFont(new Font("STXihei", Font.PLAIN, 30));
+
+		JButton p1_Confirm = new JButton("CONFIRM");
+		p1_Confirm.setBounds( 400, 500, 600, 200);
+		p1_Confirm.setContentAreaFilled(false);
+		p1_Confirm.addActionListener(new player1_intermission());
+		p1_Confirm.setFont(new Font("STXihei", Font.PLAIN, 30));
+		player1_nextPanel.add(p1_Confirm);
+
+		/////////////////////////////////// Player 2 Select Next ///////////////////////////////////
+
+		player2_nextPanel.setBounds( 0, 0, 1920, 1080);
+		layeredPane.add(player2_nextPanel);
+		player2_nextPanel.setLayout(null);
+		player2_nextPanel.setVisible(false);
+
+		JLabel wait_for_player_2 = new JLabel("Player 2, Please press Confirm to go to the next Screen");
+		player2_nextPanel.add(wait_for_player_2);
+		wait_for_player_2.setBounds(300,200,800,400);
+		wait_for_player_2.setFont(new Font("STXihei", Font.PLAIN, 30));
+
+		JButton p2_Confirm = new JButton("CONFIRM");
+		p2_Confirm.setBounds(400,500,600,200);
+		p2_Confirm.setContentAreaFilled(false);
+		p2_Confirm.addActionListener(new player2_intermission());
+		p2_Confirm.setFont(new Font("STXihei", Font.PLAIN, 30));
+		player2_nextPanel.add(p2_Confirm);
+
+
 		/////////////////////////////////// Game Exit Panel
 		/////////////////////////////////// ///////////////////////////////////
 
@@ -372,6 +425,38 @@ public class MainGUI extends JFrame {
 		btnLeaveGame.setBounds(100, 90, 100, 100);
 		btnLeaveGame.setBorderPainted(false);
 		gameExitPanel.add(btnLeaveGame);
+
+		/////////////////////////////////// Question From Other Player ///////////////////////////////////
+
+		opAskPanel.setBackground(Color.LIGHT_GRAY);
+		opAskPanel.setBounds(320, 200, 720, 400);;
+		layeredPane.add(opAskPanel);
+		opAskPanel.setLayout(null);
+		opAskPanel.setVisible(false);
+
+		opQuestion.setBounds(100, 100, 500, 100);
+		opAskPanel.add(opQuestion);
+		opQuestion.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
+
+		JButton yesButton = new JButton("Yep");
+		yesButton.setContentAreaFilled(false);
+		yesButton.setBounds( 100, 200, 100, 100);
+		yesButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 21));
+		yesButton.addActionListener(new opYesButton());
+		opAskPanel.add(yesButton);
+
+		JButton noButton = new JButton("Nope");
+		noButton.setContentAreaFilled(false);
+		noButton.setBounds( 400, 200, 100, 100);
+		noButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 21));
+		noButton.addActionListener(new opNoButton());
+		opAskPanel.add(noButton);
+
+		questioning.setBounds( 100, 300, 500, 100);
+		opAskPanel.add(questioning);
+		questioning.setFont(new Font("Trebuchet MS", Font.PLAIN, 21));
+		questioning.setVisible(false);
+
 
 		/////////////////////////////////// Game
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -463,7 +548,7 @@ public class MainGUI extends JFrame {
 		btnConfirm.addActionListener(new confirmButton());
 		questionPanel.add(btnConfirm);
 
-		/////////////////////////////////// Character Selection Screen
+		/////////////////////////////////// Character Selection Screen [PVC]
 		/////////////////////////////////// ///////////////////////////////////
 
 		playerselectionPanel.setBounds(0, 0, 1980, 1080);
@@ -497,6 +582,7 @@ public class MainGUI extends JFrame {
 			}
 		}
 
+
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { exitPanel, contentPane, layeredPane,
 				btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit,
 				btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMid, btnHard, btnBackDifficulty,
@@ -512,7 +598,8 @@ public class MainGUI extends JFrame {
 			mainPanel.setVisible(false);
 			difficultyPanel.setVisible(true);
 			exitPanel.setVisible(false);
-			Initialization.initializeGame();
+			game.restartGame();
+			game.initializeGame();
 			p1_questions.readFile();
 			Questions = p1_questions.getQuestions(); // Testing Purposes only
 			data = Questions.toArray(new String[Questions.size()]);
@@ -603,16 +690,17 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
 			playerselectionPanel.setVisible(true);
-			// gamePanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
+			pvpMode = true;
 
 		}
 	}
 
 	static class PVCButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			pvpMode = false;
 			selectorPanel.setVisible(false);
 			namePanel1.setVisible(true);
 			// playerselectionPanel.setVisible(true);
@@ -664,38 +752,149 @@ public class MainGUI extends JFrame {
 	static class characterConfirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(fileName);
-			playerselectionPanel.setVisible(false);
+			if(pvpMode){
+				if(p1_ongoing){
+					p1_character = fileName;
+					p1_ongoing = false;
+					player2_nextPanel.setVisible(true);
+					playerselectionPanel.setVisible(false);
+					p2_select = true;
+					game.characterChoice(1, p1_character);
+				}else{
+					p2_character = fileName;
+					p1_ongoing = true;
+					gameSetCharacterScreen();
+					playerselectionPanel.setVisible(false);
+					player1_nextPanel .setVisible(true);
+					game.characterChoice(2, p2_character);
+				}
+			}else{
+				p1_character = fileName;
+				gameSetCharacterScreen();
+				playerselectionPanel.setVisible(false);
+				gamePanel.setVisible(true);	
+			}
+			
+			System.out.println("Player 1 - "+p1_character); //Testing
+			System.out.println("Player 2 - "+p2_character); //Testing
+		}
+	}
+
+	static class confirmButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {                                                                                                                                               
+			String question = questionList.getSelectedItem().toString();
+			questionList.removeAllItems(); 
+			if(p1_ongoing){
+				result = game.checkAnswer(question, 1);
+				p1_questionAsked = question;
+				TextFileReader check_questions = new TextFileReader("src\\resources\\p2_questions_remaining.txt"); 
+				check_questions.readFile();
+				Questions = check_questions.getQuestions();
+				data = Questions.toArray(new String[Questions.size()]);
+				for (int i = 0; i < data.length; i++) {questionList.addItem(data[i]);}
+				player2_nextPanel.setVisible(true);
+				gamePanel.setVisible(false);
+				p1_ongoing = false;
+				gameSetCharacterScreen();
+				System.out.print("Player 1 - "); //Testing
+			}else{
+				result = game.checkAnswer(question, 2);
+				p2_questionAsked = question;
+				TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt"); 
+				check_questions.readFile();
+				Questions = check_questions.getQuestions();
+				data = Questions.toArray(new String[Questions.size()]);
+				for (int i = 0; i < data.length; i++) {questionList.addItem(data[i]);}
+				player1_nextPanel.setVisible(true);
+				gamePanel.setVisible(false);
+				p1_ongoing = true;
+				gameSetCharacterScreen();
+				System.out.print("Player 2 - "); //Testing
+			}
+			opQuestion.setText(question);
+			System.out.println(questionList.getSelectedItem()); //Testing
+			System.out.println(result); //Testing Purposes
+			
+		}
+	}
+
+	static class player1_intermission implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(p2_questionAsked != null){
+				opAskPanel.setVisible(true);
+				opAskingHide(false);
+			}
+			player1_nextPanel.setVisible(false);
 			gamePanel.setVisible(true);
 			String namepicture = "/resources/characters/" + fileName + ".png";
+		}
+	}
+
+	static class player2_intermission implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(p2_select){
+				playerselectionPanel.setVisible(true);
+				player2_nextPanel.setVisible(false);
+				p2_select = false;
+			}else{
+				gamePanel.setVisible(true);
+				opAskPanel.setVisible(true);
+				opAskingHide(false);
+				player2_nextPanel.setVisible(false);
+			}
+		}
+	}
+
+	static class opYesButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(result){
+				opAskPanel.setVisible(false);
+				opAskingHide(true);
+				questioning.setVisible(false);
+			}else{
+				questioning.setVisible(true);
+			}
+		}
+
+	}
+
+	static class opNoButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(!result){
+				opAskPanel.setVisible(false);
+				opAskingHide(true);
+				questioning.setVisible(false);
+			}else{
+				questioning.setVisible(true);
+			}
+		}
+	}
+
+	static void gameSetCharacterScreen(){
+		String namepicture;
+		if(p1_ongoing){
+			namepicture = "/resources/characters/" + p1_character + ".png";
+		}else{
+			namepicture = "/resources/characters/" + p2_character + ".png";
+		}
+			// player_character.setIcon(new
+			// ImageIcon(MainGUI.class.getResource(namepicture)));
 			ImageIcon imageIcon = new ImageIcon(MainGUI.class.getResource(namepicture));
 			Image image = imageIcon.getImage();
 			Image newimg = image.getScaledInstance(283, 375, java.awt.Image.SCALE_SMOOTH);
 			imageIcon = new ImageIcon(newimg);
 			player_character.setIcon(imageIcon);
-		}
 	}
 
-	static class confirmButton implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.out.println(questionList.getSelectedItem());
-			String question = questionList.getSelectedItem().toString();
-			game.checkAnswer(question, 1);
-			questionList.removeAllItems();
-			TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt"); // Prob
-																												// change
-																												// this
-																												// later
-																												// if
-																												// found
-																												// another
-																												// solution
-			check_questions.readFile();
-			Questions = check_questions.getQuestions();
-			data = Questions.toArray(new String[Questions.size()]);
-			for (int i = 0; i < data.length; i++) {
-				questionList.addItem(data[i]);
-			}
-		}
+	static void opAskingHide(boolean nah){
+		characterButtons[8].setVisible(nah);
+		characterButtons[9].setVisible(nah);
+		characterButtons[10].setVisible(nah);
+		characterButtons[11].setVisible(nah);
+		characterButtons[14].setVisible(nah);
+		characterButtons[15].setVisible(nah);
+		characterButtons[16].setVisible(nah);
+		characterButtons[17].setVisible(nah);
 	}
 
 	static class enterButton1 implements ActionListener {

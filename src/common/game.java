@@ -3,17 +3,17 @@ package common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import AI.MainAI;
+//import AI.MainAI;
 
 public class game {
 
     private static ArrayList<GameCharacter> characters; // Character array.
-    private static MainAI aiPlayer; // AI player instance
+ //   private static MainAI aiPlayer; // AI player instance
 
     public static void main(String[] args){
         characterChoice(1,"Eric");
         characterChoice(2,"Daniel");
-        checkAnswer("Does the person have facial hair?",2);
+        checkAnswer("Does the person have facial hair?",2);                            
     }
     private static void characterStore(String path) {
         characters = new ArrayList<>();
@@ -74,7 +74,7 @@ public class game {
      * @param question // The question asked (String format) Eg: "Is the person a male?"
      * @param player // The player who posed the question
      */
-    public static void checkAnswer(String question, int player){
+    public static boolean checkAnswer(String question, int player){
         String path = new String();
         int value = player;
 
@@ -92,6 +92,7 @@ public class game {
         QuestionHandler.setQuestionAsked(arrayQuestion);
         QuestionHandler.handleQuestions();
         QuestionListHandler.updateQuestionsList(question, player, result);
+        return result;
     }
 
     // Passthrough methods to Initialization.java methods.
@@ -105,7 +106,7 @@ public class game {
     // Call method in gui code if game is being initialized against AI player, and pass difficulty chosen.
     public void startAI(int difficulty) {
         // Initialize the AI if playing against AI
-        aiPlayer = new MainAI(difficulty); 
+    //    aiPlayer = new MainAI(difficulty); 
 
     }
 
@@ -163,12 +164,12 @@ public class game {
             aiRemainingCharacters.add(character);
         }
 
-        aiPlayer.updateRemainingCharacters(aiRemainingCharacters);
+       // aiPlayer.updateRemainingCharacters(aiRemainingCharacters);
     }
 
     // So the instance of aiPlayer can be used elsewhere.
-    public static MainAI getAiPlayer() {
-        return aiPlayer;
-    }
+   // public static MainAI getAiPlayer() {
+     //   return aiPlayer;
+  //  }
 
 }
