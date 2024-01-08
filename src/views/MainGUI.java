@@ -603,6 +603,10 @@ public class MainGUI extends JFrame {
 			exitPanel.setVisible(false);
 			game.restartGame();
 			game.initializeGame();
+			p1_character = null;
+			p2_character = null;
+			p1_ongoing = true;
+			p2_select = false;
 			p1_questions.readFile();
 			Questions = p1_questions.getQuestions(); // Testing Purposes only
 			data = Questions.toArray(new String[Questions.size()]);
@@ -855,26 +859,54 @@ public class MainGUI extends JFrame {
 
 	static class opYesButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 			if (result) {
 				opAskPanel.setVisible(false);
 				opAskingHide(true);
 				questioning.setVisible(false);
 			} else {
 				questioning.setVisible(true);
+=======
+			if(pvpMode){//PVP Mode Confirming yes
+				if(result){
+					opAskPanel.setVisible(false);
+					opAskingHide(true);
+					questioning.setVisible(false);
+				}else{
+					questioning.setVisible(true);
+				}
+			}else{//PVE Mode No Confirming 
+
+>>>>>>> 7f740c145b5d45c5a10a63c0bc3c6d28796f6d53
 			}
+			
 		}
 
 	}
 
 	static class opNoButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 			if (!result) {
 				opAskPanel.setVisible(false);
 				opAskingHide(true);
 				questioning.setVisible(false);
 			} else {
 				questioning.setVisible(true);
+=======
+			if(pvpMode){//PVP Mode Confirming yes
+				if(!result){
+					opAskPanel.setVisible(false);
+					opAskingHide(true);
+					questioning.setVisible(false);
+				}else{
+					questioning.setVisible(true);
+				}
+			}else{//PVP Mode No Confirming
+
+>>>>>>> 7f740c145b5d45c5a10a63c0bc3c6d28796f6d53
 			}
+			
 		}
 	}
 
