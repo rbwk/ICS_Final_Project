@@ -862,26 +862,18 @@ public class MainGUI extends JFrame {
 
 	static class opYesButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-			if (result) {
-				opAskPanel.setVisible(false);
-				opAskingHide(true);
-				questioning.setVisible(false);
-			} else {
-				questioning.setVisible(true);
-=======
-			if(pvpMode){//PVP Mode Confirming yes
-				if(result){
+			if(pvpMode){
+				if (result) {
 					opAskPanel.setVisible(false);
 					opAskingHide(true);
 					questioning.setVisible(false);
-				}else{
+				} else {
 					questioning.setVisible(true);
 				}
-			}else{//PVE Mode No Confirming 
-
->>>>>>> 7f740c145b5d45c5a10a63c0bc3c6d28796f6d53
+			}else{
+				
 			}
+			
 			
 		}
 
@@ -889,14 +881,6 @@ public class MainGUI extends JFrame {
 
 	static class opNoButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-			if (!result) {
-				opAskPanel.setVisible(false);
-				opAskingHide(true);
-				questioning.setVisible(false);
-			} else {
-				questioning.setVisible(true);
-=======
 			if(pvpMode){//PVP Mode Confirming yes
 				if(!result){
 					opAskPanel.setVisible(false);
@@ -907,7 +891,6 @@ public class MainGUI extends JFrame {
 				}
 			}else{//PVP Mode No Confirming
 
->>>>>>> 7f740c145b5d45c5a10a63c0bc3c6d28796f6d53
 			}
 			
 		}
