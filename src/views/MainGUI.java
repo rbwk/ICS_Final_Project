@@ -74,6 +74,9 @@ public class MainGUI extends JFrame {
 	private static String fileName;
 	private static JLabel player_character = new JLabel();
 
+	private static JTextField nameTextField1 = new JTextField(20);
+	private static JTextField nameTextField2 = new JTextField(20);
+
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); // Testing Purposes
 																									// only
 	// private static TextFileReader questionReader = new
@@ -259,7 +262,6 @@ public class MainGUI extends JFrame {
 		enterNameLabel1.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
 		namePanel1.add(enterNameLabel1);
 
-		JTextField nameTextField1 = new JTextField(20);
 		nameTextField1.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
 		nameTextField1.setBounds(760, 400, 400, 50);
 		namePanel1.add(nameTextField1);
@@ -281,7 +283,6 @@ public class MainGUI extends JFrame {
 		enterNameLabel2.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
 		namePanel2.add(enterNameLabel2);
 
-		JTextField nameTextField2 = new JTextField(20);
 		nameTextField2.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
 		nameTextField2.setBounds(760, 400, 400, 50);
 		namePanel2.add(nameTextField2);
@@ -599,7 +600,7 @@ public class MainGUI extends JFrame {
 	static class startButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			mainPanel.setVisible(false);
-			difficultyPanel.setVisible(true);
+			selectorPanel.setVisible(true);
 			exitPanel.setVisible(false);
 			game.restartGame();
 			game.initializeGame();
@@ -675,33 +676,39 @@ public class MainGUI extends JFrame {
 	static class EasyButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
-			selectorPanel.setVisible(true);
+			playerselectionPanel.setVisible(true);
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
 		}
 	}
 
 	static class MedButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
-			selectorPanel.setVisible(true);
+			playerselectionPanel.setVisible(true);
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
 		}
 	}
 
 	static class HardButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
-			selectorPanel.setVisible(true);
+			playerselectionPanel.setVisible(true);
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
 		}
 	}
 
 	static class PVPButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
-			// playerselectionPanel.setVisible(true);
-			// characterButtons[15].setVisible(true);
-			// characterButtons[16].setVisible(true);
-			// characterButtons[17].setVisible(true);
 			pvpMode = true;
 			namePanel1.setVisible(true);
+			nameTextField1.setText("");
 
 		}
 	}
@@ -711,11 +718,7 @@ public class MainGUI extends JFrame {
 			pvpMode = false;
 			selectorPanel.setVisible(false);
 			namePanel1.setVisible(true);
-			// playerselectionPanel.setVisible(true);
-			// // gamePanel.setVisible(true);
-			// characterButtons[15].setVisible(true);
-			// characterButtons[16].setVisible(true);
-			// characterButtons[17].setVisible(true);
+			nameTextField1.setText(" ");
 		}
 	}
 
@@ -942,11 +945,10 @@ public class MainGUI extends JFrame {
 			namePanel1.setVisible(false);
 			if (pvpMode) {
 				namePanel2.setVisible(true);
+				nameTextField2.setText(" ");
 			} else {
-				playerselectionPanel.setVisible(true);
-				characterButtons[15].setVisible(true);
-				characterButtons[16].setVisible(true);
-				characterButtons[17].setVisible(true);
+				difficultyPanel.setVisible(true);
+
 			}
 
 		}
@@ -956,7 +958,6 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			namePanel2.setVisible(false);
 			playerselectionPanel.setVisible(true);
-			// gamePanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
