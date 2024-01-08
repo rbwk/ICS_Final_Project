@@ -3,7 +3,7 @@ package common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-//import AI.MainAI;
+import AI.MainAI;
 
 public class game {
 
