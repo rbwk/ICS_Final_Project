@@ -43,8 +43,7 @@ public class MainGUI extends JFrame {
 	private static JPanel difficultyPanel = new JPanel();
 	private static JPanel gameExitPanel = new JPanel();
 	private static JPanel playerselectionPanel = new JPanel();
-	private static JPanel namePanel1 = new JPanel();
-	private static JPanel namePanel2 = new JPanel();
+	private static JPanel namePanel = new JPanel();
 	private static JPanel player1_nextPanel = new JPanel(); // Panel that shows during player 2 to 1 commision
 	private static JPanel player2_nextPanel = new JPanel(); // Panel that shows during player 1 to 2 commision
 
@@ -74,9 +73,8 @@ public class MainGUI extends JFrame {
 	private static String fileName;
 	private static JLabel player_character = new JLabel();
 
-	private static JLabel enterNameLabel1 = new JLabel();
-	private static JTextField nameTextField1 = new JTextField(20);
-	private static JTextField nameTextField2 = new JTextField(20);
+	private static JLabel enterNameLabel = new JLabel();
+	private static JTextField nameTextField = new JTextField(20);
 
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); // Testing Purposes
 																									// only
@@ -253,47 +251,32 @@ public class MainGUI extends JFrame {
 
 		/////////////////////////////////// Get Name
 		/////////////////////////////////// Screen///////////////////////////////////
-		namePanel1.setBounds(0, 0, 1920, 1080);
-		layeredPane.add(namePanel1);
-		namePanel1.setLayout(null);
-		namePanel1.setVisible(false);
+		namePanel.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(namePanel);
+		namePanel.setLayout(null);
+		namePanel.setVisible(false);
 
-		enterNameLabel1.setText("Enter Player 1's Name");
-		enterNameLabel1.setBounds(760, 250, 400, 100);
-		enterNameLabel1.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
-		namePanel1.add(enterNameLabel1);
+		enterNameLabel.setText("Enter Player 1's Name");
+		enterNameLabel.setBounds(760, 250, 400, 100);
+		enterNameLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
+		namePanel.add(enterNameLabel);
 
-		nameTextField1.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
-		nameTextField1.setBounds(760, 400, 400, 50);
-		namePanel1.add(nameTextField1);
+		nameTextField.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		nameTextField.setBounds(760, 400, 400, 50);
+		namePanel.add(nameTextField);
 
-		JButton enterButton1 = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/enter_btn.png")));
-		enterButton1.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
-		enterButton1.setContentAreaFilled(true);
-		enterButton1.setBounds(810, 600, 300, 100);
-		enterButton1.addActionListener(new enterButton1());
-		namePanel1.add(enterButton1);
+		JButton enterButton = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/enter_btn.png")));
+		enterButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
+		enterButton.setContentAreaFilled(true);
+		enterButton.setBounds(810, 600, 300, 100);
+		enterButton.addActionListener(new enterButton());
+		namePanel.add(enterButton);
 
-		namePanel2.setBounds(0, 0, 1920, 1080);
-		layeredPane.add(namePanel2);
-		namePanel2.setLayout(null);
-		namePanel2.setVisible(false);
-
-		JLabel enterNameLabel2 = new JLabel("Enter Player 2's Name");
-		enterNameLabel2.setBounds(760, 250, 400, 100);
-		enterNameLabel2.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
-		namePanel2.add(enterNameLabel2);
-
-		nameTextField2.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
-		nameTextField2.setBounds(760, 400, 400, 50);
-		namePanel2.add(nameTextField2);
-
-		JButton enterButton2 = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/enter_btn.png")));
-		enterButton2.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
-		enterButton2.setContentAreaFilled(true);
-		enterButton2.setBounds(810, 600, 300, 100);
-		enterButton2.addActionListener(new enterButton2());
-		namePanel2.add(enterButton2);
+		JButton btnBackName = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBackName.setContentAreaFilled(false);
+		btnBackName.setBounds(1250, 20, 100, 100);
+		btnBackName.addActionListener(new backNameButton());
+		namePanel.add(btnBackName);
 
 		/////////////////////////////////// Leaderboard
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -636,7 +619,7 @@ public class MainGUI extends JFrame {
 
 	static class backSelectorButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			difficultyPanel.setVisible(true);
+			mainPanel.setVisible(true);
 			selectorPanel.setVisible(false);
 		}
 	}
@@ -657,7 +640,7 @@ public class MainGUI extends JFrame {
 
 	static class BackDifficultyButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			mainPanel.setVisible(true);
+			namePanel.setVisible(true);
 			difficultyPanel.setVisible(false);
 		}
 	}
@@ -708,8 +691,10 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
 			pvpMode = true;
-			namePanel1.setVisible(true);
-			nameTextField1.setText("");
+			playerselectionPanel.setVisible(true);
+			characterButtons[15].setVisible(true);
+			characterButtons[16].setVisible(true);
+			characterButtons[17].setVisible(true);
 
 		}
 	}
@@ -718,9 +703,9 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			pvpMode = false;
 			selectorPanel.setVisible(false);
-			namePanel1.setVisible(true);
-			enterNameLabel1.setText("Enter Your Name:");
-			nameTextField1.setText(" ");
+			namePanel.setVisible(true);
+			enterNameLabel.setText("Enter Your Name:");
+			nameTextField.setText(" ");
 		}
 	}
 
@@ -924,27 +909,20 @@ public class MainGUI extends JFrame {
 		characterButtons[17].setVisible(nah);
 	}
 
-	static class enterButton1 implements ActionListener {
+	static class enterButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			namePanel1.setVisible(false);
-			if (pvpMode) {
-				namePanel2.setVisible(true);
-				nameTextField2.setText(" ");
-			} else {
-				difficultyPanel.setVisible(true);
-
-			}
+			namePanel.setVisible(false);
+			difficultyPanel.setVisible(true);
 
 		}
 	}
 
-	static class enterButton2 implements ActionListener {
+	static class backNameButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			namePanel2.setVisible(false);
-			playerselectionPanel.setVisible(true);
-			characterButtons[15].setVisible(true);
-			characterButtons[16].setVisible(true);
-			characterButtons[17].setVisible(true);
+			namePanel.setVisible(false);
+			selectorPanel.setVisible(true);
+
 		}
 	}
+
 }
