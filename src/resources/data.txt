@@ -141,7 +141,7 @@ false
 false
 tied
 false
-Sofia
+Sophia
 female
 green
 dark
