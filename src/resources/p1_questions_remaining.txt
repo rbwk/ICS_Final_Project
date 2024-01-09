@@ -1,5 +1,5 @@
-Is the person a male?
-Is the person a female?
+<<<<<<< Updated upstream
+=======
 Is the eye colour brown?
 Is the eye colour green?
 Is the eye colour blue?
@@ -19,3 +19,4 @@ Does the person have their hair tied up?
 Does the person have long hair?
 Is the person bald?
 Does the person have an ear piercing?
+>>>>>>> Stashed changes
