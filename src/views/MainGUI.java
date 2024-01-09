@@ -512,7 +512,8 @@ public class MainGUI extends JFrame {
 		player_character.setHorizontalAlignment(SwingConstants.CENTER);
 		player_character.setBounds(65, 220, 300, 400);
 		player_character.setBorder(blackline);
-		player_character.setHorizontalTextPosition(SwingConstants.CENTER);;
+		player_character.setHorizontalTextPosition(SwingConstants.CENTER);
+		;
 		scorePanel.add(player_character);
 
 		enemyPanel.setBackground(Color.RED);
@@ -782,7 +783,7 @@ public class MainGUI extends JFrame {
 			String question = questionList.getSelectedItem().toString();
 			questionList.removeAllItems();
 			if (p1_ongoing) {
-				if(pvpMode){
+				if (pvpMode) {
 					result = game.checkAnswer(question, 1);
 				}
 				p1_questionAsked = question;
@@ -799,10 +800,10 @@ public class MainGUI extends JFrame {
 				gameSetCharacterScreen();
 				System.out.print("Player 1 - "); // Testing
 			} else {
-				if(pvpMode){
+				if (pvpMode) {
 					result = game.checkAnswer(question, 2);
 				}
-				
+
 				p2_questionAsked = question;
 				TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
 				check_questions.readFile();
@@ -860,13 +861,8 @@ public class MainGUI extends JFrame {
 				} else {
 					questioning.setVisible(true);
 				}
-<<<<<<< Updated upstream
-			} else {
+			} else { // No Confirming
 
-=======
-			} else { //No Confirming
-				
->>>>>>> Stashed changes
 			}
 
 		}
@@ -884,21 +880,17 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else {// PVP Mode No Confirming
-<<<<<<< Updated upstream
-
-=======
 				// Return False
->>>>>>> Stashed changes
 			}
 
 		}
 	}
 
 	static void gameSetCharacterScreen() {
-		if(!pvpMode){
+		if (!pvpMode) {
 			player_character.setText("Not Selected");
 			player_character.setFont(new Font("STXihei", Font.PLAIN, 30));
-		}else{
+		} else {
 			String namepicture;
 			if (p1_ongoing) {
 				namepicture = "/resources/characters/" + p1_character + ".png";
@@ -913,7 +905,7 @@ public class MainGUI extends JFrame {
 			imageIcon = new ImageIcon(newimg);
 			player_character.setIcon(imageIcon);
 		}
-		
+
 	}
 
 	static void opAskingHide(boolean nah) {
