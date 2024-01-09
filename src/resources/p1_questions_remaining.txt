@@ -1,0 +1,22 @@
+<<<<<<< Updated upstream
+=======
+Is the eye colour brown?
+Is the eye colour green?
+Is the eye colour blue?
+Does the person have a light skin tone?
+Does the person have a dark skin tone?
+Is the hair colour black?
+Is the hair colour brown?
+Is the hair colour ginger?
+Is the hair colour blonde?
+Is the hair colour white/no hair?
+Does the person have facial hair?
+Is the person wearing glasses?
+Is the person showing their teeth?
+Is the person wearing a hat?
+Does the person have short hair?
+Does the person have their hair tied up?
+Does the person have long hair?
+Is the person bald?
+Does the person have an ear piercing?
+>>>>>>> Stashed changes

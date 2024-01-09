@@ -1,0 +1,11 @@
+Carmen
+female
+brown
+dark
+white
+false
+false
+true
+false
+short
+true

@@ -503,6 +503,7 @@ public class MainGUI extends JFrame {
 		JLabel actualScore = new JLabel("12345");
 		actualScore.setFont(new Font("STXihei", Font.PLAIN, 52));
 		actualScore.setBounds(90, 120, 250, 70);
+
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		actualScore.setBorder(blackline);
 		actualScore.setHorizontalAlignment(SwingConstants.CENTER);
@@ -511,6 +512,7 @@ public class MainGUI extends JFrame {
 		player_character.setHorizontalAlignment(SwingConstants.CENTER);
 		player_character.setBounds(65, 220, 300, 400);
 		player_character.setBorder(blackline);
+		player_character.setHorizontalTextPosition(SwingConstants.CENTER);;
 		scorePanel.add(player_character);
 
 		enemyPanel.setBackground(Color.RED);
@@ -749,7 +751,6 @@ public class MainGUI extends JFrame {
 
 	static class characterConfirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(fileName);
 			if (pvpMode) {
 				if (p1_ongoing) {
 					p1_character = fileName;
@@ -767,8 +768,6 @@ public class MainGUI extends JFrame {
 					game.characterChoice(2, p2_character);
 				}
 			} else {
-				p1_character = fileName;
-				gameSetCharacterScreen();
 				playerselectionPanel.setVisible(false);
 				gamePanel.setVisible(true);
 			}
@@ -783,7 +782,9 @@ public class MainGUI extends JFrame {
 			String question = questionList.getSelectedItem().toString();
 			questionList.removeAllItems();
 			if (p1_ongoing) {
-				result = game.checkAnswer(question, 1);
+				if(pvpMode){
+					result = game.checkAnswer(question, 1);
+				}
 				p1_questionAsked = question;
 				TextFileReader check_questions = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
 				check_questions.readFile();
@@ -798,7 +799,10 @@ public class MainGUI extends JFrame {
 				gameSetCharacterScreen();
 				System.out.print("Player 1 - "); // Testing
 			} else {
-				result = game.checkAnswer(question, 2);
+				if(pvpMode){
+					result = game.checkAnswer(question, 2);
+				}
+				
 				p2_questionAsked = question;
 				TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
 				check_questions.readFile();
@@ -828,7 +832,6 @@ public class MainGUI extends JFrame {
 			}
 			player1_nextPanel.setVisible(false);
 			gamePanel.setVisible(true);
-			String namepicture = "/resources/characters/" + fileName + ".png";
 		}
 	}
 
@@ -857,8 +860,13 @@ public class MainGUI extends JFrame {
 				} else {
 					questioning.setVisible(true);
 				}
+<<<<<<< Updated upstream
 			} else {
 
+=======
+			} else { //No Confirming
+				
+>>>>>>> Stashed changes
 			}
 
 		}
@@ -876,26 +884,36 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else {// PVP Mode No Confirming
+<<<<<<< Updated upstream
 
+=======
+				// Return False
+>>>>>>> Stashed changes
 			}
 
 		}
 	}
 
 	static void gameSetCharacterScreen() {
-		String namepicture;
-		if (p1_ongoing) {
-			namepicture = "/resources/characters/" + p1_character + ".png";
-		} else {
-			namepicture = "/resources/characters/" + p2_character + ".png";
+		if(!pvpMode){
+			player_character.setText("Not Selected");
+			player_character.setFont(new Font("STXihei", Font.PLAIN, 30));
+		}else{
+			String namepicture;
+			if (p1_ongoing) {
+				namepicture = "/resources/characters/" + p1_character + ".png";
+			} else {
+				namepicture = "/resources/characters/" + p2_character + ".png";
+			}
+			// player_character.setIcon(new
+			// ImageIcon(MainGUI.class.getResource(namepicture)));
+			ImageIcon imageIcon = new ImageIcon(MainGUI.class.getResource(namepicture));
+			Image image = imageIcon.getImage();
+			Image newimg = image.getScaledInstance(283, 375, java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			player_character.setIcon(imageIcon);
 		}
-		// player_character.setIcon(new
-		// ImageIcon(MainGUI.class.getResource(namepicture)));
-		ImageIcon imageIcon = new ImageIcon(MainGUI.class.getResource(namepicture));
-		Image image = imageIcon.getImage();
-		Image newimg = image.getScaledInstance(283, 375, java.awt.Image.SCALE_SMOOTH);
-		imageIcon = new ImageIcon(newimg);
-		player_character.setIcon(imageIcon);
+		
 	}
 
 	static void opAskingHide(boolean nah) {
