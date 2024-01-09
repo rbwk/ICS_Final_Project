@@ -74,6 +74,7 @@ public class MainGUI extends JFrame {
 	private static String fileName;
 	private static JLabel player_character = new JLabel();
 
+	private static JLabel enterNameLabel1 = new JLabel();
 	private static JTextField nameTextField1 = new JTextField(20);
 	private static JTextField nameTextField2 = new JTextField(20);
 
@@ -257,7 +258,7 @@ public class MainGUI extends JFrame {
 		namePanel1.setLayout(null);
 		namePanel1.setVisible(false);
 
-		JLabel enterNameLabel1 = new JLabel("Enter Player 1's Name");
+		enterNameLabel1.setText("Enter Player 1's Name");
 		enterNameLabel1.setBounds(760, 250, 400, 100);
 		enterNameLabel1.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
 		namePanel1.add(enterNameLabel1);
@@ -718,6 +719,7 @@ public class MainGUI extends JFrame {
 			pvpMode = false;
 			selectorPanel.setVisible(false);
 			namePanel1.setVisible(true);
+			enterNameLabel1.setText("Enter Your Name:");
 			nameTextField1.setText(" ");
 		}
 	}
@@ -862,7 +864,7 @@ public class MainGUI extends JFrame {
 
 	static class opYesButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(pvpMode){
+			if (pvpMode) {
 				if (result) {
 					opAskPanel.setVisible(false);
 					opAskingHide(true);
@@ -870,29 +872,28 @@ public class MainGUI extends JFrame {
 				} else {
 					questioning.setVisible(true);
 				}
-			}else{
-				
+			} else {
+
 			}
-			
-			
+
 		}
 
 	}
 
 	static class opNoButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(pvpMode){//PVP Mode Confirming yes
-				if(!result){
+			if (pvpMode) {// PVP Mode Confirming yes
+				if (!result) {
 					opAskPanel.setVisible(false);
 					opAskingHide(true);
 					questioning.setVisible(false);
-				}else{
+				} else {
 					questioning.setVisible(true);
 				}
-			}else{//PVP Mode No Confirming
+			} else {// PVP Mode No Confirming
 
 			}
-			
+
 		}
 	}
 
