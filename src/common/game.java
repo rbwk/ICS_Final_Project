@@ -3,7 +3,7 @@ package common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import AI.MainAI;
+// import AI.MainAI;
 
 public class game {
 
@@ -69,7 +69,26 @@ public class game {
     }
 
     /**
+     * Method to take question and result and update the characterlists and questionlists accordingly. 
+     * Uses player result input instead of auto check, for use in AI gamemode.
+     * 
+     * @param question
+     * @param player
+     * @param result
+     */
+    public static void checkAnswerPVC(String question, int player, boolean result){
+        String Stresult = String.valueOf(result);
+        String Strplayer = String.valueOf(player);
+        String[] arrayQuestion = { question, Strplayer, Stresult };
+        QuestionHandler.setQuestionAsked(arrayQuestion);
+        QuestionHandler.handleQuestions();
+        QuestionListHandler.updateQuestionsList(question, player, result);
+    }
+
+    /**
      * Method to take question, obtain result and pass along to the QuestionHandling class for processing.
+     * In player vs AI, still using this method if the player asks a question since logic has AI's chosen character.
+     * Computers the answer and passes it back to the human player.
      * 
      * @param question // The question asked (String format) Eg: "Is the person a male?"
      * @param player // The player who posed the question
