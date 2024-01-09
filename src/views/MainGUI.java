@@ -259,18 +259,18 @@ public class MainGUI extends JFrame {
 		namePanel1.setVisible(false);
 
 		enterNameLabel1.setText("Enter Player 1's Name");
-		enterNameLabel1.setBounds(760, 250, 400, 100);
+		enterNameLabel1.setBounds(500, 250, 400, 100);
 		enterNameLabel1.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
 		namePanel1.add(enterNameLabel1);
 
 		nameTextField1.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
-		nameTextField1.setBounds(760, 400, 400, 50);
+		nameTextField1.setBounds(500, 400, 400, 50);
 		namePanel1.add(nameTextField1);
 
 		JButton enterButton1 = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/enter_btn.png")));
 		enterButton1.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
 		enterButton1.setContentAreaFilled(true);
-		enterButton1.setBounds(810, 600, 300, 100);
+		enterButton1.setBounds(550, 600, 300, 100);
 		enterButton1.addActionListener(new enterButton1());
 		namePanel1.add(enterButton1);
 
@@ -873,7 +873,7 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else {
-
+				//Return True
 			}
 
 		}
@@ -891,7 +891,7 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else {// PVP Mode No Confirming
-
+				//Return False
 			}
 
 		}
