@@ -1,6 +1,7 @@
 /**ICS4U Final Project: Guess Who?
  * Nathan Chu, Victoria Chi, Aryan Alipanahi
  * Jan 12, 2024
+ * 
  */
 package views;
 
