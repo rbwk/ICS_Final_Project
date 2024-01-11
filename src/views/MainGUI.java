@@ -1,10 +1,6 @@
 /**ICS4U Final Project: Guess Who?
  * Nathan Chu, Victoria Chi, Aryan Alipanahi
-<<<<<<< Updated upstream
- * Jan 12, 2023
-=======
  * Jan 12, 2024
->>>>>>> Stashed changes
  */
 package views;
 
@@ -19,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -35,11 +32,18 @@ import javax.swing.border.Border;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import AI.MainAI;
 import common.Initialization;
 import common.TextFileReader;
 import common.game;
+import common.GameCharacter;
 
 public class MainGUI extends JFrame {
+
+	//ublic static MainAI aiPlayer; // AI player instance
+
+	static MainAI aiPlayer = new MainAI(3); //Defauly aiPlayer defaulty
+	private static ArrayList<GameCharacter> characters; 
 
 	// initializing GUI elements
 
@@ -64,7 +68,7 @@ public class MainGUI extends JFrame {
 	private static boolean p1_ongoing = true; // Variable the set if the player 1 is controlling or player 2
 	private static boolean p2_select = false; // Recognizing if player 2 need to set character that is being guessed by
 												// player 1
-	@SuppressWarnings("unused")
+	private static String question = null;
 	private static String p1_questionAsked = null; // question player 1 asks player 2 in a turn
 	private static String p2_questionAsked = null; // question player 2 asks player 1 in a turn
 	private static boolean result;
@@ -73,6 +77,8 @@ public class MainGUI extends JFrame {
 	private static boolean guess2;
 	@SuppressWarnings("unused")
 	private static String playerName;
+
+	
 
 	// panels for game screen
 
@@ -84,6 +90,7 @@ public class MainGUI extends JFrame {
 	private static JPanel opAskPanel = new JPanel(); // Panel where the opposition askes u the question and u have to
 														// answer it
 	private static JLabel opQuestion = new JLabel();
+	private static JLabel actualScore = new JLabel("12345");
 	private static JLabel questioning = new JLabel("Are you sure about that?");
 	private static JButton[] selectionCharacterButtons = new JButton[24];
 	private static JButton[] characterButtons = new JButton[24]; // Use 1D Array as the data is 1d and easier to switch
@@ -553,7 +560,7 @@ public class MainGUI extends JFrame {
 		titleScore.setBounds(130, 50, 200, 50);
 		scorePanel.add(titleScore);
 
-		JLabel actualScore = new JLabel("12345");
+		
 		actualScore.setFont(new Font("STXihei", Font.PLAIN, 52));
 		actualScore.setBounds(90, 120, 250, 70);
 
@@ -771,6 +778,12 @@ public class MainGUI extends JFrame {
 			namePanel.setVisible(true);
 			enterNameLabel.setText("Enter Your Name:");
 			nameTextField.setText(" ");
+
+			Random rand = new Random();
+			int random = rand.nextInt(24);
+			p2_character = Characters.get(random);
+			System.out.println("AI Charcater - "+p2_character);
+
 		}
 	}
 
@@ -847,13 +860,15 @@ public class MainGUI extends JFrame {
 	}
 
 	static class confirmButton implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			String question = questionList.getSelectedItem().toString();
+		public void actionPerformed(ActionEvent e) { 
+			question = questionList.getSelectedItem().toString();
 			if (question.equals("Guess Character")) {
 				if (p1_ongoing) {
 					guess1 = true;
+					
 				} else {
 					guess2 = true;
+					
 				}
 				gamePanel.setVisible(false);
 				playerselectionPanel.setVisible(true);
@@ -862,28 +877,63 @@ public class MainGUI extends JFrame {
 				characterButtons[17].setVisible(true);
 			} else {
 				questionList.removeAllItems();
-				if (p1_ongoing) {
+				if (p1_ongoing) { //Player 1
+					actualScore.setText("Player 1");
 					if (pvpMode) {
 						result = game.checkAnswer(question, 1);
-					}
-					p1_questionAsked = question;
-					TextFileReader check_questions = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
-					check_questions.readFile();
-					Questions = check_questions.getQuestions();
-					data = Questions.toArray(new String[Questions.size()]);
-					for (int i = 0; i < data.length; i++) {
-						questionList.addItem(data[i]);
-					}
-					player2_nextPanel.setVisible(true);
-					gamePanel.setVisible(false);
-					p1_ongoing = false;
-					gameSetCharacterScreen();
-					System.out.print("Player 1 - "); // Testing
-				} else {
-					if (pvpMode) {
-						result = game.checkAnswer(question, 2);
-					}
+						p1_questionAsked = question;
+						TextFileReader check_questions = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
+						check_questions.readFile();
+						Questions = check_questions.getQuestions();
+						data = Questions.toArray(new String[Questions.size()]);
+						for (int i = 0; i < data.length; i++) {
+							questionList.addItem(data[i]);
+						}
+						player2_nextPanel.setVisible(true);
+						gamePanel.setVisible(false);
+						p1_ongoing = false;
+						gameSetCharacterScreen();
+						System.out.print("Player 1 - "); // Testing
+					}else{
+						
+						p1_questionAsked = question;
+						p1_ongoing = false;
+						gameSetCharacterScreen();
 
+						TextFileReader aiCharcaters = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
+						TextFileReader aiQuestion = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
+
+						aiCharcaters.readFile();
+						aiQuestion.readFile();
+						
+						characters = new ArrayList<>();
+						
+						for (int i = 0; i < aiCharcaters.getname().size(); i++) {
+							GameCharacter character = new GameCharacter();
+							character.setName(aiCharcaters.getname().get(i));
+							character.setGender(aiCharcaters.getgender().get(i));
+							character.setEyeColour(aiCharcaters.geteye_color().get(i));
+							character.setSkinTone(aiCharcaters.getskin_tone().get(i));
+							character.setHairColour(aiCharcaters.gethair_color().get(i));
+							character.setFacialHair(aiCharcaters.getfacial_hair().get(i));
+							character.setGlasses(aiCharcaters.getglasses().get(i));
+							character.setShowingTeeth(aiCharcaters.getshowing_teeth().get(i));
+							character.setWearingHat(aiCharcaters.getwearing_hat().get(i));
+							character.setHairLength(aiCharcaters.gethair_length().get(i));
+							character.setPiercings(aiCharcaters.getpiercings().get(i));
+							characters.add(character);
+						}
+
+						aiPlayer.updateGameState(characters,aiQuestion.getQuestions());
+						question = aiPlayer.selectQuestion();
+						opAskPanel.setVisible(true);
+						opAskingHide(false);
+
+					}
+					
+				} else { //Player 2
+					actualScore.setText("Player 2");
+					result = game.checkAnswer(question, 2);
 					p2_questionAsked = question;
 					TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
 					check_questions.readFile();
@@ -897,6 +947,8 @@ public class MainGUI extends JFrame {
 					p1_ongoing = true;
 					gameSetCharacterScreen();
 					System.out.print("Player 2 - "); // Testing
+
+					
 				}
 				opQuestion.setText(question);
 				System.out.println(questionList.getSelectedItem()); // Testing
@@ -943,7 +995,17 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else { // No Confirming
-				// True
+				game.checkAnswerPVC(p1_questionAsked, 1, true);
+				opAskPanel.setVisible(false);
+				opAskingHide(true);
+				p2_questionAsked = question;
+				TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
+				check_questions.readFile();
+				Questions = check_questions.getQuestions();
+				data = Questions.toArray(new String[Questions.size()]);
+				for (int i = 0; i < data.length; i++) {
+					questionList.addItem(data[i]);
+				}
 			}
 
 		}
@@ -961,7 +1023,17 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else {// PVP Mode No Confirming
-				// False
+				game.checkAnswerPVC(p1_questionAsked, 1, false);
+				opAskPanel.setVisible(false);
+				opAskingHide(true);
+				p2_questionAsked = question;
+				TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
+				check_questions.readFile();
+				Questions = check_questions.getQuestions();
+				data = Questions.toArray(new String[Questions.size()]);
+				for (int i = 0; i < data.length; i++) {
+					questionList.addItem(data[i]);
+				}
 			}
 
 		}
@@ -1007,7 +1079,7 @@ public class MainGUI extends JFrame {
 			namePanel.setVisible(false);
 			difficultyPanel.setVisible(true);
 			playerName = enterNameLabel.getText();
-		}
+ 		}
 	}
 
 	static class backNameButton implements ActionListener {
