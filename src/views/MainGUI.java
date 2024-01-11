@@ -782,7 +782,7 @@ public class MainGUI extends JFrame {
 			Random rand = new Random();
 			int random = rand.nextInt(24);
 			p2_character = Characters.get(random);
-			System.out.println("AI Charcater - " + p2_character);
+			System.out.println("AI Character - " + p2_character);
 
 		}
 	}
@@ -894,11 +894,16 @@ public class MainGUI extends JFrame {
 						p1_ongoing = false;
 						gameSetCharacterScreen();
 						System.out.print("Player 1 - "); // Testing
-					} else {
+					} else { //PVC Mode thing
 
 						p1_questionAsked = question;
 						p1_ongoing = true;
 						gameSetCharacterScreen();
+
+						result = game.checkAnswer(p1_questionAsked, 1);
+
+						System.out.println("Player Q - "+question);
+						System.out.println("Result - "+result);
 
 						TextFileReader aiCharcaters = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
 						TextFileReader aiQuestion = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
@@ -926,6 +931,9 @@ public class MainGUI extends JFrame {
 
 						aiPlayer.updateGameState(characters, aiQuestion.getQuestions());
 						question = aiPlayer.selectQuestion();
+
+						System.out.println("AI Q - " + question);
+
 						opAskPanel.setVisible(true);
 						opAskingHide(false);
 
@@ -996,8 +1004,7 @@ public class MainGUI extends JFrame {
 			} else { // No Confirming
 				result = true;
 				game.checkAnswerPVC(p1_questionAsked, 1, result);
-				System.out.println("Question - " + question); // Testing
-				System.out.println("result - " + result); // Testing Purposes
+				System.out.println("Result - " + result); // Testing Purposes
 				opAskPanel.setVisible(false);
 				opAskingHide(true);
 				p2_questionAsked = question;
@@ -1028,9 +1035,7 @@ public class MainGUI extends JFrame {
 			} else {// PVP Mode No Confirming
 				result = false;
 				game.checkAnswerPVC(p1_questionAsked, 1, result);
-
-				System.out.println("Question - " + question); // Testing
-				System.out.println("result - " + result); // Testing Purposes
+				System.out.println("Result - " + result); // Testing Purposes
 				opAskPanel.setVisible(false);
 				opAskingHide(true);
 				p2_questionAsked = question;
