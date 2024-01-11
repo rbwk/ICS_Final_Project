@@ -3,8 +3,6 @@ package common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import AI.MainAI;
-
 public class game {
 
     private static ArrayList<GameCharacter> characters; // Character array.
@@ -77,6 +75,7 @@ public class game {
      * @param result
      */
     public static void checkAnswerPVC(String question, int player, boolean result){
+        System.out.println(question);
         String Stresult = String.valueOf(result);
         String Strplayer = String.valueOf(player);
         String[] arrayQuestion = { question, Strplayer, Stresult };
