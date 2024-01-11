@@ -40,10 +40,10 @@ import common.GameCharacter;
 
 public class MainGUI extends JFrame {
 
-	//ublic static MainAI aiPlayer; // AI player instance
+	// ublic static MainAI aiPlayer; // AI player instance
 
-	static MainAI aiPlayer = new MainAI(3); //Defauly aiPlayer defaulty
-	private static ArrayList<GameCharacter> characters; 
+	static MainAI aiPlayer = new MainAI(1); // Defauly aiPlayer defaulty
+	private static ArrayList<GameCharacter> characters;
 
 	// initializing GUI elements
 
@@ -77,8 +77,6 @@ public class MainGUI extends JFrame {
 	private static boolean guess2;
 	@SuppressWarnings("unused")
 	private static String playerName;
-
-	
 
 	// panels for game screen
 
@@ -560,7 +558,6 @@ public class MainGUI extends JFrame {
 		titleScore.setBounds(130, 50, 200, 50);
 		scorePanel.add(titleScore);
 
-		
 		actualScore.setFont(new Font("STXihei", Font.PLAIN, 52));
 		actualScore.setBounds(90, 120, 250, 70);
 
@@ -573,6 +570,7 @@ public class MainGUI extends JFrame {
 		player_character.setBounds(65, 220, 300, 400);
 		player_character.setBorder(blackline);
 		player_character.setHorizontalTextPosition(SwingConstants.CENTER);
+		player_character.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/characters/default.png")));
 		scorePanel.add(player_character);
 
 		// panel that shows how many characters the opponent has left
@@ -667,6 +665,8 @@ public class MainGUI extends JFrame {
 			p1_questions.readFile();
 			Questions = p1_questions.getQuestions(); // Testing Purposes only
 			data = Questions.toArray(new String[Questions.size()]);
+
+			questionList.addItem("Guess Character");
 			for (int i = 0; i < data.length; i++) {
 				questionList.addItem(data[i]);
 			}
@@ -782,7 +782,7 @@ public class MainGUI extends JFrame {
 			Random rand = new Random();
 			int random = rand.nextInt(24);
 			p2_character = Characters.get(random);
-			System.out.println("AI Charcater - "+p2_character);
+			System.out.println("AI Charcater - " + p2_character);
 
 		}
 	}
@@ -850,25 +850,23 @@ public class MainGUI extends JFrame {
 				} else {
 					playerselectionPanel.setVisible(false);
 					gamePanel.setVisible(true);
+					game.characterChoice(2, p2_character);
 				}
-
-				System.out.println("Player 1 - " + p1_character); // Testing
-				System.out.println("Player 2 - " + p2_character); // Testing
 			}
 
 		}
 	}
 
 	static class confirmButton implements ActionListener {
-		public void actionPerformed(ActionEvent e) { 
+		public void actionPerformed(ActionEvent e) {
 			question = questionList.getSelectedItem().toString();
 			if (question.equals("Guess Character")) {
 				if (p1_ongoing) {
 					guess1 = true;
-					
+
 				} else {
 					guess2 = true;
-					
+
 				}
 				gamePanel.setVisible(false);
 				playerselectionPanel.setVisible(true);
@@ -877,15 +875,17 @@ public class MainGUI extends JFrame {
 				characterButtons[17].setVisible(true);
 			} else {
 				questionList.removeAllItems();
-				if (p1_ongoing) { //Player 1
+				if (p1_ongoing) { // Player 1
 					actualScore.setText("Player 1");
 					if (pvpMode) {
 						result = game.checkAnswer(question, 1);
 						p1_questionAsked = question;
-						TextFileReader check_questions = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
+						TextFileReader check_questions = new TextFileReader(
+								"src\\resources\\p2_questions_remaining.txt");
 						check_questions.readFile();
 						Questions = check_questions.getQuestions();
 						data = Questions.toArray(new String[Questions.size()]);
+						questionList.addItem("Guess Character");
 						for (int i = 0; i < data.length; i++) {
 							questionList.addItem(data[i]);
 						}
@@ -894,10 +894,10 @@ public class MainGUI extends JFrame {
 						p1_ongoing = false;
 						gameSetCharacterScreen();
 						System.out.print("Player 1 - "); // Testing
-					}else{
-						
+					} else {
+
 						p1_questionAsked = question;
-						p1_ongoing = false;
+						p1_ongoing = true;
 						gameSetCharacterScreen();
 
 						TextFileReader aiCharcaters = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
@@ -905,9 +905,9 @@ public class MainGUI extends JFrame {
 
 						aiCharcaters.readFile();
 						aiQuestion.readFile();
-						
+
 						characters = new ArrayList<>();
-						
+
 						for (int i = 0; i < aiCharcaters.getname().size(); i++) {
 							GameCharacter character = new GameCharacter();
 							character.setName(aiCharcaters.getname().get(i));
@@ -924,14 +924,14 @@ public class MainGUI extends JFrame {
 							characters.add(character);
 						}
 
-						aiPlayer.updateGameState(characters,aiQuestion.getQuestions());
+						aiPlayer.updateGameState(characters, aiQuestion.getQuestions());
 						question = aiPlayer.selectQuestion();
 						opAskPanel.setVisible(true);
 						opAskingHide(false);
 
 					}
-					
-				} else { //Player 2
+
+				} else { // Player 2
 					actualScore.setText("Player 2");
 					result = game.checkAnswer(question, 2);
 					p2_questionAsked = question;
@@ -939,6 +939,7 @@ public class MainGUI extends JFrame {
 					check_questions.readFile();
 					Questions = check_questions.getQuestions();
 					data = Questions.toArray(new String[Questions.size()]);
+					questionList.addItem("Guess Character");
 					for (int i = 0; i < data.length; i++) {
 						questionList.addItem(data[i]);
 					}
@@ -948,11 +949,9 @@ public class MainGUI extends JFrame {
 					gameSetCharacterScreen();
 					System.out.print("Player 2 - "); // Testing
 
-					
 				}
 				opQuestion.setText(question);
-				System.out.println(questionList.getSelectedItem()); // Testing
-				System.out.println(result); // Testing Purposes
+
 			}
 
 		}
@@ -995,7 +994,10 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else { // No Confirming
-				game.checkAnswerPVC(p1_questionAsked, 1, true);
+				result = true;
+				game.checkAnswerPVC(p1_questionAsked, 1, result);
+				System.out.println("Question - " + question); // Testing
+				System.out.println("result - " + result); // Testing Purposes
 				opAskPanel.setVisible(false);
 				opAskingHide(true);
 				p2_questionAsked = question;
@@ -1003,6 +1005,7 @@ public class MainGUI extends JFrame {
 				check_questions.readFile();
 				Questions = check_questions.getQuestions();
 				data = Questions.toArray(new String[Questions.size()]);
+				questionList.addItem("Guess Character");
 				for (int i = 0; i < data.length; i++) {
 					questionList.addItem(data[i]);
 				}
@@ -1023,7 +1026,11 @@ public class MainGUI extends JFrame {
 					questioning.setVisible(true);
 				}
 			} else {// PVP Mode No Confirming
-				game.checkAnswerPVC(p1_questionAsked, 1, false);
+				result = false;
+				game.checkAnswerPVC(p1_questionAsked, 1, result);
+
+				System.out.println("Question - " + question); // Testing
+				System.out.println("result - " + result); // Testing Purposes
 				opAskPanel.setVisible(false);
 				opAskingHide(true);
 				p2_questionAsked = question;
@@ -1031,6 +1038,7 @@ public class MainGUI extends JFrame {
 				check_questions.readFile();
 				Questions = check_questions.getQuestions();
 				data = Questions.toArray(new String[Questions.size()]);
+				questionList.addItem("Guess Character");
 				for (int i = 0; i < data.length; i++) {
 					questionList.addItem(data[i]);
 				}
@@ -1040,6 +1048,8 @@ public class MainGUI extends JFrame {
 	}
 
 	static void gameSetCharacterScreen() {
+		System.out.println("P1 Q - " + p1_questionAsked);
+		System.out.println("P2 Q - " + p2_questionAsked);
 
 		if (!pvpMode) {
 			player_character.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/characters/default.png")));
@@ -1079,7 +1089,7 @@ public class MainGUI extends JFrame {
 			namePanel.setVisible(false);
 			difficultyPanel.setVisible(true);
 			playerName = enterNameLabel.getText();
- 		}
+		}
 	}
 
 	static class backNameButton implements ActionListener {
