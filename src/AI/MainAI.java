@@ -1,4 +1,4 @@
- package AI;
+package AI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,12 @@ public class MainAI {
     }
 
     public String selectQuestion() {
+
+            // First, check if AI should make a guess
+        String aiGuess = makeGuess();
+        if (aiGuess != null) {
+            return aiGuess; // AI makes a guess instead of asking a question
+        }
         if (difficulty == 1) { // Hard
             return selectStrategicQuestion();
         } else if (difficulty == 2) { // Medium
@@ -39,15 +45,22 @@ public class MainAI {
     }
 
     public String makeGuess() {
-        if (remainingCharacters.size() == 1 || shouldMakeGuess()) {
-            return remainingCharacters.get(0).getName();
+        // Check if the AI should make a guess
+        if (shouldMakeGuess()) {
+            // If there's only one character left, return that character's name
+            if (remainingCharacters.size() == 1) {
+                return remainingCharacters.get(0).getName();
+            }
+    
+            // If there are more characters, but AI decides to guess, pick one randomly or based on some logic
+            int randomIndex = random.nextInt(remainingCharacters.size());
+            return remainingCharacters.get(randomIndex).getName();
         }
+        // No guess is made
         return null;
     }
     
-    private boolean shouldMakeGuess() {
-        return false; // temp
-    }
+    
 
     private String selectRandomQuestion() {
         if (availableQuestions.isEmpty()) {
@@ -56,49 +69,66 @@ public class MainAI {
         int randomIndex = random.nextInt(availableQuestions.size());
         return availableQuestions.get(randomIndex);
     }
-    private String selectBalancedQuestion() {
-        String bestQuestion = null;
-        double bestDifference = Double.MAX_VALUE;
-    
-        for (String question : availableQuestions) {
-            double elimPercentage = calculateEliminationPercentage(question);
-            double difference = Math.abs(0.5 - elimPercentage);
-    
-            if (difference < bestDifference) {
-                bestDifference = difference;
-                bestQuestion = question;
-            }
-        }
-    
-        return bestQuestion;
-    }
-
-    private String selectStrategicQuestion() {
-        String bestQuestion = null;
-        double bestElimination = 0.0;
-    
-        for (String question : availableQuestions) {
-            double elimPercentage = calculateEliminationPercentage(question);
-            if (elimPercentage > bestElimination) {
-                bestElimination = elimPercentage;
-                bestQuestion = question;
-            }
-        }
-    
-        return bestQuestion;
-    }
-
-    private double calculateEliminationPercentage(String question) {
+    public String selectBalancedQuestion() {
         int totalCharacters = remainingCharacters.size();
-        int eliminatedCharacters = 0;
+        double minDifferencePercentage = Double.MAX_VALUE;
+        String bestQuestion = null;
     
-        for (GameCharacter character : remainingCharacters) {
-            if (questionEliminatesCharacter(question, character)) {
-                eliminatedCharacters++;
+        for (String question : availableQuestions) {
+            double yesEliminationCount = calculateEliminationPercentage(question, true);
+            double noEliminationCount = calculateEliminationPercentage(question, false);
+    
+            double yesEliminationPercentage = (double) yesEliminationCount / totalCharacters;
+            double noEliminationPercentage = (double) noEliminationCount / totalCharacters;
+    
+            // Find the question with the smallest percentage difference between yes and no eliminations
+            double balancePercentage = Math.abs(yesEliminationPercentage - noEliminationPercentage);
+            if (balancePercentage < minDifferencePercentage) {
+                minDifferencePercentage = balancePercentage;
+                bestQuestion = question;
             }
         }
     
-        return totalCharacters > 0 ? (double) eliminatedCharacters / totalCharacters : 0;
+        return bestQuestion;
+    }
+    
+    public String selectStrategicQuestion() {
+        int totalCharacters = remainingCharacters.size();
+        double maxGuaranteedEliminationPercentage = 0.0;
+        String bestQuestion = null;
+    
+        for (String question : availableQuestions) {
+            double yesEliminationCount = calculateEliminationPercentage(question, true);
+            double noEliminationCount = calculateEliminationPercentage(question, false);
+    
+            double yesEliminationPercentage = (double) yesEliminationCount / totalCharacters;
+            double noEliminationPercentage = (double) noEliminationCount / totalCharacters;
+    
+            // Choose the question that ensures the highest minimum percentage of eliminations, regardless of the answer
+            double guaranteedEliminationPercentage = Math.min(yesEliminationPercentage, noEliminationPercentage);
+            if (guaranteedEliminationPercentage > maxGuaranteedEliminationPercentage) {
+                maxGuaranteedEliminationPercentage = guaranteedEliminationPercentage;
+                bestQuestion = question;
+                System.out.println(guaranteedEliminationPercentage + " is the guaranteed percentage percentage");
+
+            }
+        }
+        System.out.println(maxGuaranteedEliminationPercentage + " is the final max percentage");
+
+        return bestQuestion;
+    }
+    
+
+
+    private double calculateEliminationPercentage(String question, boolean answer) {
+        int count = 0;
+        for (GameCharacter character : remainingCharacters) {
+            if (questionEliminatesCharacter(question, character) == answer) {
+                count++;
+            }
+        }
+        System.out.println(count + " is the amount of people that would be eliminated");
+        return count;    
     }
     
     private boolean questionEliminatesCharacter(String question, GameCharacter character) {
@@ -154,4 +184,51 @@ public class MainAI {
     public void updateRemainingCharacters(List<GameCharacter> updatedCharacters) {
         this.remainingCharacters = updatedCharacters;
     }
+
+    private boolean shouldMakeGuess() {
+        int totalCharacters = remainingCharacters.size();
+
+        // Define thresholds for guessing based on difficulty
+        int hardThreshold = 3;   // Hard difficulty: Guess when 3 or fewer characters remain
+        int mediumThreshold = 4; // Medium difficulty: Guess when 5 or fewer characters remain
+        int easyThreshold = 4;   // Easy difficulty: Guess randomly when 3 or fewer characters remain
+    
+        // Determine the threshold based on the difficulty level
+        int threshold = 0;
+        switch (difficulty) {
+            case 1: // Hard
+                threshold = hardThreshold;
+                break;
+            case 2: // Medium
+                threshold = mediumThreshold;
+                break;
+            case 3: // Basic AI
+                threshold = easyThreshold;
+                break;
+        }
+    
+        // Make a guess if the number of characters is below the threshold
+        if (totalCharacters <= threshold) {
+            return true;
+        }
+    
+        // For higher difficulties, consider the probability of a correct guess
+        if (difficulty == 1 || difficulty == 2) {
+            double probability = calculateGuessProbability();
+            double confidenceLevel = difficulty == 1 ? 0.75 : 0.6;
+            return probability >= confidenceLevel;
+        }
+    
+        // For Easy and Basic AI, the decision is based solely on the threshold
+        return false;
+    
+    }    
+    
+    private double calculateGuessProbability() {
+        if (remainingCharacters.size() == 1) {
+            return 1.0; // 100% probability
+        }
+        return 1.0 / remainingCharacters.size();
+    }
+            
 }
