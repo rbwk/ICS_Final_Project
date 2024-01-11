@@ -3,12 +3,12 @@ package common;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-// import AI.MainAI;
+import AI.MainAI;
 
 public class game {
 
     private static ArrayList<GameCharacter> characters; // Character array.
- //   private static MainAI aiPlayer; // AI player instance
+    //private static MainAI aiPlayer; // AI player instance
 
     public static void main(String[] args){
         characterChoice(1,"Eric");

@@ -6,10 +6,10 @@ import common.TextFileReader;
 
 public class test {
 
-    private static ArrayList<GameCharacter> characters; 
+    private static ArrayList<GameCharacter> chrs; 
 
     public static void main(String[] args) {
-        characters = new ArrayList<>();
+        chrs = new ArrayList<>();
         TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt");
         characterReader.readFile();
 
@@ -26,7 +26,7 @@ public class test {
             character.setWearingHat(characterReader.getwearing_hat().get(i));
             character.setHairLength(characterReader.gethair_length().get(i));
             character.setPiercings(characterReader.getpiercings().get(i));
-            characters.add(character);
+            chrs.add(character);
         }
 
         ArrayList<String> questions = new ArrayList<>(Arrays.asList(
@@ -57,8 +57,8 @@ public class test {
         // Initialize the AI with a difficulty level (1 for hard, 2 for medium, 3 for easy)
         MainAI ai = new MainAI(1); // Using medium difficulty for this test
 
-        // Update AI's game state with characters and questions
-        ai.updateGameState(characters, questions);
+        // Update AI's game state with chrs and questions
+        ai.updateGameState(chrs, questions);
 
         // Let the AI select a question
         String selectedQuestion = ai.selectQuestion();
