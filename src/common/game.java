@@ -2,7 +2,7 @@ package common;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+//
 public class game {
 
     private static ArrayList<GameCharacter> characters; // Character array.
