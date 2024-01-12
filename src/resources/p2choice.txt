@@ -1,0 +1,11 @@
+Jordan
+male
+brown
+dark
+black
+true
+false
+false
+false
+short
+true
