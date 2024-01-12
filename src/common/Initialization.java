@@ -1,3 +1,8 @@
+/* TextFileReader.java class
+ * By Nathan, Aryan, and Victoria
+ * Last updated: January 6th 2024
+ */
+
 package common;
 
 import java.util.ArrayList;

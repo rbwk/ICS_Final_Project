@@ -1,3 +1,8 @@
+/* MainAI.java class
+ * By Nathan, Aryan, and Victoria
+ * Last updated: January 11th 2024
+ */
+
 package AI;
 
 import java.util.ArrayList;

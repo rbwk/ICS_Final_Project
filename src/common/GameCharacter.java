@@ -1,3 +1,8 @@
+/* GameCharacter.java class
+ * By Nathan, Aryan, and Victoria
+ * Last updated: January 5th 2024
+ */
+
 package common;
 //This is a clone to be used in game.java
 public class GameCharacter {
