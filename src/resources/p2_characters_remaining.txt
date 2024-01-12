@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 Sam
 male
 green
@@ -70,11 +71,20 @@ brown
 dark
 black
 false
+=======
+Daniel
+male
+green
+light
+ginger
+true
+>>>>>>> Stashed changes
 false
 false
 false
 tied
 false
+<<<<<<< Updated upstream
 Sophia
 female
 green
@@ -101,11 +111,18 @@ Farah
 female
 blue
 dark
+=======
+Eric
+male
+blue
+light
+>>>>>>> Stashed changes
 black
 false
 false
 false
 false
+<<<<<<< Updated upstream
 tied
 false
 Laura
@@ -140,4 +157,7 @@ false
 true
 false
 long
+=======
+short
+>>>>>>> Stashed changes
 false

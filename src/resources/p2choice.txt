@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 Jordan
 male
 brown
@@ -7,5 +8,16 @@ true
 false
 false
 false
+=======
+Sophia
+female
+green
+dark
+brown
+false
+false
+true
+false
+>>>>>>> Stashed changes
 short
 true

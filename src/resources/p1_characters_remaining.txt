@@ -9,6 +9,7 @@ false
 true
 short
 false
+<<<<<<< Updated upstream
 Nick
 male
 brown
@@ -130,6 +131,8 @@ false
 false
 tied
 false
+=======
+>>>>>>> Stashed changes
 Sophia
 female
 green
@@ -152,6 +155,7 @@ true
 true
 long
 false
+<<<<<<< Updated upstream
 Emma
 female
 brown
@@ -174,6 +178,8 @@ false
 false
 short
 false
+=======
+>>>>>>> Stashed changes
 Laura
 female
 green
@@ -185,6 +191,7 @@ true
 false
 long
 true
+<<<<<<< Updated upstream
 Carmen
 female
 brown
@@ -207,3 +214,5 @@ true
 false
 long
 false
+=======
+>>>>>>> Stashed changes
