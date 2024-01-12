@@ -1,3 +1,8 @@
+/*TextFileReader.java class
+ * By Nathan, Aryan, and Victoria
+ * Last updated: January 11th 2024
+ */
+
 package common;
 
 import java.io.BufferedReader;
@@ -235,4 +240,22 @@ public class TextFileReader {
             return false; // Default to false if file was empty
         }
     }
+    public static List<List<String>> readLeaderboard(String filePath) {
+        List<List<String>> leaderboardData = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(","); 
+                List<String> rowData = new ArrayList<>();
+                for (String part : parts) {
+                    rowData.add(part.trim());
+                }
+                leaderboardData.add(rowData);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return leaderboardData;
+    }
+
 }

@@ -1,3 +1,10 @@
+/* game.java class
+ * By Nathan, Aryan, and Victoria
+ * Last updated: January 11th 2024
+ * 
+ * Handles all game logic in one class for ease of access and organization.
+ */
+
 package common;
 
 import java.util.ArrayList;
@@ -5,6 +12,7 @@ import java.util.Iterator;
 //
 public class game {
 
+    private static HandleScores handleScores = new HandleScores(); // Assuming one instance for the entire game
     private static ArrayList<GameCharacter> characters; // Character array.
     //private static MainAI aiPlayer; // AI player instance
 
@@ -13,6 +21,7 @@ public class game {
         characterChoice(2,"Daniel");
         checkAnswer("Does the person have facial hair?",2);                            
     }
+    
     private static void characterStore(String path) {
         characters = new ArrayList<>();
         TextFileReader characterReader = new TextFileReader(path);
@@ -34,6 +43,7 @@ public class game {
             characters.add(character);
         }
     }
+
     public static void characterChoice(int player, String choice){
         ArrayList<GameCharacter> selectedCharacter = new ArrayList<>();
         characters = new ArrayList<>();
@@ -111,6 +121,19 @@ public class game {
         QuestionHandler.handleQuestions();
         QuestionListHandler.updateQuestionsList(question, player, result);
         return result;
+    }
+
+    /**
+     * Method to handle updating the leaderboards at the end of a game. 
+     * Passes variables into the handlescores object which automatically makes the changes to the text files directly.
+     * 
+     * @param winnerName // name of the winner
+     * @param questionsAsked // number of questions they asked
+     * @param isWin // flag value (always inputted as true)
+     */
+    public static void updateScores(String winnerName, int questionsAsked, boolean isWin) {
+        // Process game result for score updating
+        handleScores.processGameResult(winnerName, questionsAsked, isWin);
     }
 
     // Passthrough methods to Initialization.java methods.
