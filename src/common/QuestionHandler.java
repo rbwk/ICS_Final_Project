@@ -17,6 +17,9 @@ public class QuestionHandler {
     protected static String playerAsking; // The player who asked the question.
     protected static String result; // Determines if the question asked is true or false
     protected static String CharacterPath; // Path of the players characters remaining, determined by who asked the question.
+    private static ArrayList<GameCharacter> eliminatedCharacters; // List of characters that were eliminated so far.
+    protected static String EliminatedPath; // Path of the players characters remaining, determined by who asked the question.
+
 
     /**
      * Sets the questions asked array to the question and the player asking
@@ -33,17 +36,21 @@ public class QuestionHandler {
     // Fills player characterlists with the new remaining characters after a question has been processed.
     public static void handleQuestions() {
         characters = new ArrayList<>();
+        eliminatedCharacters = new ArrayList<>();
         //questions = new ArrayList<>();
         String playerAsking = questionAsked[1];
         String result = questionAsked[2];
         String playerQuestion = questionAsked[0];
         String CharacterPath = "";
+        String EliminatedPath = "";
 
         if(playerAsking.equals("1")){
             CharacterPath = "src\\resources\\p1_characters_remaining.txt";
+            EliminatedPath = "src\\resources\\p1_characters_removed.txt";
         }
         else if(playerAsking.equals("2")){
             CharacterPath = "src\\resources\\p2_characters_remaining.txt";
+            EliminatedPath = "src\\resources\\p2_characters_removed.txt";
         }
         // Initialize TextFileReader for characters
         TextFileReader characterReader = new TextFileReader(CharacterPath);
@@ -66,6 +73,29 @@ public class QuestionHandler {
             character.setPiercings(characterReader.getpiercings().get(i));
             characters.add(character);
         }
+
+        // Initialize TextFileReader for Eliminared characters
+        TextFileReader ElimReader = new TextFileReader(EliminatedPath);
+        characterReader.readFile();
+
+
+        // Dumping the users GameCharacter objects and add them to the players removed character list
+        for (int i = 0; i < ElimReader.getname().size(); i++) {
+            GameCharacter character = new GameCharacter();
+            character.setName(ElimReader.getname().get(i));
+            character.setGender(ElimReader.getgender().get(i));
+            character.setEyeColour(ElimReader.geteye_color().get(i));
+            character.setSkinTone(ElimReader.getskin_tone().get(i));
+            character.setHairColour(ElimReader.gethair_color().get(i));
+            character.setFacialHair(ElimReader.getfacial_hair().get(i));
+            character.setGlasses(ElimReader.getglasses().get(i));
+            character.setShowingTeeth(ElimReader.getshowing_teeth().get(i));
+            character.setWearingHat(ElimReader.getwearing_hat().get(i));
+            character.setHairLength(ElimReader.gethair_length().get(i));
+            character.setPiercings(ElimReader.getpiercings().get(i));
+            eliminatedCharacters.add(character);
+        }
+
         
 
         // Initialize TextFileReader for questions   (CURRENTLY UNUSED)
@@ -93,21 +123,24 @@ public class QuestionHandler {
                 while (iterator.hasNext()) {
                     GameCharacter character = iterator.next();
                     if (character.getGender().equals("female")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
                 writeCharactersToFile(CharacterPath);
-
+                writeEliminatedCharactersToFile(EliminatedPath);
             }
             if(result.equals("false")){
                 Iterator<GameCharacter> iterator = characters.iterator();
                 while (iterator.hasNext()) {
                     GameCharacter character = iterator.next();
                     if (character.getGender().equals("male")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
                 writeCharactersToFile(CharacterPath);
+                writeEliminatedCharactersToFile(EliminatedPath);
 
             }  
         }  
@@ -119,10 +152,12 @@ public class QuestionHandler {
                 while (iterator.hasNext()) {
                     GameCharacter character = iterator.next();
                     if (character.getGender().equals("male")) {
+                        eliminatedCharacters.add(character);                        
                         iterator.remove();
                     }
                 }
                 writeCharactersToFile(CharacterPath);
+                writeEliminatedCharactersToFile(EliminatedPath);
 
             }
             if(result.equals("false")){
@@ -130,10 +165,12 @@ public class QuestionHandler {
                 while (iterator.hasNext()) {
                     GameCharacter character = iterator.next();
                     if (character.getGender().equals("female")) {
+                        eliminatedCharacters.add(character);                        
                         iterator.remove();
                     }
                 }
                 writeCharactersToFile(CharacterPath);
+                writeEliminatedCharactersToFile(EliminatedPath);
             }   
         } 
         
@@ -145,20 +182,24 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getEyeColour().equals("green")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getEyeColour().equals("blue")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getEyeColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);    
+            writeEliminatedCharactersToFile(EliminatedPath);
         } 
 
         //Fourth Question
@@ -170,20 +211,24 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getEyeColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getEyeColour().equals("blue")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getEyeColour().equals("green")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath); 
+            writeEliminatedCharactersToFile(EliminatedPath);
         } 
 
         //Fifth Question
@@ -194,20 +239,24 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getEyeColour().equals("green")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getEyeColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getEyeColour().equals("blue")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Sixth Question
@@ -218,17 +267,20 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getSkinTone().equals("dark")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getSkinTone().equals("light")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Seventh Question
@@ -239,17 +291,20 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getSkinTone().equals("light")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getSkinTone().equals("dark")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Eighth Question
@@ -260,26 +315,32 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("blonde")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("ginger")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("white")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("black")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
         
         // Ninth Question
@@ -290,26 +351,32 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("black")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("blonde")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("ginger")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("white")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Tenth Question
@@ -320,26 +387,32 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("blonde")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("black")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();  
                     }  
                     if (character.getHairColour().equals("white")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("ginger")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Eleventh Question
@@ -350,26 +423,32 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("blonde")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("ginger")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("black")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("white")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Twelfth Question
@@ -380,26 +459,32 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("brown")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("black")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("ginger")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                     if (character.getHairColour().equals("white")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }  
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairColour().equals("blonde")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Thirteenth Question
@@ -410,12 +495,15 @@ public class QuestionHandler {
                 boolean istrue = character.getFacialHair();
 
                 if (result.equals("true") && !istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 } else if (result.equals("false") && istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Fourteenth Question
@@ -426,12 +514,15 @@ public class QuestionHandler {
                 boolean istrue = character.getGlasses();
 
                 if (result.equals("true") && !istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 } else if (result.equals("false") && istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Fifteenth Question
@@ -442,12 +533,15 @@ public class QuestionHandler {
                 boolean istrue = character.getShowingTeeth();
 
                 if (result.equals("true") && !istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 } else if (result.equals("false") && istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Sixteenth Question
@@ -458,12 +552,15 @@ public class QuestionHandler {
                 boolean istrue = character.getWearingHat();
 
                 if (result.equals("true") && !istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 } else if (result.equals("false") && istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Seventeenth Question
@@ -473,23 +570,28 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("long")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     } 
                     if (character.getHairLength().equals("tied")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getHairLength().equals("bald")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     } 
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("short")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Eighteenth Question
@@ -499,23 +601,28 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("long")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getHairLength().equals("short")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getHairLength().equals("bald")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     } 
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("tied")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Ninteenth Question
@@ -525,23 +632,28 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("tied")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getHairLength().equals("short")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getHairLength().equals("bald")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     } 
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("long")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Twentieth Question
@@ -551,24 +663,29 @@ public class QuestionHandler {
                 if(result.equals("true")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("tied")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
 
                     if (character.getHairLength().equals("short")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                     if (character.getHairLength().equals("long")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     } 
                 }
                 if(result.equals("false")){
                     GameCharacter character = iterator.next();
                     if (character.getHairLength().equals("bald")) {
+                        eliminatedCharacters.add(character);
                         iterator.remove();
                     }
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }
 
         // Twenty First Question
@@ -578,12 +695,15 @@ public class QuestionHandler {
                 GameCharacter character = iterator.next();
                 boolean istrue = character.getPiercings();
                 if (result.equals("true") && !istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 } else if (result.equals("false") && istrue) {
+                    eliminatedCharacters.add(character);
                     iterator.remove();
                 }
             }
             writeCharactersToFile(CharacterPath);
+            writeEliminatedCharactersToFile(EliminatedPath);
         }           
            
     }
@@ -597,6 +717,18 @@ public class QuestionHandler {
 
         writer.writeFile(characterStrings);
     }
+
+        public static void writeEliminatedCharactersToFile(String filePath) {
+        TextFileWriter writer = new TextFileWriter(filePath);
+        ArrayList<String> characterStrings = new ArrayList<>();
+
+        for (GameCharacter character : eliminatedCharacters) {
+            characterStrings.add(character.toFileString());
+        }
+
+        writer.writeFile(characterStrings);
+    }
+
 
     // Checks the question asked by user and returns the true or false statement depending on the result.
     public static boolean checkQuestion(String playerQuestion, int player){
