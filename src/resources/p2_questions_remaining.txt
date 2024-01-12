@@ -1,6 +1,3 @@
-Is the person a male?
-Is the person a female?
-Is the eye colour brown?
 Is the eye colour green?
 Is the eye colour blue?
 Is the hair colour black?

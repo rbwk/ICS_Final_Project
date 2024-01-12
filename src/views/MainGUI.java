@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -67,6 +68,7 @@ public class MainGUI extends JFrame {
 	private static String p2_character = null; // Setting the character that Player 2 chose
 	private static boolean p1_ongoing = true; // Variable the set if the player 1 is controlling or player 2
 	private static boolean p2_select = false; // Recognizing if player 2 need to set character that is being guessed by
+	private static boolean pvc_win = false; //true if character won 
 												// player 1
 	private static String question = null;
 	private static String p1_questionAsked = null; // question player 1 asks player 2 in a turn
@@ -88,6 +90,7 @@ public class MainGUI extends JFrame {
 	private static JPanel opAskPanel = new JPanel(); // Panel where the opposition askes u the question and u have to
 														// answer it
 	private static JLabel opQuestion = new JLabel();
+	private static JLabel resultLabel = new JLabel();
 	private static JLabel actualScore = new JLabel("12345");
 	private static JLabel questioning = new JLabel("Are you sure about that?");
 	private static JButton[] selectionCharacterButtons = new JButton[24];
@@ -528,10 +531,12 @@ public class MainGUI extends JFrame {
 		int num = 0;
 		for (int x = 0; x < 4; x++) { // displaying the characters in a 4x6 grid format
 			for (int y = 0; y < 6; y++) {
-				String name = Characters.get(num);
-				String namepicture = "/resources/characters/" + name + ".png";
+				String name = Characters.get(num); //going through the arraylist of names
+				String namepicture = "/resources/characters/" + name + ".png"; //getting the filepath of the charact
+  //create a button for the charactere //displayman rieht gnisu noci s'r
 				characterButtons[num] = new JButton();
-				characterButtons[num].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+ //the button icon as the player ico				
+ 				characterButtons[num].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
 				characterButtons[num].setBorderPainted(false);
 				int ylocation = 15 + (x) * 200;
 				int xlocation = 15 + (y) * 170;
@@ -617,13 +622,7 @@ public class MainGUI extends JFrame {
 		btnCharacterConfirm.addActionListener(new characterConfirmButton());
 		playerselectionPanel.add(btnCharacterConfirm);
 
-		/////////////////////////////////// Character Selection Screen [PVC]
-		/////////////////////////////////// ///////////////////////////////////
-
-		endGamePanel.setBounds(0, 0, 1980, 1080);
-		layeredPane.add(endGamePanel);
-		endGamePanel.setLayout(null);
-		endGamePanel.setVisible(false);
+		
 
 		/////////////////////////////////// Adding Characters for Selection Screen
 		/////////////////////////////////// ///////////////////////////////////
@@ -644,6 +643,35 @@ public class MainGUI extends JFrame {
 				num1++;
 			}
 		}
+
+		/////////////////////////////////// End Game Screen [Finish Game]
+		/////////////////////////////////// ///////////////////////////////////
+
+		endGamePanel.setBounds(0, 0, 1980, 1080);
+		layeredPane.add(endGamePanel);
+		endGamePanel.setLayout(null);
+		endGamePanel.setVisible(false);
+
+		resultLabel.setBounds( 500, 300, 400, 100); 
+		resultLabel.setFont(new Font("STXihei", Font.PLAIN, 50));
+		endGamePanel.add(resultLabel);
+
+		JButton btnFinishGame = new JButton("Leave Game");
+		btnFinishGame.setFont(new Font("STXihei", Font.PLAIN, 30));
+		btnFinishGame.setBounds(500, 450, 400, 100);
+		btnFinishGame.setHorizontalAlignment(SwingConstants.CENTER);
+		btnFinishGame.setContentAreaFilled(false);
+		btnFinishGame.addActionListener(new finishButton());
+		endGamePanel.add(btnFinishGame);
+
+		JButton btnToLeaderboard = new JButton("Go to Leaderboard");
+		btnToLeaderboard.setFont(new Font("STXihei", Font.PLAIN, 30));
+		btnToLeaderboard.setBounds(500, 600, 400, 100);
+		btnToLeaderboard.setHorizontalAlignment(SwingConstants.CENTER);
+		btnToLeaderboard.setContentAreaFilled(false);
+		btnToLeaderboard.addActionListener(new finishLeaderboardButton());
+		endGamePanel.add(btnToLeaderboard);
+
 
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { exitPanel, contentPane, layeredPane,
 				btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit,
@@ -669,6 +697,20 @@ public class MainGUI extends JFrame {
 			for (int i = 0; i < data.length; i++) {
 				questionList.addItem(data[i]);
 			}
+		}
+	}
+
+	static class finishButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			endGamePanel.setVisible(false);
+			mainPanel.setVisible(true);
+		}
+	}
+
+	static class finishLeaderboardButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			endGamePanel.setVisible(false);
+			leaderboardPanel.setVisible(true);
 		}
 	}
 
@@ -809,6 +851,7 @@ public class MainGUI extends JFrame {
 			gameExitPanel.setVisible(false);
 			gamePanel.setVisible(false);
 			mainPanel.setVisible(true);
+			opAskPanel.setVisible(false);
 			Initialization.resetGame();
 		}
 	}
@@ -903,8 +946,13 @@ public class MainGUI extends JFrame {
 
 						result = game.checkAnswer(p1_questionAsked, 1);
 
+<<<<<<< Updated upstream
 						System.out.println("Player Q - "     + question);
 						System.out.println("Result - "     + result);
+=======
+						System.out.println("Player Q - "+p1_questionAsked);
+						System.out.println("Result - "+result);
+>>>>>>> Stashed changes
 
 						TextFileReader aiCharcaters = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
 						TextFileReader aiQuestion = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
@@ -932,6 +980,9 @@ public class MainGUI extends JFrame {
 
 						aiPlayer.updateGameState(characters, aiQuestion.getQuestions());
 						question = aiPlayer.selectQuestion();
+						
+						
+						p2_questionAsked = question;
 
 						System.out.println("AI Q - " + question);
 
@@ -994,30 +1045,39 @@ public class MainGUI extends JFrame {
 
 	static class opYesButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (pvpMode) {
-				if (result) {
+			if(question.lastIndexOf("?") != -1){
+				if (pvpMode) {
+					if (result) {
+						opAskPanel.setVisible(false);
+						opAskingHide(true);
+						questioning.setVisible(false);
+					} else {
+						questioning.setVisible(true);
+					}
+				} else { // No Confirming
+					result = true;
+					game.checkAnswerPVC(p2_questionAsked, 2, result);
+					System.out.println("Result - " + result); // Testing Purposes
 					opAskPanel.setVisible(false);
 					opAskingHide(true);
-					questioning.setVisible(false);
-				} else {
-					questioning.setVisible(true);
-				}
-			} else { // No Confirming
-				result = true;
-				game.checkAnswerPVC(p1_questionAsked, 1, result);
-				System.out.println("Result - " + result); // Testing Purposes
-				opAskPanel.setVisible(false);
-				opAskingHide(true);
-				p2_questionAsked = question;
-				TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
-				check_questions.readFile();
-				Questions = check_questions.getQuestions();
-				data = Questions.toArray(new String[Questions.size()]);
-				questionList.addItem("Guess Character");
-				for (int i = 0; i < data.length; i++) {
-					questionList.addItem(data[i]);
-				}
+					p2_questionAsked = question;
+					TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
+					check_questions.readFile();
+					Questions = check_questions.getQuestions();
+					data = Questions.toArray(new String[Questions.size()]);
+					questionList.addItem("Guess Character");
+					for (int i = 0; i < data.length; i++) {
+						questionList.addItem(data[i]);
+					}
+				}	
+			}else{
+				endGamePanel.setVisible(true);
+				pvc_win = false;
+				gamePanel.setVisible(false);
+				opAskPanel.setVisible(false); 
+				resultLabel.setText("YOU LOSE!!!");
 			}
+			
 
 		}
 
@@ -1025,31 +1085,40 @@ public class MainGUI extends JFrame {
 
 	static class opNoButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (pvpMode) {// PVP Mode Confirming yes
-				if (!result) {
+			if(question.lastIndexOf("?") != -1){
+				if (pvpMode) {// PVP Mode Confirming yes
+					if (!result) {
+						opAskPanel.setVisible(false);
+						opAskingHide(true);
+						questioning.setVisible(false);
+					} else {
+						questioning.setVisible(true);
+					}
+				} else {// PVP Mode No Confirming
+					result = false;
+					game.checkAnswerPVC(p2_questionAsked, 2, result);
+					System.out.println("Result - " + result); // Testing Purposes
 					opAskPanel.setVisible(false);
 					opAskingHide(true);
-					questioning.setVisible(false);
-				} else {
-					questioning.setVisible(true);
+					p2_questionAsked = question;
+					TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
+					check_questions.readFile();
+					Questions = check_questions.getQuestions();
+					data = Questions.toArray(new String[Questions.size()]);
+					questionList.addItem("Guess Character");
+					for (int i = 0; i < data.length; i++) {
+						questionList.addItem(data[i]);
+					}
 				}
-			} else {// PVP Mode No Confirming
-				result = false;
-				game.checkAnswerPVC(p1_questionAsked, 1, result);
-				System.out.println("Result - " + result); // Testing Purposes
-				opAskPanel.setVisible(false);
-				opAskingHide(true);
-				p2_questionAsked = question;
-				TextFileReader check_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
-				check_questions.readFile();
-				Questions = check_questions.getQuestions();
-				data = Questions.toArray(new String[Questions.size()]);
-				questionList.addItem("Guess Character");
-				for (int i = 0; i < data.length; i++) {
-					questionList.addItem(data[i]);
-				}
+			}else{
+				endGamePanel.setVisible(true);
+				pvc_win = true;
+				gamePanel.setVisible(false);
+				opAskPanel.setVisible(false); 
+				resultLabel.setText("You Won!!!");
 			}
 
+			
 		}
 	}
 
@@ -1058,8 +1127,6 @@ public class MainGUI extends JFrame {
 		System.out.println("P2 Q - " + p2_questionAsked);
 
 		if (!pvpMode) {
-			player_character.setIcon(new ImageIcon(MainGUI.class.getResource("/resources/characters/default.png")));
-			// player_character.setText("Not Selected");
 			player_character.setFont(new Font("STXihei", Font.PLAIN, 30));
 		} else {
 			String namepicture;
@@ -1076,7 +1143,6 @@ public class MainGUI extends JFrame {
 			imageIcon = new ImageIcon(newimg);
 			player_character.setIcon(imageIcon);
 		}
-
 	}
 
 	static void opAskingHide(boolean nah) {
@@ -1102,10 +1168,12 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			namePanel.setVisible(false);
 			selectorPanel.setVisible(true);
-
 		}
 	}
+<<<<<<< Updated upstream
 
 
 
+=======
+>>>>>>> Stashed changes
 }
