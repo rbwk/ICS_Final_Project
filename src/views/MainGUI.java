@@ -177,6 +177,24 @@ public class MainGUI extends JFrame {
 		contentPane.add(layeredPane);
 		selectorPanel.setVisible(false);
 
+		/////////////////////////////////// Leaderboard
+		/////////////////////////////////// Screen///////////////////////////////////
+
+		// shows stats on leaderboard
+		leaderboardPanel.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(leaderboardPanel);
+		leaderboardPanel.setLayout(null);
+		leaderboardPanel.setVisible(false);
+
+		// button that goes back to the exit menu
+		JButton btnBackLeaderboard = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBackLeaderboard.setContentAreaFilled(false);
+		btnBackLeaderboard.setBounds(1250, 20, 100, 100);
+		btnBackLeaderboard.addActionListener(new backLeaderboardButton());
+		leaderboardPanel.add(btnBackLeaderboard);
+
+		
+
 		/////////////////////////////////// Exit
 		/////////////////////////////////// Panel///////////////////////////////////
 
@@ -215,6 +233,7 @@ public class MainGUI extends JFrame {
 		btnLeaderboard.setFont(new Font("STXihei", Font.PLAIN, 31));
 		btnLeaderboard.addActionListener(new leaderboardButton());
 		exitPanel.add(btnLeaderboard);
+
 
 		// button that displays the credits
 		JButton btnCredits = new JButton("CREDITS");
@@ -334,21 +353,7 @@ public class MainGUI extends JFrame {
 		btnBackName.addActionListener(new backNameButton());
 		namePanel.add(btnBackName);
 
-		/////////////////////////////////// Leaderboard
-		/////////////////////////////////// Screen///////////////////////////////////
 
-		// shows stats on leaderboard
-		leaderboardPanel.setBounds(0, 0, 1920, 1080);
-		layeredPane.add(leaderboardPanel);
-		leaderboardPanel.setLayout(null);
-		leaderboardPanel.setVisible(false);
-
-		// button that goes back to the exit menu
-		JButton btnBackLeaderboard = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
-		btnBackLeaderboard.setContentAreaFilled(false);
-		btnBackLeaderboard.setBounds(1250, 20, 100, 100);
-		btnBackLeaderboard.addActionListener(new backLeaderboardButton());
-		leaderboardPanel.add(btnBackLeaderboard);
 
 		/////////////////////////////////// Credits
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -735,7 +740,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			endGamePanel.setVisible(false);
 			mainPanel.setVisible(true);
-			game.updateScores(playerName, amountCount, pvc_win);
+			game.updateScores(enterNameLabel.getText(), amountCount, pvc_win);
 			game.restartGame();
 		}
 	}
@@ -744,7 +749,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			endGamePanel.setVisible(false);
 			leaderboardPanel.setVisible(true);
-			game.updateScores(playerName, amountCount, pvc_win);
+			game.updateScores(enterNameLabel.getText(), amountCount, pvc_win);
 			game.restartGame();
 		}
 	}
