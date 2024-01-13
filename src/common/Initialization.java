@@ -110,8 +110,6 @@ public class Initialization {
         writer.clearFile();
         writer = new TextFileWriter(p1ChoicePath); // Path to player 1's character choice file
         writer.clearFile();
-        writer = new TextFileWriter(statePath);  // Path to the state check file
-        writer.clearFile();
         writer = new TextFileWriter(p1QuestionsPath);  // Path to player 1's questions file
         writer.clearFile();
         writer = new TextFileWriter(p2QuestionsPath); // Path to player 2's questions file
