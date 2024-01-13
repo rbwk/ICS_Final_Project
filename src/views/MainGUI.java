@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -113,7 +112,6 @@ public class MainGUI extends JFrame {
 	private static JLabel enterNameLabel = new JLabel();
 	private static JTextField nameTextField = new JTextField(20);
 	private static JLabel instructionsTitle = new JLabel("HOW TO PLAY");
-	private static JLabel instructionsLabel[] = new JLabel[5];
 
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); // Testing Purposes
 	private static TextFileReader p1_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
@@ -414,14 +412,6 @@ public class MainGUI extends JFrame {
 		instructionsTitle.setBounds(500, 250, 400, 100);
 		instructionsTitle.setFont(new Font("Trebuchet MS", Font.PLAIN, 31));
 		instructionsPanel.add(instructionsTitle);
-
-		for (int i = 0; i < 5; i++) {
-			System.out.println("rj;speip");
-			instructionsLabel[i].setText("acehrjlaervjha");
-			instructionsLabel[i].setBounds(130, 30 + i * 100, 400, 100);
-			instructionsLabel[i].setFont(new Font("STXihei", Font.PLAIN, 31));
-			instructionsPanel.add(instructionsLabel[i]);
-		}
 
 		// goes back to the start screen
 		JButton btnBackInstructions = new JButton(
