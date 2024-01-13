@@ -946,13 +946,8 @@ public class MainGUI extends JFrame {
 
 						result = game.checkAnswer(p1_questionAsked, 1);
 
-<<<<<<< Updated upstream
-						System.out.println("Player Q - "     + question);
-						System.out.println("Result - "     + result);
-=======
 						System.out.println("Player Q - "+p1_questionAsked);
 						System.out.println("Result - "+result);
->>>>>>> Stashed changes
 
 						TextFileReader aiCharcaters = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
 						TextFileReader aiQuestion = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
@@ -1170,10 +1165,4 @@ public class MainGUI extends JFrame {
 			selectorPanel.setVisible(true);
 		}
 	}
-<<<<<<< Updated upstream
-
-
-
-=======
->>>>>>> Stashed changes
 }
