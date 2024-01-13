@@ -911,8 +911,8 @@ public class MainGUI extends JFrame {
 			int random = rand.nextInt(24);
 			p2_character = Characters.get(random);
 			System.out.println("AI Character - " + p2_character);
-			aiPlayer.logNewGame();
-			aiPlayer.logCharacterChoice(p2_character);
+			aiPlayer.logNewGame(); // Calls the method in mainAI to log the start of a new round.
+			aiPlayer.logCharacterChoice(p2_character); // Stores the Ai's character choice for the new round.
 			questionList.removeAllItems();
 			TextFileReader check_questions = new TextFileReader("src\\resources\\questions.txt");
 			check_questions.readFile();

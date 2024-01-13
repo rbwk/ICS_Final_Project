@@ -309,11 +309,19 @@ public class MainAI {
         return 1.0 / remainingCharacters.size();
     }
 
+    /**
+     * Method to get the random character chosen for the AI from MainGUI logic.
+     * 
+     * @param logcharacter Character choice of the AI
+     */
     public void logCharacterChoice(String logcharacter) {
         TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // Logger for character choice
         logger.appendToFile("AI Character Choice: " + logcharacter);
     }
     
+    /**
+     * Makes a new line for the next round of play.
+     */
     public void logNewGame(){
         TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // Logger for new round
         logger.appendToFile("\nNew Round: \n ");
