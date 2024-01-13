@@ -28,16 +28,13 @@ public class Initialization {
      * Writes the initial game state to files.
      */
     public static void initializeGame() {
-        TextFileReader reader = new TextFileReader(statePath);
-        if (!reader.readInitializationState()) {
-            characters = new ArrayList<>();
-            initializeCharacters(characterPath);
-            writeCharactersToFile(p1Path);
-            writeCharactersToFile(p2Path);
-            initializeQuestions();
-            TextFileWriter writer = new TextFileWriter(statePath);
-            writer.writeInitializationState(true);
-        }
+        characters = new ArrayList<>();
+        initializeCharacters(characterPath);
+        writeCharactersToFile(p1Path);
+        writeCharactersToFile(p2Path);
+        initializeQuestions();
+        TextFileWriter writer = new TextFileWriter(statePath);
+        writer.writeInitializationState(true);
     }
 
     /**
