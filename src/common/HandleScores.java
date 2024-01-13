@@ -1,8 +1,12 @@
 /* HandleScores.java class
  * By Nathan, Aryan, and Victoria
  * Created: January 11th 2024
+ *
+ * This class is responsible for handling the game's scoring system, including maintaining
+ * and updating the leaderboards for games won and average questions asked per game.
+ * It utilizes two-dimensional lists (List<List<String>>) for flexible data storage, allowing
+ * theoretically unlimited entries in the leaderboards.
  */
-
 package common;
 
 import java.util.List;
@@ -10,14 +14,24 @@ import java.util.ArrayList;
 
 public class HandleScores {
 
-    private List<List<String>> winsLeaderboard;
-    private List<List<String>> averageQuestionsLeaderboard;
+    private List<List<String>> winsLeaderboard; // List that stores the names and number of won rounds of players
+    private List<List<String>> averageQuestionsLeaderboard; // List that stores names and avg question count for win of players.
 
+    /**
+     * Constructor to initialize the leaderboards by reading existing leaderboard data from files.
+     */
     public HandleScores() {
         winsLeaderboard = TextFileReader.readLeaderboard("src\\resources\\games_won_leaderboard");
         averageQuestionsLeaderboard = TextFileReader.readLeaderboard("src\\resources\\average_questions_leaderboard");
     }
 
+    /**
+     * Method called by game code to process the results of a game for leaderboard storage.
+     * 
+     * @param playerName // Name of the player who won.
+     * @param questionsAsked // Number of questions that player asked to achieve win.
+     * @param isWin // Flag value.
+     */
     public void processGameResult(String playerName, int questionsAsked, boolean isWin) {
         if (isWin) {
             updateLeaderboards(playerName, questionsAsked);
@@ -26,6 +40,12 @@ public class HandleScores {
         }
     }
 
+    /**
+     * Method to update the leaderboards.
+     * 
+     * @param playerName // Name of player who won.
+     * @param questionsAsked // Number of questions player asked in the round they won.
+     */
     private void updateLeaderboards(String playerName, int questionsAsked) {
         boolean playerExists = false;
         for (List<String> player : winsLeaderboard) {
@@ -60,6 +80,7 @@ public class HandleScores {
         }
     }
 
+    // Method used to return the number of wins a player had before. Returns 0 if name doesn't exist or they haven't won anything.
     private String getWinCount(String playerName) {
         for (List<String> player : winsLeaderboard) {
             if (player.get(0).equals(playerName)) {

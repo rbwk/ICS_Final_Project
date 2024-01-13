@@ -1,20 +1,21 @@
 /* game.java class
  * By Nathan, Aryan, and Victoria
  * Last updated: January 11th 2024
- * 
- * Handles all game logic in one class for ease of access and organization.
+ *
+ * This class encapsulates all game logic for ease of access and organization.
+ * It manages character selections, question handling, score updating, and game state initialization.
  */
+
 
 package common;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-//
+
 public class game {
 
     private static HandleScores handleScores = new HandleScores(); // Assuming one instance for the entire game
     private static ArrayList<GameCharacter> characters; // Character array.
-    //private static MainAI aiPlayer; // AI player instance
 
     public static void main(String[] args){
         characterChoice(1,"Eric");
@@ -22,6 +23,11 @@ public class game {
         checkAnswer("Does the person have facial hair?",2);                            
     }
     
+    /**
+     * Loads characters from a specified file into the characters list.
+     *
+     * @param path File path of the character data.
+     */
     private static void characterStore(String path) {
         characters = new ArrayList<>();
         TextFileReader characterReader = new TextFileReader(path);
@@ -44,6 +50,12 @@ public class game {
         }
     }
 
+    /**
+     * Handles character selection for a player.
+     *
+     * @param player Player number (1 or 2).
+     * @param choice Name of the character chosen by the player.
+     */
     public static void characterChoice(int player, String choice){
         ArrayList<GameCharacter> selectedCharacter = new ArrayList<>();
         characters = new ArrayList<>();
@@ -77,12 +89,12 @@ public class game {
     }
 
     /**
-     * Method to take question and result and update the characterlists and questionlists accordingly. 
-     * Uses player result input instead of auto check, for use in AI gamemode.
-     * 
-     * @param question
-     * @param player
-     * @param result
+     * Processes a question and its result, updating character lists and question lists accordingly.
+     * Used in player vs. computer mode.
+     *
+     * @param question The question asked.
+     * @param player The player asking the question.
+     * @param result The result of the question (true or false).
      */
     public static void checkAnswerPVC(String question, int player, boolean result){
         System.out.println(question);
@@ -95,12 +107,12 @@ public class game {
     }
 
     /**
-     * Method to take question, obtain result and pass along to the QuestionHandling class for processing.
-     * In player vs AI, still using this method if the player asks a question since logic has AI's chosen character.
-     * Computers the answer and passes it back to the human player.
-     * 
-     * @param question // The question asked (String format) Eg: "Is the person a male?"
-     * @param player // The player who posed the question
+     * Processes a question in player vs. player or player vs. AI mode.
+     * Computes the answer and updates character lists and question lists.
+     *
+     * @param question The question asked.
+     * @param player The player who posed the question.
+     * @return The result of the question (true or false).
      */
     public static boolean checkAnswer(String question, int player){
         String path = new String();
@@ -124,43 +136,41 @@ public class game {
     }
 
     /**
-     * Method to handle updating the leaderboards at the end of a game. 
-     * Passes variables into the handlescores object which automatically makes the changes to the text files directly.
-     * 
-     * @param winnerName // name of the winner
-     * @param questionsAsked // number of questions they asked
-     * @param isWin // flag value (always inputted as true)
+     * Updates the game's leaderboards at the end of a round.
+     *
+     * @param winnerName Name of the winning player.
+     * @param questionsAsked Number of questions asked by the winning player.
+     * @param isWin Flag indicating a win (always true when this method is called).
      */
     public static void updateScores(String winnerName, int questionsAsked, boolean isWin) {
         // Process game result for score updating
         handleScores.processGameResult(winnerName, questionsAsked, isWin);
     }
 
-    // Passthrough methods to Initialization.java methods.
+    /**
+     * Resets the game state and clears temporary files.
+     */
     public static void restartGame(){
         Initialization.resetGame();
     }
+    /**
+     * Initializes the game state.
+     */
     public static void initializeGame(){
         Initialization.initializeGame();
     }
 
-    // Call method in gui code if game is being initialized against AI player, and pass difficulty chosen.
-    public void startAI(int difficulty) {
-        // Initialize the AI if playing against AI
-    //    aiPlayer = new MainAI(difficulty); 
 
-    }
 
     /**
-     * Method to handle enemy players character guess, thus determining endgame and who wins.
-     * 
-     * @param guess
-     * @param asked
-     * @return // Returns True/False value
+     * Handles the endgame scenario by checking a player's guess against the opponent's character.
+     *
+     * @param guess The guessed character name.
+     * @param asked The player making the guess.
+     * @return True if the guess is correct, false otherwise.
      */
     public static boolean endGame(String guess, int asked){
         String path = new String();
-
         if(asked == 1){
             path = "src\\resources\\p2choice.txt";
         }
@@ -171,46 +181,9 @@ public class game {
         Iterator<GameCharacter> iterator = characters.iterator();
         GameCharacter character = iterator.next();
         if (character.getName().equals(guess)) {
-            if(asked == 2) {
-                updateAICharacters();
-            }
             return true;
         } else {     
-
             return false;
-
         }
-
     }
-
-    public static void updateAICharacters() {
-        String aiCharactersFilePath = "src\\resources\\p2_characters_remaining.txt"; // AI characters file
-        TextFileReader characterReader = new TextFileReader(aiCharactersFilePath);
-        characterReader.readFile();
-        ArrayList<GameCharacter> aiRemainingCharacters = new ArrayList<>();
-
-        for (int i = 0; i < characterReader.getname().size(); i++) {
-            GameCharacter character = new GameCharacter();
-            character.setName(characterReader.getname().get(i));
-            character.setGender(characterReader.getgender().get(i));
-            character.setEyeColour(characterReader.geteye_color().get(i));
-            character.setSkinTone(characterReader.getskin_tone().get(i));
-            character.setHairColour(characterReader.gethair_color().get(i));
-            character.setFacialHair(characterReader.getfacial_hair().get(i));
-            character.setGlasses(characterReader.getglasses().get(i));
-            character.setShowingTeeth(characterReader.getshowing_teeth().get(i));
-            character.setWearingHat(characterReader.getwearing_hat().get(i));
-            character.setHairLength(characterReader.gethair_length().get(i));
-            character.setPiercings(characterReader.getpiercings().get(i));
-            aiRemainingCharacters.add(character);
-        }
-
-       // aiPlayer.updateRemainingCharacters(aiRemainingCharacters);
-    }
-
-    // So the instance of aiPlayer can be used elsewhere.
-   // public static MainAI getAiPlayer() {
-     //   return aiPlayer;
-  //  }
-
 }

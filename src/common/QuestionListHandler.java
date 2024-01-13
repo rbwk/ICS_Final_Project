@@ -1,6 +1,10 @@
 /* QuestionListHandler.java class
  * By Nathan, Aryan, and Victoria
  * Last updated: January 4th 2024
+ *
+ * This class is responsible for handling the list of questions available to players in the game.
+ * It updates the list based on the questions asked and their outcomes, ensuring that the game
+ * reflects the current state of knowledge about the characters.
  */
 
 package common;
@@ -10,18 +14,17 @@ import java.util.List;
 
 public class QuestionListHandler {
 
-    private static final String p1QuestionsPath = "src\\resources\\p1_questions_remaining.txt"; 
-    private static final String p2QuestionsPath = "src\\resources\\p2_questions_remaining.txt";
+    private static final String p1QuestionsPath = "src\\resources\\p1_questions_remaining.txt"; // Path to p1 question list
+    private static final String p2QuestionsPath = "src\\resources\\p2_questions_remaining.txt"; // Path to p2 question list
 
     /**
-     * Method to update the list of remaining questions that the user has. 
-     * Takes the users question asked and processes the relevant changes to their list of remaining questions depending
-     * on the result of the question asked.
-     * 
-     * @param questionAsked  // The question asked
-     * @param player  // The player who posed the question
-     * @param result  //  The result of the question asked (true or false)
-     */
+    * Updates the list of remaining questions for a player based on the question asked.
+    * It removes the asked question and any related questions based on the answer's outcome.
+    *
+    * @param questionAsked The question asked.
+    * @param player The player who asked the question.
+    * @param result The result of the question (true or false).
+    */
     public static void updateQuestionsList(String questionAsked, int player, boolean result) {
         String questionsPath = (player == 1) ? p1QuestionsPath : p2QuestionsPath;
         TextFileReader questionReader = new TextFileReader(questionsPath);
@@ -40,14 +43,13 @@ public class QuestionListHandler {
         questionWriter.writeQuestions(questions);
     }
 
-
     /**
-     * Method to store any related questions to the question asked in an arraylist for removal from players
-     * bank of remaining questions.
-     * 
-     * @param question // The question that was asked
-     * @param result // The result of the question asked (true or false)
-     * @return  // Returns filled arraylist
+     * Determines and returns a list of questions related to the question asked.
+     * These related questions are removed from the player's list to reflect the new game state.
+     *
+     * @param question The question that was asked.
+     * @param result The result of the question (true or false).
+     * @return A list of related questions to be removed.
      */
     private static ArrayList<String> getRelatedQuestions(String question, boolean result) {
         ArrayList<String> relatedQuestions = new ArrayList<>();
@@ -156,7 +158,5 @@ public class QuestionListHandler {
                 break;
         }
         return relatedQuestions;
-    }
-    
-    
+    } 
 }

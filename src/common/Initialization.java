@@ -1,6 +1,9 @@
-/* TextFileReader.java class
+/* Initialization.java class
  * By Nathan, Aryan, and Victoria
  * Last updated: January 6th 2024
+ *
+ * This class is responsible for initializing and resetting the game state.
+ * It handles operations like setting up character data, question lists, and clearing temporary files.
  */
 
 package common;
@@ -21,7 +24,8 @@ public class Initialization {
     private static final String p2EliminatedPath = "src\\resources\\p2_characters_removed.txt"; // Path to player 1 character storage file.
 
     /**
-     * Method to initialize the game.
+     * Initializes the game by setting up characters and questions if not already done.
+     * Writes the initial game state to files.
      */
     public static void initializeGame() {
         TextFileReader reader = new TextFileReader(statePath);
@@ -37,7 +41,8 @@ public class Initialization {
     }
 
     /**
-     * Method for initializing the question lists for both players
+     * Initializes the list of questions for both players.
+     * Reads the questions from a file and writes them into player-specific question files.
      */
     private static void initializeQuestions() {
         // Initialize TextFileReader for questions
@@ -53,7 +58,11 @@ public class Initialization {
         writerP2.writeQuestions(questions);
     }
 
-    // Filling the character array with all the character objects
+    /**
+     * Initializes the characters from a file and stores them in the 'characters' list.
+     * 
+     * @param filePath Path to the file containing character data.
+     */
     private static void initializeCharacters(String filePath) {
         TextFileReader characterReader = new TextFileReader(filePath);
         characterReader.readFile();
@@ -75,7 +84,11 @@ public class Initialization {
         }
     }
 
-    // Filling the P1 and P2 character files with the character objects
+    /**
+     * Writes the list of characters to a file. Each character is converted to a string format suitable for file storage.
+     * 
+     * @param filePath Path to the file where character data will be written.
+     */
     public static void writeCharactersToFile(String filePath) {
         TextFileWriter writer = new TextFileWriter(filePath);
         ArrayList<String> characterStrings = new ArrayList<>();
@@ -88,7 +101,8 @@ public class Initialization {
     }
 
     /**
-     * Method to reset the game and clear all temporary files of contents for reuse in the next round.
+     * Resets the game state by clearing all temporary files.
+     * This method is called at the end of a game round to prepare for a new game.
      */
     public static void resetGame() {
         TextFileWriter writer = new TextFileWriter(p1Path); // Path to player 1's remaining characters file

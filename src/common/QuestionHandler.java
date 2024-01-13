@@ -1,6 +1,10 @@
 /* QuestionHandler.java class
  * By Nathan, Aryan, and Victoria
  * Last updated: January 4th 2024
+ *
+ * This class handles the processing of questions asked in the game.
+ * It manages character data, filtering characters based on the answers to questions,
+ * and updates the corresponding files with the new state of the game.
  */
 
 package common;
@@ -20,9 +24,9 @@ public class QuestionHandler {
 
 
     /**
-     * Sets the questions asked array to the question and the player asking
-     * @param question The array containing the question asked and the user that asked it, along with whether 
-     *                 the answer to the question is true or false
+     * Sets the question asked by the player.
+     * 
+     * @param question Array containing the question, the player who asked, and the result (true/false).
      */
     public static void setQuestionAsked(String[] question) {
         for(int i=0; i<3;i++){
@@ -31,7 +35,10 @@ public class QuestionHandler {
         }
     }
 
-    // Fills player characterlists with the new remaining characters after a question has been processed.
+    /**
+     * Handles the logic for filtering characters based on the question asked.
+     * Updates the character lists and writes the changes to the corresponding files.
+     */
     public static void handleQuestions() {
         characters = new ArrayList<>();
         eliminatedCharacters = new ArrayList<>();
@@ -688,9 +695,9 @@ public class QuestionHandler {
     }
 
     /**
-     * Method that writes the remaining list of characters to txt for storage
+     * Writes the list of remaining characters to a file.
      * 
-     * @param filePath // Path of the players characterlist
+     * @param filePath Path to the file where the remaining characters are stored.
      */
     public static void writeCharactersToFile(String filePath) {
         TextFileWriter writer = new TextFileWriter(filePath);
@@ -704,9 +711,9 @@ public class QuestionHandler {
     }
 
     /**
-     * Method that writes the list of eliminated characters to txt for storage.
+     * Writes the list of eliminated characters to a file.
      * 
-     * @param filePath  // Path of the players eliminated characterlist.
+     * @param filePath Path to the file where the eliminated characters are stored.
      */
     public static void writeEliminatedCharactersToFile(String filePath) {
         TextFileWriter writer = new TextFileWriter(filePath);
@@ -721,13 +728,12 @@ public class QuestionHandler {
 
 
     /**
-     * Checks the question asked by user and returns the true or false statement depending on the result.
-     * This method is primarily used in PVP where both players characters are pre stored in game logic.
-     * Also used to return answers to questions asked about AI's character by player in PVC mode. 
+     * Checks if a specific question asked by the player is true or false.
+     * This method is used in player-vs-player and player-vs-computer modes.
      * 
-     * @param playerQuestion // Question asked by the user
-     * @param player  // Player who asked the question
-     * @return // Returns a boolean true or false value. 
+     * @param playerQuestion The question asked by the player.
+     * @param player The player who asked the question.
+     * @return true if the question's answer is affirmative, false otherwise.
      */
     public static boolean checkQuestion(String playerQuestion, int player){
         if(player == 1){
@@ -1028,9 +1034,10 @@ public class QuestionHandler {
     }
 
     /**
-     * Method used by checkQuestion, stores players characterlist in an arraylist for use within the class.
+     * Retrieves the list of characters for a player.
+     * Used by checkQuestion method.
      * 
-     * @param path // Path location of players characterlist.
+     * @param path The file path of the player's character list.
      */
     private static void getCharacters(String path) {
         characters = new ArrayList<>();

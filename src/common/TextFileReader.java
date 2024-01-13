@@ -1,6 +1,9 @@
-/*TextFileReader.java class
+/* TextFileReader.java class
  * By Nathan, Aryan, and Victoria
- * Last updated: January 11th 2024
+ * Last updated: January 12th 2024
+ *
+ * This class is responsible for reading various text files used in the game.
+ * It can read character attribute files, question files, and leaderboard data.
  */
 
 package common;
@@ -15,21 +18,27 @@ import java.util.List;
 public class TextFileReader {
     protected String filePath;
 
+    // Lists to store character attributes
     protected ArrayList<String> name;
     protected ArrayList<String> gender;
     protected ArrayList<String> skin_tone;
     protected ArrayList<String> eye_color;
     protected ArrayList<String> hair_color;
     protected ArrayList<String> hair_length;
-
+    // Lists to store boolean character attributes
     protected List<Boolean> showing_teeth = new ArrayList<Boolean>(Arrays.asList(true));
     protected List<Boolean> wearing_hat = new ArrayList<Boolean>(Arrays.asList(true));
     protected List<Boolean> facial_hair = new ArrayList<Boolean>(Arrays.asList(true));
     protected List<Boolean> piercings = new ArrayList<Boolean>(Arrays.asList(true));
     protected List<Boolean> glasses = new ArrayList<Boolean>(Arrays.asList(true));
-
+    // List to store questions
     protected ArrayList<String> questions;
-
+    
+    /**
+     * Constructor to initialize the TextFileReader with a file path.
+     * 
+     * @param filePath The path of the file to be read.
+     */
     public TextFileReader(String filePath) {
         this.filePath = filePath;
 
@@ -48,6 +57,11 @@ public class TextFileReader {
 
         this.questions = new ArrayList<>();
     }
+
+    /**
+     * Reads the file specified by the filePath.
+     * Depending on the file, it populates different lists with character attributes or questions.
+     */
 
     public void readFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -86,6 +100,7 @@ public class TextFileReader {
         }
     }
 
+    // Get methods so the objects can be written to arraylist.
     public ArrayList<String> getname() {
         return name;
     }
@@ -133,6 +148,8 @@ public class TextFileReader {
     public ArrayList<String> getQuestions() {
         return questions;
     }
+
+    // Method used by initialization.java to lock initialization until the next round (extra error protection)
     public boolean readInitializationState() {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line = reader.readLine();
@@ -141,6 +158,9 @@ public class TextFileReader {
             return false; // Default to false if file was empty
         }
     }
+
+    // Method to read leaderboard data. Reads both leaderboards to listoflists for storage.
+    // Uses list lists, which allow for what are essentially 2d arraylists.
     public static List<List<String>> readLeaderboard(String filePath) {
         List<List<String>> leaderboardData = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

@@ -1,13 +1,16 @@
 /* GameCharacter.java class
  * By Nathan, Aryan, and Victoria
  * Last updated: January 5th 2024
+ *
+ * This class represents a character in the game. It holds various attributes of the character
+ * like name, gender, physical traits, and other features. It also provides methods to set and
+ * get these attributes.
  */
 
 package common;
-//This is a clone to be used in game.java
 public class GameCharacter {
 
-    // Characteristics (Maybe a menu for customizing characters)
+    // Attributes representing different characteristics of the game character
     protected String name;
     protected String gender;
     protected String skin_tone;
@@ -21,7 +24,9 @@ public class GameCharacter {
     protected boolean piercings;
     protected boolean glasses;
 
-    // Constructor Methods
+    /**
+     * Constructor for GameCharacter. Initializes the character attributes.
+     */
     public GameCharacter() {
         name = null;
         gender = null;
@@ -37,7 +42,7 @@ public class GameCharacter {
         glasses = false;
     }
 
-    // Behaviours
+    // Setters and Getters for each attribute
     public void setName(String newName) {
         name = newName;
     }
@@ -125,6 +130,13 @@ public class GameCharacter {
     public boolean getPiercings() {
         return piercings;
     }
+
+    /**
+     * Converts the character's attributes to a string format suitable for file storage.
+     * Each attribute is separated by a newline character.
+     * 
+     * @return String representation of the character's attributes.
+     */
     public String toFileString() {
         return name + "\n" + 
                gender + "\n" + 
@@ -138,6 +150,5 @@ public class GameCharacter {
                hair_length + "\n" + 
                String.valueOf(piercings);
     }
-
 }
 
