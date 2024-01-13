@@ -717,7 +717,7 @@ public class MainGUI extends JFrame {
 			mainPanel.setVisible(false);
 			selectorPanel.setVisible(true);
 			exitPanel.setVisible(false);
-			game.restartGame();
+			//game.restartGame();
 			game.initializeGame();
 			p1_character = null;
 			p2_character = null;
