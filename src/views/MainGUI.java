@@ -79,6 +79,7 @@ public class MainGUI extends JFrame {
 	private static boolean guess2;
 	@SuppressWarnings("unused")
 	private static String playerName;
+	private static int amountCount = 0;
 
 	// panels for game screen
 
@@ -734,6 +735,8 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			endGamePanel.setVisible(false);
 			mainPanel.setVisible(true);
+			game.updateScores(playerName, amountCount, pvc_win);
+			game.restartGame();
 		}
 	}
 
@@ -741,6 +744,8 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			endGamePanel.setVisible(false);
 			leaderboardPanel.setVisible(true);
+			game.updateScores(playerName, amountCount, pvc_win);
+			game.restartGame();
 		}
 	}
 
@@ -807,6 +812,7 @@ public class MainGUI extends JFrame {
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
+			aiPlayer.setDifficulty(3);
 		}
 	}
 
@@ -817,6 +823,7 @@ public class MainGUI extends JFrame {
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
+			aiPlayer.setDifficulty(2);
 		}
 	}
 
@@ -827,6 +834,7 @@ public class MainGUI extends JFrame {
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
+			aiPlayer.setDifficulty(1);
 		}
 	}
 
@@ -902,7 +910,9 @@ public class MainGUI extends JFrame {
 			if (guess1 == true) {
 				playerselectionPanel.setVisible(false);
 				endGamePanel.setVisible(true);
-				if(p2_character == fileName){
+				System.out.println("Character - "+p2_character);
+				System.out.println("File - "+fileName);
+				if(p2_character.equals(fileName)){
 					pvc_win = true;
 					resultLabel.setText("YOU WIN!!!!");
 				}else{
@@ -974,7 +984,7 @@ public class MainGUI extends JFrame {
 						gameSetCharacterScreen();
 						System.out.print("Player 1 - "); // Testing
 					} else { //   PVC Mode thing
-
+						amountCount++;
 						p1_questionAsked = question;
 						p1_ongoing = true;
 						gameSetCharacterScreen();
@@ -1174,25 +1184,21 @@ public class MainGUI extends JFrame {
 
 	static void gameUpdateCharacter() {
 		if(!pvpMode){
-			TextFileReader chara = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
+			TextFileReader chara = new TextFileReader("src\\resources\\p1_characters_removed.txt");
 			chara.readFile();
 			ArrayList<String> check = new ArrayList<String>();
 			check = chara.getname();
-			int count = 0;
-			for(int i = 0; i < Characters.size(); i++){
-				String chr = Characters.get(i);
-				if(check.get(count).equals(chr)){
-					count++;
-					String namepicture = "/resources/characters/" + chr + ".png";
-					characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
-				}else{
-					String namepicture = "/resources/eliminated_characters/elim_" + chr + ".png";
-					characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+			for(int x = 0; x < check.size(); x++) {
+				for(int i = 0; i < Characters.size(); i++) {
+					if(Characters.get(i).equals(check.get(x))){
+						String namepicture = "/resources/eliminated_characters/elim_" + check.get(x) + ".png";
+						characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+					}
 				}
 			}
 		}
 	}
-	
+
 
 	static void opAskingHide(boolean nah) {
 		characterButtons[8].setVisible(nah);
