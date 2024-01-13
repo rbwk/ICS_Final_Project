@@ -86,8 +86,8 @@ public class MainGUI extends JFrame {
 	private static boolean guess2;
 	private static String playerName;
 	private static int amountCount = 0;
-	private static String leader1 = "\n\n\n\nName \t\t\t Average\n";
-	private static String leader2 = "\n\n\n\nName \t\t\t Won\n";
+	private static String leader1 = "Name \t\t\t Average\n\n";
+	private static String leader2 = "Name \t\t\t Won\n\n";
 	private static JTextArea avgLeader = new JTextArea();
 	private static JTextArea gamesWon = new JTextArea();
 
@@ -211,7 +211,7 @@ public class MainGUI extends JFrame {
 		title2.setFont(new Font("STXihei", Font.PLAIN, 31));
 		leaderboardPanel.add(title2);
 
-		avgLeader.setBounds(10, 10, 600, 800);
+		avgLeader.setBounds(10, 150, 600, 600);
 		avgLeader.setBackground(Color.LIGHT_GRAY);
 		avgLeader.setEditable(false);
 		avgLeader.setFont(new Font("STXihei", Font.PLAIN, 20));
@@ -219,7 +219,7 @@ public class MainGUI extends JFrame {
 		avgLeader.setText(leader1);
 		avgLeaderUpdate();
 
-		gamesWon.setBounds(620, 10, 600, 800);
+		gamesWon.setBounds(620,150,600,600);
 		gamesWon.setBackground(Color.LIGHT_GRAY);
 		gamesWon.setEditable(false);
 		gamesWon.setFont(new Font("STXihei", Font.PLAIN, 20));
@@ -248,6 +248,7 @@ public class MainGUI extends JFrame {
 		JButton btnExit = new JButton("EXIT TO DESKTOP");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				game.restartGame();
 				dispose();
 			}
 		});
@@ -414,12 +415,21 @@ public class MainGUI extends JFrame {
 		instructionsPanel.add(instructionsTitle);
 
 		// goes back to the start screen
-		JButton btnBackInstructions = new JButton(
-				new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		JButton btnBackInstructions = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
 		btnBackInstructions.setContentAreaFilled(false);
 		btnBackInstructions.setBounds(1250, 20, 100, 100);
 		btnBackInstructions.addActionListener(new backInstructionsButton());
 		instructionsPanel.add(btnBackInstructions);
+
+		JTextArea instructions = new JTextArea();
+		instructions.setBackground(Color.LIGHT_GRAY);
+		instructions.setBounds(10, 11, 1420, 880);
+		instructions.setEditable(false);
+		instructions.setFont(new Font("STXihei", Font.PLAIN, 20));
+		instructions.setText
+		("1. XXX\n2. VVV\n3.ZZZ");
+		instructionsPanel.add(instructions);
+
 
 		/////////////////////////////////// Difficulty
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -1263,10 +1273,10 @@ public class MainGUI extends JFrame {
 
 	static void avgLeaderUpdate() {
 		List<List<String>> update = new ArrayList<>();
-		leader1 = "\n\n\n\nName \t\t\t Average\n";
+		leader1 = "Name \t\t\t Average\n\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\average_questions_leaderboard");
 		for (List<String> player : update) {
-			leader1 = leader1 + (player.get(0) + " -                \t\t" + player.get(1) + "\n");
+			leader1 = leader1 + (player.get(0) + " -                    \t\t"+player.get(1)+"\n");
 		}
 		avgLeader.setText(leader1);
 
@@ -1274,10 +1284,10 @@ public class MainGUI extends JFrame {
 
 	static void gamesWonUpdate() {
 		List<List<String>> update = new ArrayList<>();
-		leader2 = "\n\n\n\nName \t\t\t Won\n";
+		leader2 = "Name \t\t\t Won\n\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\games_won_leaderboard");
 		for (List<String> player : update) {
-			leader2 = leader2 + (player.get(0) + " -                \t\t" + player.get(1) + "\n");
+			leader2 = leader2 + (player.get(0) + " -                    \t\t"+player.get(1)+"\n");
 		}
 		gamesWon.setText(leader2);
 
