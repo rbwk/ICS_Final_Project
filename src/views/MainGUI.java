@@ -1,6 +1,12 @@
 /**ICS4U Final Project: Guess Who?
  * Nathan Chu, Victoria Chi, Aryan Alipanahi
  * Jan 12, 2024
+ * 
+ * The MainGUI class serves as the primary interface for the Guess Who game.
+ * It handles the creation and interaction of all GUI components, including
+ * panels, buttons, labels, and game logic integration. This class orchestrates
+ * the game flow and user interactions.
+ * 
   */
 package views;
 
@@ -15,6 +21,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
@@ -25,6 +32,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -77,9 +85,12 @@ public class MainGUI extends JFrame {
 	private static boolean guess1;
 	@SuppressWarnings("unused")
 	private static boolean guess2;
-	@SuppressWarnings("unused")
 	private static String playerName;
 	private static int amountCount = 0;
+	private static String leader1 = "\n\n\n\nName \t\t\t Average\n";
+	private static String leader2 = "\n\n\n\nName \t\t\t Won\n";
+	private static JTextArea avgLeader = new JTextArea();
+	private static JTextArea gamesWon = new JTextArea();
 
 	// panels for game screen
 
@@ -192,6 +203,32 @@ public class MainGUI extends JFrame {
 		btnBackLeaderboard.setBounds(1250, 20, 100, 100);
 		btnBackLeaderboard.addActionListener(new backLeaderboardButton());
 		leaderboardPanel.add(btnBackLeaderboard);
+
+		JLabel title1 = new JLabel("Average Questions Asked");
+		title1.setBounds( 130, 30, 400, 100);
+		title1.setFont(new Font("STXihei", Font.PLAIN, 31));
+		leaderboardPanel.add(title1);
+
+		JLabel title2 = new JLabel("Games Won");
+		title2.setBounds( 835, 30, 400, 100);
+		title2.setFont(new Font("STXihei", Font.PLAIN, 31));
+		leaderboardPanel.add(title2);
+
+		avgLeader.setBounds(10, 10, 600, 800);
+		avgLeader.setBackground(Color.DARK_GRAY);
+		avgLeader.setEditable(false);
+		avgLeader.setFont(new Font("STXihei", Font.PLAIN, 20));
+		leaderboardPanel.add(avgLeader);
+		avgLeader.setText(leader1);
+		avgLeaderUpdate();
+
+		gamesWon.setBounds(620,10,600,800);
+		gamesWon.setBackground(Color.DARK_GRAY);
+		gamesWon.setEditable(false);
+		gamesWon.setFont(new Font("STXihei", Font.PLAIN, 20));
+		leaderboardPanel.add(gamesWon);
+		gamesWon.setText(leader2);
+		gamesWonUpdate();
 
 		
 
@@ -742,6 +779,8 @@ public class MainGUI extends JFrame {
 			mainPanel.setVisible(true);
 			game.updateScores(playerName, amountCount, pvc_win);
 			game.restartGame();
+			avgLeaderUpdate();
+			gamesWonUpdate();
 		}
 	}
 
@@ -751,6 +790,8 @@ public class MainGUI extends JFrame {
 			leaderboardPanel.setVisible(true);
 			game.updateScores(playerName, amountCount, pvc_win);
 			game.restartGame();
+			avgLeaderUpdate();
+			gamesWonUpdate();
 		}
 	}
 
@@ -1203,7 +1244,26 @@ public class MainGUI extends JFrame {
 			}
 		}
 	}
+	
+	static void avgLeaderUpdate() {
+		List<List<String>> update = new ArrayList<>();
+		update = TextFileReader.readLeaderboard("src\\resources\\average_questions_leaderboard");
+		for (List<String> player : update) {
+			leader1 = leader1 + (player.get(0) + " -                \t\t"+player.get(1)+"\n");
+		}
+		avgLeader.setText(leader1);
+		
+	}
 
+	static void gamesWonUpdate() {
+		List<List<String>> update = new ArrayList<>();
+		update = TextFileReader.readLeaderboard("src\\resources\\games_won_leaderboard");
+		for (List<String> player : update) {
+			leader2 = leader2 + (player.get(0) + " -                \t\t"+player.get(1)+"\n");
+		}
+		gamesWon.setText(leader2);
+		
+	}
 
 	static void opAskingHide(boolean nah) {
 		characterButtons[8].setVisible(nah);
@@ -1220,7 +1280,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			namePanel.setVisible(false);
 			difficultyPanel.setVisible(true);
-			playerName = nameTextField.getText();
+			playerName = nameTextField.getText().trim();
 		}
 	}
 

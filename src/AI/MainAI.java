@@ -154,11 +154,9 @@ public class MainAI {
             if (guaranteedEliminationPercentage > maxGuaranteedEliminationPercentage) {
                 maxGuaranteedEliminationPercentage = guaranteedEliminationPercentage;
                 bestQuestion = question;
-                System.out.println(guaranteedEliminationPercentage + " is the guaranteed percentage percentage");
 
             }
         }
-        System.out.println(maxGuaranteedEliminationPercentage + " is the final max percentage");
 
         return bestQuestion;
     }
