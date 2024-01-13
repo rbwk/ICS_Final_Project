@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import common.GameCharacter;
+import common.TextFileWriter;
 
 public class MainAI {
     private int difficulty; // Represents the difficulty level of the AI
@@ -31,6 +32,7 @@ public class MainAI {
         this.availableQuestions = new ArrayList<>(); // Initialize with all possible questions
         this.remainingCharacters = new ArrayList<>(); // Initialize with all characters
         this.random = new Random();
+
     }
 
     // Sets the AI's difficulty level (for subsequent rounds should the difficulty change)
@@ -45,9 +47,11 @@ public class MainAI {
      */
     public String selectQuestion() {
 
-        // First, check if AI should make a guess
+        // Check if AI should make a guess
         String aiGuess = makeGuess();
         if (aiGuess != null) {
+            TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // logger for final character guess logging
+            logger.appendToFile("AI Character Final Choice: " + aiGuess);    
             return aiGuess; // AI makes a guess instead of asking a question
         }
         if (difficulty == 1) { // Hard
@@ -101,7 +105,10 @@ public class MainAI {
             return null;
         }
         int randomIndex = random.nextInt(availableQuestions.size());
-        return availableQuestions.get(randomIndex);
+        String returnQuestion = availableQuestions.get(randomIndex);
+        TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // logger for question logging
+        logger.appendToFile("AI Question Choice: " + returnQuestion);
+        return returnQuestion;
     }
 
     /**
@@ -113,7 +120,6 @@ public class MainAI {
         int totalCharacters = remainingCharacters.size();
         double minDifferencePercentage = Double.MAX_VALUE;
         String bestQuestion = null;
-    
         for (String question : availableQuestions) {
             double yesEliminationCount = calculateEliminationPercentage(question, true);
             double noEliminationCount = calculateEliminationPercentage(question, false);
@@ -128,7 +134,9 @@ public class MainAI {
                 bestQuestion = question;
             }
         }
-    
+        TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // logger for calculation and question logging
+        logger.appendToFile("AI Question Choice: " + bestQuestion);
+        logger.appendToFile("Ai Percentage Calculation: " + minDifferencePercentage);
         return bestQuestion;
     }
     
@@ -157,7 +165,9 @@ public class MainAI {
 
             }
         }
-
+        TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // logger for calculation and question logging
+        logger.appendToFile("AI Question Choice: " + bestQuestion);
+        logger.appendToFile("Ai Percentage Calculation: " + maxGuaranteedEliminationPercentage);
         return bestQuestion;
     }
     
@@ -175,7 +185,6 @@ public class MainAI {
                 count++;
             }
         }
-        System.out.println(count + " is the amount of people that would be eliminated");
         return count;    
     }
     
@@ -298,6 +307,16 @@ public class MainAI {
             return 1.0; // 100% probability
         }
         return 1.0 / remainingCharacters.size();
+    }
+
+    public void logCharacterChoice(String logcharacter) {
+        TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // Logger for character choice
+        logger.appendToFile("AI Character Choice: " + logcharacter);
+    }
+    
+    public void logNewGame(){
+        TextFileWriter logger = new TextFileWriter("src\\resources\\ai_log"); // Logger for new round
+        logger.appendToFile("\nNew Round: \n ");
     }
             
 }

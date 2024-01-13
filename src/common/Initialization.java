@@ -22,12 +22,16 @@ public class Initialization {
     private static final String p2QuestionsPath = "src\\resources\\p2_questions_remaining.txt"; // Path to player 1 character storage file.
     private static final String p1EliminatedPath = "src\\resources\\p1_characters_removed.txt"; // Path to player 1 character storage file.
     private static final String p2EliminatedPath = "src\\resources\\p2_characters_removed.txt"; // Path to player 1 character storage file.
-
+    private static final String tempLogPath = "src\\resources\\temp_log.txt"; // Path to temp log.
     /**
      * Initializes the game by setting up characters and questions if not already done.
      * Writes the initial game state to files.
      */
     public static void initializeGame() {
+        TextFileWriter logger = new TextFileWriter("src\\resources\\master_log"); // Path of master log.
+        logger.appendToFile("\nNew Round: \n ");
+        TextFileWriter tempLogger = new TextFileWriter(tempLogPath); // Path of temp log.
+        tempLogger.appendToFile("\nNew Round: \n ");
         characters = new ArrayList<>();
         initializeCharacters(characterPath);
         writeCharactersToFile(p1Path);
@@ -36,7 +40,7 @@ public class Initialization {
         TextFileWriter writer = new TextFileWriter(statePath);
         writer.writeInitializationState(true);
     }
-
+    
     /**
      * Initializes the list of questions for both players.
      * Reads the questions from a file and writes them into player-specific question files.
@@ -117,6 +121,8 @@ public class Initialization {
         writer = new TextFileWriter(p1EliminatedPath);  // Path to player 1's eliminated file
         writer.clearFile();
         writer = new TextFileWriter(p2EliminatedPath); // Path to player 2's eliminated file
+        writer.clearFile();
+        writer = new TextFileWriter(tempLogPath); // Path to temp log file.
         writer.clearFile();
 
 

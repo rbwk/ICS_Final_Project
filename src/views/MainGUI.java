@@ -76,8 +76,7 @@ public class MainGUI extends JFrame {
 	private static String p2_character = null; // Setting the character that Player 2 chose
 	private static boolean p1_ongoing = true; // Variable the set if the player 1 is controlling or player 2
 	private static boolean p2_select = false; // Recognizing if player 2 need to set character that is being guessed by
-	private static boolean pvc_win = false; // true if character won
-											// player 1
+	private static boolean pvc_win = false; // true if character won player 1
 	private static String question = null;
 	private static String p1_questionAsked = null; // question player 1 asks player 2 in a turn
 	private static String p2_questionAsked = null; // question player 2 asks player 1 in a turn
@@ -100,14 +99,12 @@ public class MainGUI extends JFrame {
 	private static JPanel gamePanel = new JPanel();
 	private static JPanel enemyPanel = new JPanel();
 	private static JPanel opAskPanel = new JPanel(); // Panel where the opposition askes u the question and u have to
-														// answer it
 	private static JLabel opQuestion = new JLabel();
 	private static JLabel resultLabel = new JLabel();
 	private static JLabel actualScore = new JLabel("12345");
 	private static JLabel questioning = new JLabel("Are you sure about that?");
 	private static JButton[] selectionCharacterButtons = new JButton[24];
 	private static JButton[] characterButtons = new JButton[24]; // Use 1D Array as the data is 1d and easier to switch
-																	// between
 	private static JComboBox<String> questionList = new JComboBox<>();
 	private static String fileName;
 	private static JLabel player_character = new JLabel();
@@ -116,11 +113,9 @@ public class MainGUI extends JFrame {
 	private static JTextField nameTextField = new JTextField(20);
 
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); // Testing Purposes
-																									// only
-	// private static TextFileReader questionReader = new
-	// TextFileReader("src\\resources\\questions.txt"); //Testing Purposes Only
 	private static TextFileReader p1_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
 	private static ArrayList<String> Characters = new ArrayList<String>(); // Testing Purposes only
+	private static TextFileReader questions = new TextFileReader("src\\resources\\questions.txt");
 	private static ArrayList<String> Questions = new ArrayList<String>(); // Testing Purposes only
 	private static String[] data; // Testing Purposes only
 
@@ -152,9 +147,10 @@ public class MainGUI extends JFrame {
 
 		characterReader.readFile(); // Testing Purposes only
 		p1_questions.readFile(); // Testing Purposes only
+		questions.readFile();
 
 		Characters = characterReader.getname(); // Testing Purposes only
-		Questions = p1_questions.getQuestions();
+		Questions = questions.getQuestions();
 
 		initComponents();
 
@@ -163,7 +159,7 @@ public class MainGUI extends JFrame {
 	// setting up all GUI elements
 
 	private void initComponents() throws IOException {
-
+		
 		setBackground(Color.WHITE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setUndecorated(true);
@@ -215,7 +211,7 @@ public class MainGUI extends JFrame {
 		leaderboardPanel.add(title2);
 
 		avgLeader.setBounds(10, 10, 600, 800);
-		avgLeader.setBackground(Color.DARK_GRAY);
+		avgLeader.setBackground(Color.LIGHT_GRAY);
 		avgLeader.setEditable(false);
 		avgLeader.setFont(new Font("STXihei", Font.PLAIN, 20));
 		leaderboardPanel.add(avgLeader);
@@ -223,7 +219,7 @@ public class MainGUI extends JFrame {
 		avgLeaderUpdate();
 
 		gamesWon.setBounds(620,10,600,800);
-		gamesWon.setBackground(Color.DARK_GRAY);
+		gamesWon.setBackground(Color.LIGHT_GRAY);
 		gamesWon.setEditable(false);
 		gamesWon.setFont(new Font("STXihei", Font.PLAIN, 20));
 		leaderboardPanel.add(gamesWon);
@@ -763,9 +759,9 @@ public class MainGUI extends JFrame {
 			guess1 = false;
 			guess2 = false;
 			p1_questions.readFile();
-			Questions = p1_questions.getQuestions(); // Testing Purposes only
+			//Questions = p1_questions.getQuestions(); // Testing Purposes only
 			data = Questions.toArray(new String[Questions.size()]);
-
+			questionList.removeAllItems();
 			questionList.addItem("Guess Character");
 			for (int i = 0; i < data.length; i++) {
 				questionList.addItem(data[i]);
@@ -781,6 +777,7 @@ public class MainGUI extends JFrame {
 			game.restartGame();
 			avgLeaderUpdate();
 			gamesWonUpdate();
+			resetCharacter();
 		}
 	}
 
@@ -792,6 +789,7 @@ public class MainGUI extends JFrame {
 			game.restartGame();
 			avgLeaderUpdate();
 			gamesWonUpdate();
+			resetCharacter();
 		}
 	}
 
@@ -893,12 +891,17 @@ public class MainGUI extends JFrame {
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
 
+			Questions = questions.getQuestions();
+			questionList.removeAllItems();
+			
+
 		}
 	}
 
 	static class PVCButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			pvpMode = false;
+			resetCharacter();
 			selectorPanel.setVisible(false);
 			namePanel.setVisible(true);
 			enterNameLabel.setText("Enter Your Name:");
@@ -908,7 +911,17 @@ public class MainGUI extends JFrame {
 			int random = rand.nextInt(24);
 			p2_character = Characters.get(random);
 			System.out.println("AI Character - " + p2_character);
-
+			aiPlayer.logNewGame();
+			aiPlayer.logCharacterChoice(p2_character);
+			questionList.removeAllItems();
+			TextFileReader check_questions = new TextFileReader("src\\resources\\questions.txt");
+			check_questions.readFile();
+			Questions = check_questions.getQuestions();
+			data = Questions.toArray(new String[Questions.size()]);
+			questionList.addItem("Guess Character");
+			for (int i = 0; i < data.length; i++) {
+				questionList.addItem(data[i]);
+			}
 		}
 	}
 
@@ -996,6 +1009,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			question = questionList.getSelectedItem().toString();
 			if (question.equals("Guess Character")) {
+				questionList.removeAllItems();
 				if (p1_ongoing) {
 					guess1 = true;
 
@@ -1086,6 +1100,7 @@ public class MainGUI extends JFrame {
 					check_questions.readFile();
 					Questions = check_questions.getQuestions();
 					data = Questions.toArray(new String[Questions.size()]);
+					questionList.removeAllItems();
 					questionList.addItem("Guess Character");
 					for (int i = 0; i < data.length; i++) {
 						questionList.addItem(data[i]);
@@ -1152,6 +1167,7 @@ public class MainGUI extends JFrame {
 					check_questions.readFile();
 					Questions = check_questions.getQuestions();
 					data = Questions.toArray(new String[Questions.size()]);
+					questionList.removeAllItems();
 					questionList.addItem("Guess Character");
 					for (int i = 0; i < data.length; i++) {
 						questionList.addItem(data[i]);
@@ -1191,6 +1207,7 @@ public class MainGUI extends JFrame {
 					check_questions.readFile();
 					Questions = check_questions.getQuestions();
 					data = Questions.toArray(new String[Questions.size()]);
+					questionList.removeAllItems();
 					questionList.addItem("Guess Character");
 					for (int i = 0; i < data.length; i++) {
 						questionList.addItem(data[i]);
@@ -1247,6 +1264,7 @@ public class MainGUI extends JFrame {
 	
 	static void avgLeaderUpdate() {
 		List<List<String>> update = new ArrayList<>();
+		leader1 = "\n\n\n\nName \t\t\t Average\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\average_questions_leaderboard");
 		for (List<String> player : update) {
 			leader1 = leader1 + (player.get(0) + " -                \t\t"+player.get(1)+"\n");
@@ -1257,6 +1275,7 @@ public class MainGUI extends JFrame {
 
 	static void gamesWonUpdate() {
 		List<List<String>> update = new ArrayList<>();
+		leader2 = "\n\n\n\nName \t\t\t Won\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\games_won_leaderboard");
 		for (List<String> player : update) {
 			leader2 = leader2 + (player.get(0) + " -                \t\t"+player.get(1)+"\n");
@@ -1274,6 +1293,15 @@ public class MainGUI extends JFrame {
 		characterButtons[15].setVisible(nah);
 		characterButtons[16].setVisible(nah);
 		characterButtons[17].setVisible(nah);
+	}
+
+	static void resetCharacter() {
+		questionList.removeAllItems();
+		for(int i = 0; i < 24; i++){
+			String name = Characters.get(i);
+			String namepicture = "/resources/characters/" + name + ".png"; 
+			characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+		}
 	}
 
 	static class enterButton implements ActionListener {

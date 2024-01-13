@@ -98,4 +98,13 @@ public class TextFileWriter {
             e.printStackTrace();
         }
     }
+
+    public void appendToFile(String line) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+            writer.write(line);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -11,6 +11,7 @@ package common;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HandleScores {
 
@@ -35,6 +36,8 @@ public class HandleScores {
     public void processGameResult(String playerName, int questionsAsked, boolean isWin) {
         if (isWin) {
             updateLeaderboards(playerName, questionsAsked);
+            sortWinsLeaderboard();
+            sortAverageQuestionsLeaderboard();
             TextFileWriter.writeLeaderboard("src\\resources\\games_won_leaderboard", winsLeaderboard);
             TextFileWriter.writeLeaderboard("src\\resources\\average_questions_leaderboard", averageQuestionsLeaderboard);
         }
@@ -55,6 +58,7 @@ public class HandleScores {
                 player.set(1, String.valueOf(wins + 1));
                 break;
             }
+        
         }
         
         if (!playerExists) {
@@ -101,6 +105,18 @@ public class HandleScores {
         for (List<String> player : averageQuestionsLeaderboard) {
             System.out.println(player.get(0) + ": " + player.get(1) + " average questions");
         }
+    }
+
+    public void sortWinsLeaderboard() {
+        Collections.sort(winsLeaderboard, (a, b) -> Integer.parseInt(b.get(1)) - Integer.parseInt(a.get(1)));
+    }
+
+    public void sortAverageQuestionsLeaderboard() {
+        Collections.sort(averageQuestionsLeaderboard, (a, b) -> {
+            double avgA = Double.parseDouble(a.get(1));
+            double avgB = Double.parseDouble(b.get(1));
+            return Double.compare(avgA, avgB);
+        });
     }
     
 }
