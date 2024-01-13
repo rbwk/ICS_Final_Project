@@ -49,187 +49,46 @@ public class TextFileReader {
         this.questions = new ArrayList<>();
     }
 
-    public void readFile() { // Very Disgusting way but it works so don't complain
+    private void processCharacterData(BufferedReader reader) throws IOException {
+        name.add(reader.readLine());
+        gender.add(reader.readLine());
+        eye_color.add(reader.readLine());
+        skin_tone.add(reader.readLine());
+        hair_color.add(reader.readLine());
+        facial_hair.add(Boolean.parseBoolean(reader.readLine()));
+        glasses.add(Boolean.parseBoolean(reader.readLine()));
+        showing_teeth.add(Boolean.parseBoolean(reader.readLine()));
+        wearing_hat.add(Boolean.parseBoolean(reader.readLine()));
+        hair_length.add(reader.readLine());
+        piercings.add(Boolean.parseBoolean(reader.readLine()));
+    }
+
+    public void readFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if (filePath == "src\\resources\\data.txt") {
-                    name.add(line);
-                    line = reader.readLine();
-                    gender.add(line);
-                    line = reader.readLine();
-                    eye_color.add(line);
-                    line = reader.readLine();
-                    skin_tone.add(line);
-                    line = reader.readLine();
-                    hair_color.add(line);
-                    line = reader.readLine();
-                    facial_hair.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    glasses.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    showing_teeth.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    wearing_hat.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    hair_length.add(line);
-                    line = reader.readLine();
-                    piercings.add(Boolean.parseBoolean(line));
-
-                } 
-                if (filePath == "src\\resources\\questions.txt") {
-                    questions.add(line);
+                switch (filePath) {
+                    case "src\\resources\\data.txt":
+                    case "src\\resources\\p1_characters_remaining.txt":
+                    case "src\\resources\\p2_characters_remaining.txt":
+                    case "src\\resources\\p2choice.txt":
+                    case "src\\resources\\p1choice.txt":
+                    case "src\\resources\\p2_characters_removed.txt":
+                    case "src\\resources\\p1_characters_removed.txt":
+                        processCharacterData(reader);
+                        break;
+                    case "src\\resources\\questions.txt":
+                    case "src\\resources\\p2_questions_remaining.txt":
+                    case "src\\resources\\p1_questions_remaining.txt":
+                        questions.add(line);
+                        break;
                 }
-                if (filePath == "src\\resources\\p2_questions_remaining.txt") {
-                    questions.add(line);
-                }
-                if (filePath == "src\\resources\\p1_questions_remaining.txt") {
-                    questions.add(line);
-                }
-                if (filePath == "src\\resources\\p1_characters_remaining.txt") {
-                    name.add(line);
-                    line = reader.readLine();
-                    gender.add(line);
-                    line = reader.readLine();
-                    eye_color.add(line);
-                    line = reader.readLine();
-                    skin_tone.add(line);
-                    line = reader.readLine();
-                    hair_color.add(line);
-                    line = reader.readLine();
-                    facial_hair.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    glasses.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    showing_teeth.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    wearing_hat.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    hair_length.add(line);
-                    line = reader.readLine();
-                    piercings.add(Boolean.parseBoolean(line));
-                }
-                if (filePath == "src\\resources\\p2_characters_remaining.txt") {
-                    name.add(line);
-                    line = reader.readLine();
-                    gender.add(line);
-                    line = reader.readLine();
-                    eye_color.add(line);
-                    line = reader.readLine();
-                    skin_tone.add(line);
-                    line = reader.readLine();
-                    hair_color.add(line);
-                    line = reader.readLine();
-                    facial_hair.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    glasses.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    showing_teeth.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    wearing_hat.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    hair_length.add(line);
-                    line = reader.readLine();
-                    piercings.add(Boolean.parseBoolean(line));
-                }
-                if (filePath == "src\\resources\\p2choice.txt") {
-                    name.add(line);
-                    line = reader.readLine();
-                    gender.add(line);
-                    line = reader.readLine();
-                    eye_color.add(line);
-                    line = reader.readLine();
-                    skin_tone.add(line);
-                    line = reader.readLine();
-                    hair_color.add(line);
-                    line = reader.readLine();
-                    facial_hair.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    glasses.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    showing_teeth.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    wearing_hat.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    hair_length.add(line);
-                    line = reader.readLine();
-                    piercings.add(Boolean.parseBoolean(line));
-                }
-                if (filePath == "src\\resources\\p1choice.txt") {
-                    name.add(line);
-                    line = reader.readLine();
-                    gender.add(line);
-                    line = reader.readLine();
-                    eye_color.add(line);
-                    line = reader.readLine();
-                    skin_tone.add(line);
-                    line = reader.readLine();
-                    hair_color.add(line);
-                    line = reader.readLine();
-                    facial_hair.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    glasses.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    showing_teeth.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    wearing_hat.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    hair_length.add(line);
-                    line = reader.readLine();
-                    piercings.add(Boolean.parseBoolean(line));
-                }
-                if (filePath == "src\\resources\\p2_characters_removed.txt") {
-                    name.add(line);
-                    line = reader.readLine();
-                    gender.add(line);
-                    line = reader.readLine();
-                    eye_color.add(line);
-                    line = reader.readLine();
-                    skin_tone.add(line);
-                    line = reader.readLine();
-                    hair_color.add(line);
-                    line = reader.readLine();
-                    facial_hair.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    glasses.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    showing_teeth.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    wearing_hat.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    hair_length.add(line);
-                    line = reader.readLine();
-                    piercings.add(Boolean.parseBoolean(line));
-                }
-                if (filePath == "src\\resources\\p1_characters_removed.txt") {
-                    name.add(line);
-                    line = reader.readLine();
-                    gender.add(line);
-                    line = reader.readLine();
-                    eye_color.add(line);
-                    line = reader.readLine();
-                    skin_tone.add(line);
-                    line = reader.readLine();
-                    hair_color.add(line);
-                    line = reader.readLine();
-                    facial_hair.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    glasses.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    showing_teeth.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    wearing_hat.add(Boolean.parseBoolean(line));
-                    line = reader.readLine();
-                    hair_length.add(line);
-                    line = reader.readLine();
-                    piercings.add(Boolean.parseBoolean(line));
-                }
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     public ArrayList<String> getname() {
         return name;
