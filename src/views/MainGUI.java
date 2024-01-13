@@ -1,7 +1,7 @@
 /**ICS4U Final Project: Guess Who?
  * Nathan Chu, Victoria Chi, Aryan Alipanahi
  * Jan 12, 2024
- */
+  */
 package views;
 
 import java.awt.Color;
@@ -41,7 +41,7 @@ import common.GameCharacter;
 
 public class MainGUI extends JFrame {
 
-	// public static MainAI aiPlayer; // AI player instance
+	// ublic static MainAI aiPlayer; // AI player instance
 
 	static MainAI aiPlayer = new MainAI(1); // Defauly aiPlayer defaulty
 	private static ArrayList<GameCharacter> characters;
@@ -709,19 +709,22 @@ public class MainGUI extends JFrame {
 
 	static class startButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			mainPanel.setVisible(false); // close main screen and show panel to select gamemode
+			mainPanel.setVisible(false);
 			selectorPanel.setVisible(true);
 			exitPanel.setVisible(false);
-			game.restartGame(); // reset the game
+			game.restartGame();
 			game.initializeGame();
 			p1_character = null;
 			p2_character = null;
 			p1_ongoing = true;
 			p2_select = false;
+			guess1 = false;
+			guess2 = false;
 			p1_questions.readFile();
 			Questions = p1_questions.getQuestions(); // Testing Purposes only
 			data = Questions.toArray(new String[Questions.size()]);
-			questionList.addItem("Guess Character"); // read questions from a file to add to dropdown menu
+
+			questionList.addItem("Guess Character");
 			for (int i = 0; i < data.length; i++) {
 				questionList.addItem(data[i]);
 			}
@@ -886,9 +889,8 @@ public class MainGUI extends JFrame {
 
 	static class charactersButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			JButton clickedButton = (JButton) e.getSource(); // find out which character the player selected
-			String FilePath = clickedButton.getIcon().toString(); // get file name of the player icon which contains the
-																	// character's name
+			JButton clickedButton = (JButton) e.getSource();
+			String FilePath = clickedButton.getIcon().toString();
 			File file = new File(FilePath);
 			fileName = file.getName();
 			int index = fileName.lastIndexOf(".png");
@@ -898,31 +900,37 @@ public class MainGUI extends JFrame {
 
 	static class characterConfirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (guess1 == true) { // if character screen is being displayed for a guess, the game will end and
-									// display end game screen
+			if (guess1 == true) {
 				playerselectionPanel.setVisible(false);
 				endGamePanel.setVisible(true);
-			} else { // character screen is being displayed before a game starts
+				if(p2_character == fileName){
+					pvc_win = true;
+					resultLabel.setText("YOU WIN!!!!");
+				}else{
+					pvc_win = false;
+					resultLabel.setText("YOU LOST!!!");
+				}
+			} else {
 				if (pvpMode) {
-					if (p1_ongoing) { // if pvp and it's player 1's turn to choose their character
-						p1_character = fileName; // set their character
-						p1_ongoing = false; // switch turn to p2
-						player2_nextPanel.setVisible(true); // display panel for player 2
+					if (p1_ongoing) {
+						p1_character = fileName;
+						p1_ongoing = false;
+						player2_nextPanel.setVisible(true);
 						playerselectionPanel.setVisible(false);
 						p2_select = true;
 						game.characterChoice(1, p1_character);
 					} else {
-						p2_character = fileName; // set character for p2
-						p1_ongoing = true; // switch to p1 turn
-						gameSetCharacterScreen(); // set up game screen
+						p2_character = fileName;
+						p1_ongoing = true;
+						gameSetCharacterScreen();
 						playerselectionPanel.setVisible(false);
-						player1_nextPanel.setVisible(true); // display screen for p1
+						player1_nextPanel.setVisible(true);
 						game.characterChoice(2, p2_character);
 					}
-				} else { // if pvc mode, start the game screen
+				} else {
 					playerselectionPanel.setVisible(false);
 					gamePanel.setVisible(true);
-					game.characterChoice(2, p2_character); // is the player p2 in pvc mode and p1 is the computer?
+					game.characterChoice(2, p2_character);
 				}
 			}
 
@@ -931,8 +939,8 @@ public class MainGUI extends JFrame {
 
 	static class confirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			question = questionList.getSelectedItem().toString(); // turn the selected question to ask into a string
-			if (question.equals("Guess Character")) { // if the question selected was to guess character
+			question = questionList.getSelectedItem().toString();
+			if (question.equals("Guess Character")) {
 				if (p1_ongoing) {
 					guess1 = true;
 
@@ -966,7 +974,7 @@ public class MainGUI extends JFrame {
 						p1_ongoing = false;
 						gameSetCharacterScreen();
 						System.out.print("Player 1 - "); // Testing
-					} else { // PVC Mode thing
+					} else { //   PVC Mode thing
 
 						p1_questionAsked = question;
 						p1_ongoing = true;
