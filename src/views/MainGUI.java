@@ -740,7 +740,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			endGamePanel.setVisible(false);
 			mainPanel.setVisible(true);
-			game.updateScores(enterNameLabel.getText(), amountCount, pvc_win);
+			game.updateScores(playerName, amountCount, pvc_win);
 			game.restartGame();
 		}
 	}
@@ -749,7 +749,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			endGamePanel.setVisible(false);
 			leaderboardPanel.setVisible(true);
-			game.updateScores(enterNameLabel.getText(), amountCount, pvc_win);
+			game.updateScores(playerName, amountCount, pvc_win);
 			game.restartGame();
 		}
 	}
@@ -1220,7 +1220,7 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			namePanel.setVisible(false);
 			difficultyPanel.setVisible(true);
-			playerName = enterNameLabel.getText();
+			playerName = nameTextField.getText();
 		}
 	}
 
