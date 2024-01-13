@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -982,6 +981,8 @@ public class MainGUI extends JFrame {
 
 						result = game.checkAnswer(p1_questionAsked, 1);
 
+						gameUpdateCharacter();
+
 						System.out.println("Player Q - " + p1_questionAsked);
 						System.out.println("Result - " + result);
 
@@ -1151,7 +1152,7 @@ public class MainGUI extends JFrame {
 	}
 
 	static void gameSetCharacterScreen() {
-		System.out.println("P1 Q - " + p1_questionAsked);
+		System.out.println("chara Q - " + p1_questionAsked);
 		System.out.println("P2 Q - " + p2_questionAsked);
 
 		if (!pvpMode) {
@@ -1168,6 +1169,27 @@ public class MainGUI extends JFrame {
 			Image newimg = image.getScaledInstance(283, 375, java.awt.Image.SCALE_SMOOTH);
 			imageIcon = new ImageIcon(newimg);
 			player_character.setIcon(imageIcon);
+		}
+	}
+
+	static void gameUpdateCharacter() {
+		if(!pvpMode){
+			TextFileReader chara = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
+			chara.readFile();
+			ArrayList<String> check = new ArrayList<String>();
+			check = chara.getname();
+			int count = 0;
+			for(int i = 0; i < Characters.size(); i++){
+				String chr = Characters.get(i);
+				if(check.get(count).equals(chr)){
+					count++;
+					String namepicture = "/resources/characters/" + chr + ".png";
+					characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+				}else{
+					String namepicture = "/resources/eliminated_characters/elim_" + chr + ".png";
+					characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+				}
+			}
 		}
 	}
 
