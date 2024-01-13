@@ -17,7 +17,12 @@ public class Initialization {
     private static final String p1ChoicePath = "src\\resources\\p1choice.txt"; // Path to player 2 character storage file
     private static final String p1QuestionsPath = "src\\resources\\p1_questions_remaining.txt"; // Path to player 1 character storage file.
     private static final String p2QuestionsPath = "src\\resources\\p2_questions_remaining.txt"; // Path to player 1 character storage file.
+    private static final String p1EliminatedPath = "src\\resources\\p1_characters_removed.txt"; // Path to player 1 character storage file.
+    private static final String p2EliminatedPath = "src\\resources\\p2_characters_removed.txt"; // Path to player 1 character storage file.
 
+    /**
+     * Method to initialize the game.
+     */
     public static void initializeGame() {
         TextFileReader reader = new TextFileReader(statePath);
         if (!reader.readInitializationState()) {
@@ -31,7 +36,9 @@ public class Initialization {
         }
     }
 
-
+    /**
+     * Method for initializing the question lists for both players
+     */
     private static void initializeQuestions() {
         // Initialize TextFileReader for questions
         TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt");
@@ -79,6 +86,10 @@ public class Initialization {
 
         writer.writeFile(characterStrings);
     }
+
+    /**
+     * Method to reset the game and clear all temporary files of contents for reuse in the next round.
+     */
     public static void resetGame() {
         TextFileWriter writer = new TextFileWriter(p1Path); // Path to player 1's remaining characters file
         writer.clearFile();
@@ -94,6 +105,11 @@ public class Initialization {
         writer.clearFile();
         writer = new TextFileWriter(p2QuestionsPath); // Path to player 2's questions file
         writer.clearFile();
+        writer = new TextFileWriter(p1EliminatedPath);  // Path to player 1's eliminated file
+        writer.clearFile();
+        writer = new TextFileWriter(p2EliminatedPath); // Path to player 2's eliminated file
+        writer.clearFile();
+
 
     }
 
