@@ -111,6 +111,8 @@ public class MainGUI extends JFrame {
 
 	private static JLabel enterNameLabel = new JLabel();
 	private static JTextField nameTextField = new JTextField(20);
+	private static JLabel instructionsTitle = new JLabel("HOW TO PLAY");
+	private static JLabel instructionsLabel = new JLabel();
 
 	private static TextFileReader characterReader = new TextFileReader("src\\resources\\data.txt"); // Testing Purposes
 	private static TextFileReader p1_questions = new TextFileReader("src\\resources\\p1_questions_remaining.txt");
@@ -159,7 +161,7 @@ public class MainGUI extends JFrame {
 	// setting up all GUI elements
 
 	private void initComponents() throws IOException {
-		
+
 		setBackground(Color.WHITE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setUndecorated(true);
@@ -201,12 +203,12 @@ public class MainGUI extends JFrame {
 		leaderboardPanel.add(btnBackLeaderboard);
 
 		JLabel title1 = new JLabel("Average Questions Asked");
-		title1.setBounds( 130, 30, 400, 100);
+		title1.setBounds(130, 30, 400, 100);
 		title1.setFont(new Font("STXihei", Font.PLAIN, 31));
 		leaderboardPanel.add(title1);
 
 		JLabel title2 = new JLabel("Games Won");
-		title2.setBounds( 835, 30, 400, 100);
+		title2.setBounds(835, 30, 400, 100);
 		title2.setFont(new Font("STXihei", Font.PLAIN, 31));
 		leaderboardPanel.add(title2);
 
@@ -218,15 +220,13 @@ public class MainGUI extends JFrame {
 		avgLeader.setText(leader1);
 		avgLeaderUpdate();
 
-		gamesWon.setBounds(620,10,600,800);
+		gamesWon.setBounds(620, 10, 600, 800);
 		gamesWon.setBackground(Color.LIGHT_GRAY);
 		gamesWon.setEditable(false);
 		gamesWon.setFont(new Font("STXihei", Font.PLAIN, 20));
 		leaderboardPanel.add(gamesWon);
 		gamesWon.setText(leader2);
 		gamesWonUpdate();
-
-		
 
 		/////////////////////////////////// Exit
 		/////////////////////////////////// Panel///////////////////////////////////
@@ -266,7 +266,6 @@ public class MainGUI extends JFrame {
 		btnLeaderboard.setFont(new Font("STXihei", Font.PLAIN, 31));
 		btnLeaderboard.addActionListener(new leaderboardButton());
 		exitPanel.add(btnLeaderboard);
-
 
 		// button that displays the credits
 		JButton btnCredits = new JButton("CREDITS");
@@ -385,8 +384,6 @@ public class MainGUI extends JFrame {
 		btnBackName.setBounds(1250, 20, 100, 100);
 		btnBackName.addActionListener(new backNameButton());
 		namePanel.add(btnBackName);
-
-
 
 		/////////////////////////////////// Credits
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -759,7 +756,7 @@ public class MainGUI extends JFrame {
 			guess1 = false;
 			guess2 = false;
 			p1_questions.readFile();
-			//Questions = p1_questions.getQuestions(); // Testing Purposes only
+			// Questions = p1_questions.getQuestions(); // Testing Purposes only
 			data = Questions.toArray(new String[Questions.size()]);
 			questionList.removeAllItems();
 			questionList.addItem("Guess Character");
@@ -893,7 +890,6 @@ public class MainGUI extends JFrame {
 
 			Questions = questions.getQuestions();
 			questionList.removeAllItems();
-			
 
 		}
 	}
@@ -969,12 +965,12 @@ public class MainGUI extends JFrame {
 			if (guess1 == true) {
 				playerselectionPanel.setVisible(false);
 				endGamePanel.setVisible(true);
-				System.out.println("Character - "+p2_character);
-				System.out.println("File - "+fileName);
-				if(p2_character.equals(fileName)){
+				System.out.println("Character - " + p2_character);
+				System.out.println("File - " + fileName);
+				if (p2_character.equals(fileName)) {
 					pvc_win = true;
 					resultLabel.setText("YOU WIN!!!!");
-				}else{
+				} else {
 					pvc_win = false;
 					resultLabel.setText("YOU LOST!!!");
 				}
@@ -1043,7 +1039,7 @@ public class MainGUI extends JFrame {
 						p1_ongoing = false;
 						gameSetCharacterScreen();
 						System.out.print("Player 1 - "); // Testing
-					} else { //   PVC Mode thing
+					} else { // PVC Mode thing
 						amountCount++;
 						p1_questionAsked = question;
 						p1_ongoing = true;
@@ -1246,14 +1242,14 @@ public class MainGUI extends JFrame {
 	}
 
 	static void gameUpdateCharacter() {
-		if(!pvpMode){
+		if (!pvpMode) {
 			TextFileReader chara = new TextFileReader("src\\resources\\p1_characters_removed.txt");
 			chara.readFile();
 			ArrayList<String> check = new ArrayList<String>();
 			check = chara.getname();
-			for(int x = 0; x < check.size(); x++) {
-				for(int i = 0; i < Characters.size(); i++) {
-					if(Characters.get(i).equals(check.get(x))){
+			for (int x = 0; x < check.size(); x++) {
+				for (int i = 0; i < Characters.size(); i++) {
+					if (Characters.get(i).equals(check.get(x))) {
 						String namepicture = "/resources/eliminated_characters/elim_" + check.get(x) + ".png";
 						characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
 					}
@@ -1261,16 +1257,16 @@ public class MainGUI extends JFrame {
 			}
 		}
 	}
-	
+
 	static void avgLeaderUpdate() {
 		List<List<String>> update = new ArrayList<>();
 		leader1 = "\n\n\n\nName \t\t\t Average\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\average_questions_leaderboard");
 		for (List<String> player : update) {
-			leader1 = leader1 + (player.get(0) + " -                \t\t"+player.get(1)+"\n");
+			leader1 = leader1 + (player.get(0) + " -                \t\t" + player.get(1) + "\n");
 		}
 		avgLeader.setText(leader1);
-		
+
 	}
 
 	static void gamesWonUpdate() {
@@ -1278,10 +1274,10 @@ public class MainGUI extends JFrame {
 		leader2 = "\n\n\n\nName \t\t\t Won\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\games_won_leaderboard");
 		for (List<String> player : update) {
-			leader2 = leader2 + (player.get(0) + " -                \t\t"+player.get(1)+"\n");
+			leader2 = leader2 + (player.get(0) + " -                \t\t" + player.get(1) + "\n");
 		}
 		gamesWon.setText(leader2);
-		
+
 	}
 
 	static void opAskingHide(boolean nah) {
@@ -1297,9 +1293,9 @@ public class MainGUI extends JFrame {
 
 	static void resetCharacter() {
 		questionList.removeAllItems();
-		for(int i = 0; i < 24; i++){
+		for (int i = 0; i < 24; i++) {
 			String name = Characters.get(i);
-			String namepicture = "/resources/characters/" + name + ".png"; 
+			String namepicture = "/resources/characters/" + name + ".png";
 			characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
 		}
 	}
