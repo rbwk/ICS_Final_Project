@@ -1,0 +1,5 @@
+1. Each player has a character that their opponent tries to guess
+2. Players take turns asking each other yes/no questions about their opponent's character
+3. Characters are eliminated from the board based on the answers to the questions
+4. If a player guesses their opponent's character correctly, they win
+5. If they guess incorrectly, they automatically lose
