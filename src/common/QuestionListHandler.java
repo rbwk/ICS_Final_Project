@@ -13,7 +13,15 @@ public class QuestionListHandler {
     private static final String p1QuestionsPath = "src\\resources\\p1_questions_remaining.txt"; 
     private static final String p2QuestionsPath = "src\\resources\\p2_questions_remaining.txt";
 
-    
+    /**
+     * Method to update the list of remaining questions that the user has. 
+     * Takes the users question asked and processes the relevant changes to their list of remaining questions depending
+     * on the result of the question asked.
+     * 
+     * @param questionAsked  // The question asked
+     * @param player  // The player who posed the question
+     * @param result  //  The result of the question asked (true or false)
+     */
     public static void updateQuestionsList(String questionAsked, int player, boolean result) {
         String questionsPath = (player == 1) ? p1QuestionsPath : p2QuestionsPath;
         TextFileReader questionReader = new TextFileReader(questionsPath);
@@ -32,6 +40,15 @@ public class QuestionListHandler {
         questionWriter.writeQuestions(questions);
     }
 
+
+    /**
+     * Method to store any related questions to the question asked in an arraylist for removal from players
+     * bank of remaining questions.
+     * 
+     * @param question // The question that was asked
+     * @param result // The result of the question asked (true or false)
+     * @return  // Returns filled arraylist
+     */
     private static ArrayList<String> getRelatedQuestions(String question, boolean result) {
         ArrayList<String> relatedQuestions = new ArrayList<>();
         switch (question) {

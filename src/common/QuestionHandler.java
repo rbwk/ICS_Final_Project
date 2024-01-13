@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class QuestionHandler {
-	//protected static int diff; // Difficulty level (CURRENTLY UNUSED)
-    //protected static ArrayList<String> questions; // List of questions (CURRENTLY UNUSED)
     private static ArrayList<GameCharacter> characters; // Players list of remaining characters.
     protected static String[] questionAsked = new String[3]; // The array housing the question and the player asking, passed into this class.
     protected static String playerQuestion; // The question storage.
@@ -37,7 +35,6 @@ public class QuestionHandler {
     public static void handleQuestions() {
         characters = new ArrayList<>();
         eliminatedCharacters = new ArrayList<>();
-        //questions = new ArrayList<>();
         String playerAsking = questionAsked[1];
         String result = questionAsked[2];
         String playerQuestion = questionAsked[0];
@@ -97,24 +94,6 @@ public class QuestionHandler {
         }
 
         
-
-        // Initialize TextFileReader for questions   (CURRENTLY UNUSED)
-        //TextFileReader questionReader = new TextFileReader("src\\resources\\questions.txt");
-        //questionReader.readFile();
-        //questions = questionReader.getQuestions();                
- 
-            /**
-             * Group of if statements responsible for question handling.
-             * Written off of the assumption that question asked by user will be given to this program as a string.
-             * "Is the person a male?"   - Like so
-             * This program will not remove questions from the list of options available to it, 
-             * instead it will assume the class that called this class will already handle this functionality. 
-             * Keep in mind, if you wish to add this functionality into this class instead
-             * the option to is present and should be very simple, for simplicity sake in writing the logic, and because
-             * the GUI programs and other game logic programs will probably need to filter the list of questions remaining, 
-             * that was not implemented here.
-             * 
-            */
         //First Question
         if(playerQuestion.equals("Is the person a male?")){
             // Iterator of characters array to remove objects without outofbounds error.
@@ -707,6 +686,12 @@ public class QuestionHandler {
         }           
            
     }
+
+    /**
+     * Method that writes the remaining list of characters to txt for storage
+     * 
+     * @param filePath // Path of the players characterlist
+     */
     public static void writeCharactersToFile(String filePath) {
         TextFileWriter writer = new TextFileWriter(filePath);
         ArrayList<String> characterStrings = new ArrayList<>();
@@ -718,7 +703,12 @@ public class QuestionHandler {
         writer.writeFile(characterStrings);
     }
 
-        public static void writeEliminatedCharactersToFile(String filePath) {
+    /**
+     * Method that writes the list of eliminated characters to txt for storage.
+     * 
+     * @param filePath  // Path of the players eliminated characterlist.
+     */
+    public static void writeEliminatedCharactersToFile(String filePath) {
         TextFileWriter writer = new TextFileWriter(filePath);
         ArrayList<String> characterStrings = new ArrayList<>();
 
@@ -730,7 +720,15 @@ public class QuestionHandler {
     }
 
 
-    // Checks the question asked by user and returns the true or false statement depending on the result.
+    /**
+     * Checks the question asked by user and returns the true or false statement depending on the result.
+     * This method is primarily used in PVP where both players characters are pre stored in game logic.
+     * Also used to return answers to questions asked about AI's character by player in PVC mode. 
+     * 
+     * @param playerQuestion // Question asked by the user
+     * @param player  // Player who asked the question
+     * @return // Returns a boolean true or false value. 
+     */
     public static boolean checkQuestion(String playerQuestion, int player){
         if(player == 1){
             getCharacters("src\\resources\\p2choice.txt");
@@ -1029,8 +1027,11 @@ public class QuestionHandler {
         return false;
     }
 
-
-    // For checkQuestion method, handleQuestions method has its own file reader.
+    /**
+     * Method used by checkQuestion, stores players characterlist in an arraylist for use within the class.
+     * 
+     * @param path // Path location of players characterlist.
+     */
     private static void getCharacters(String path) {
         characters = new ArrayList<>();
         TextFileReader characterReader = new TextFileReader(path);
