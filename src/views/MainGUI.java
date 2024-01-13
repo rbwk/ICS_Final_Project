@@ -1,7 +1,7 @@
 /**ICS4U Final Project: Guess Who?
  * Nathan Chu, Victoria Chi, Aryan Alipanahi
  * Jan 12, 2024
- */
+  */
 package views;
 
 import java.awt.Color;
@@ -41,7 +41,7 @@ import common.GameCharacter;
 
 public class MainGUI extends JFrame {
 
-	// public static MainAI aiPlayer; // AI player instance
+	// ublic static MainAI aiPlayer; // AI player instance
 
 	static MainAI aiPlayer = new MainAI(1); // Defauly aiPlayer defaulty
 	private static ArrayList<GameCharacter> characters;
@@ -60,6 +60,7 @@ public class MainGUI extends JFrame {
 	private static JPanel playerselectionPanel = new JPanel();
 	private static JPanel namePanel = new JPanel();
 	private static JPanel endGamePanel = new JPanel();
+	private static JPanel instructionsPanel = new JPanel();
 	private static JPanel player1_nextPanel = new JPanel(); // Panel that shows during player 2 to 1 commision
 	private static JPanel player2_nextPanel = new JPanel(); // Panel that shows during player 1 to 2 commision
 
@@ -68,8 +69,8 @@ public class MainGUI extends JFrame {
 	private static String p2_character = null; // Setting the character that Player 2 chose
 	private static boolean p1_ongoing = true; // Variable the set if the player 1 is controlling or player 2
 	private static boolean p2_select = false; // Recognizing if player 2 need to set character that is being guessed by
-	private static boolean pvc_win = false; //true if character won 
-												// player 1
+	private static boolean pvc_win = false; // true if character won
+											// player 1
 	private static String question = null;
 	private static String p1_questionAsked = null; // question player 1 asks player 2 in a turn
 	private static String p2_questionAsked = null; // question player 2 asks player 1 in a turn
@@ -244,6 +245,19 @@ public class MainGUI extends JFrame {
 		btnStart.addActionListener(new startButton());
 		mainPanel.add(btnStart);
 
+		// button that opens the instructions panel
+		JButton btnInstructions = new JButton(
+				new ImageIcon(MainGUI.class.getResource("/resources/instructions_btn.png")));
+		btnInstructions.addActionListener(new instructionsButton());
+		btnInstructions.setContentAreaFilled(false);
+		btnInstructions.setBounds(100, 20, 100, 100);
+		mainPanel.add(btnInstructions);
+		ImageIcon buttonIcon = new ImageIcon(MainGUI.class.getResource("/resources/instructions_btn.png"));
+		Image image = buttonIcon.getImage();
+		Image newimg = image.getScaledInstance(130, 80, java.awt.Image.SCALE_SMOOTH);
+		buttonIcon = new ImageIcon(newimg);
+		btnInstructions.setIcon(buttonIcon);
+
 		// button that opens up the exit menu
 		JButton btnMenu = new JButton(new ImageIcon(MainGUI.class.getResource("/resources/menu_btn.png")));
 		btnMenu.addActionListener(new menuButton());
@@ -351,6 +365,23 @@ public class MainGUI extends JFrame {
 		btnBackCredits.setBounds(1250, 20, 100, 100);
 		btnBackCredits.addActionListener(new backLeaderboardButton());
 		creditsPanel.add(btnBackCredits);
+
+		/////////////////////////////////// Instructions
+		/////////////////////////////////// Screen///////////////////////////////////
+
+		// shows instructions
+		instructionsPanel.setBounds(0, 0, 1920, 1080);
+		layeredPane.add(instructionsPanel);
+		instructionsPanel.setLayout(null);
+		instructionsPanel.setVisible(false);
+
+		// goes back to the start screen
+		JButton btnBackInstructions = new JButton(
+				new ImageIcon(MainGUI.class.getResource("/resources/back_btn.png")));
+		btnBackInstructions.setContentAreaFilled(false);
+		btnBackInstructions.setBounds(1250, 20, 100, 100);
+		btnBackInstructions.addActionListener(new backInstructionsButton());
+		instructionsPanel.add(btnBackInstructions);
 
 		/////////////////////////////////// Difficulty
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -531,12 +562,12 @@ public class MainGUI extends JFrame {
 		int num = 0;
 		for (int x = 0; x < 4; x++) { // displaying the characters in a 4x6 grid format
 			for (int y = 0; y < 6; y++) {
-				String name = Characters.get(num); //going through the arraylist of names
-				String namepicture = "/resources/characters/" + name + ".png"; //getting the filepath of the charact
-  //create a button for the charactere //displayman rieht gnisu noci s'r
+				String name = Characters.get(num); // going through the arraylist of names
+				String namepicture = "/resources/characters/" + name + ".png"; // getting the filepath of the charact
+				// create a button for the charactere //displayman rieht gnisu noci s'r
 				characterButtons[num] = new JButton();
- //the button icon as the player ico				
- 				characterButtons[num].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+				// the button icon as the player ico
+				characterButtons[num].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
 				characterButtons[num].setBorderPainted(false);
 				int ylocation = 15 + (x) * 200;
 				int xlocation = 15 + (y) * 170;
@@ -622,8 +653,6 @@ public class MainGUI extends JFrame {
 		btnCharacterConfirm.addActionListener(new characterConfirmButton());
 		playerselectionPanel.add(btnCharacterConfirm);
 
-		
-
 		/////////////////////////////////// Adding Characters for Selection Screen
 		/////////////////////////////////// ///////////////////////////////////
 		int num1 = 0;
@@ -652,7 +681,7 @@ public class MainGUI extends JFrame {
 		endGamePanel.setLayout(null);
 		endGamePanel.setVisible(false);
 
-		resultLabel.setBounds( 500, 300, 400, 100); 
+		resultLabel.setBounds(500, 300, 400, 100);
 		resultLabel.setFont(new Font("STXihei", Font.PLAIN, 50));
 		endGamePanel.add(resultLabel);
 
@@ -672,7 +701,6 @@ public class MainGUI extends JFrame {
 		btnToLeaderboard.addActionListener(new finishLeaderboardButton());
 		endGamePanel.add(btnToLeaderboard);
 
-
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { exitPanel, contentPane, layeredPane,
 				btnStart, lbLogo, mainPanel, selectorPanel, btnBackSelector, btnPVP, leaderboardPanel, btnExit,
 				btnLeaderboard, btnCredits, creditsPanel, difficultyPanel, btnEasy, btnMid, btnHard, btnBackDifficulty,
@@ -681,19 +709,22 @@ public class MainGUI extends JFrame {
 
 	static class startButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			mainPanel.setVisible(false); // close main screen and show panel to select gamemode
+			mainPanel.setVisible(false);
 			selectorPanel.setVisible(true);
 			exitPanel.setVisible(false);
-			game.restartGame(); // reset the game
+			game.restartGame();
 			game.initializeGame();
 			p1_character = null;
 			p2_character = null;
 			p1_ongoing = true;
 			p2_select = false;
+			guess1 = false;
+			guess2 = false;
 			p1_questions.readFile();
 			Questions = p1_questions.getQuestions(); // Testing Purposes only
 			data = Questions.toArray(new String[Questions.size()]);
-			questionList.addItem("Guess Character"); // read questions from a file to add to dropdown menu
+
+			questionList.addItem("Guess Character");
 			for (int i = 0; i < data.length; i++) {
 				questionList.addItem(data[i]);
 			}
@@ -858,9 +889,8 @@ public class MainGUI extends JFrame {
 
 	static class charactersButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			JButton clickedButton = (JButton) e.getSource(); // find out which character the player selected
-			String FilePath = clickedButton.getIcon().toString(); // get file name of the player icon which contains the
-																	// character's name
+			JButton clickedButton = (JButton) e.getSource();
+			String FilePath = clickedButton.getIcon().toString();
 			File file = new File(FilePath);
 			fileName = file.getName();
 			int index = fileName.lastIndexOf(".png");
@@ -870,31 +900,37 @@ public class MainGUI extends JFrame {
 
 	static class characterConfirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (guess1 == true) { // if character screen is being displayed for a guess, the game will end and
-									// display end game screen
+			if (guess1 == true) {
 				playerselectionPanel.setVisible(false);
 				endGamePanel.setVisible(true);
-			} else { // character screen is being displayed before a game starts
+				if(p2_character == fileName){
+					pvc_win = true;
+					resultLabel.setText("YOU WIN!!!!");
+				}else{
+					pvc_win = false;
+					resultLabel.setText("YOU LOST!!!");
+				}
+			} else {
 				if (pvpMode) {
-					if (p1_ongoing) { // if pvp and it's player 1's turn to choose their character
-						p1_character = fileName; // set their character
-						p1_ongoing = false; // switch turn to p2
-						player2_nextPanel.setVisible(true); // display panel for player 2
+					if (p1_ongoing) {
+						p1_character = fileName;
+						p1_ongoing = false;
+						player2_nextPanel.setVisible(true);
 						playerselectionPanel.setVisible(false);
 						p2_select = true;
 						game.characterChoice(1, p1_character);
 					} else {
-						p2_character = fileName; // set character for p2
-						p1_ongoing = true; // switch to p1 turn
-						gameSetCharacterScreen(); // set up game screen
+						p2_character = fileName;
+						p1_ongoing = true;
+						gameSetCharacterScreen();
 						playerselectionPanel.setVisible(false);
-						player1_nextPanel.setVisible(true); // display screen for p1
+						player1_nextPanel.setVisible(true);
 						game.characterChoice(2, p2_character);
 					}
-				} else { // if pvc mode, start the game screen
+				} else {
 					playerselectionPanel.setVisible(false);
 					gamePanel.setVisible(true);
-					game.characterChoice(2, p2_character); // is the player p2 in pvc mode and p1 is the computer?
+					game.characterChoice(2, p2_character);
 				}
 			}
 
@@ -903,8 +939,8 @@ public class MainGUI extends JFrame {
 
 	static class confirmButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			question = questionList.getSelectedItem().toString(); // turn the selected question to ask into a string
-			if (question.equals("Guess Character")) { // if the question selected was to guess character
+			question = questionList.getSelectedItem().toString();
+			if (question.equals("Guess Character")) {
 				if (p1_ongoing) {
 					guess1 = true;
 
@@ -946,8 +982,8 @@ public class MainGUI extends JFrame {
 
 						result = game.checkAnswer(p1_questionAsked, 1);
 
-						System.out.println("Player Q - "+p1_questionAsked);
-						System.out.println("Result - "+result);
+						System.out.println("Player Q - " + p1_questionAsked);
+						System.out.println("Result - " + result);
 
 						TextFileReader aiCharcaters = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
 						TextFileReader aiQuestion = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
@@ -975,8 +1011,7 @@ public class MainGUI extends JFrame {
 
 						aiPlayer.updateGameState(characters, aiQuestion.getQuestions());
 						question = aiPlayer.selectQuestion();
-						
-						
+
 						p2_questionAsked = question;
 
 						System.out.println("AI Q - " + question);
@@ -1040,7 +1075,7 @@ public class MainGUI extends JFrame {
 
 	static class opYesButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(question.lastIndexOf("?") != -1){
+			if (question.lastIndexOf("?") != -1) {
 				if (pvpMode) {
 					if (result) {
 						opAskPanel.setVisible(false);
@@ -1064,15 +1099,14 @@ public class MainGUI extends JFrame {
 					for (int i = 0; i < data.length; i++) {
 						questionList.addItem(data[i]);
 					}
-				}	
-			}else{
+				}
+			} else {
 				endGamePanel.setVisible(true);
 				pvc_win = false;
 				gamePanel.setVisible(false);
-				opAskPanel.setVisible(false); 
+				opAskPanel.setVisible(false);
 				resultLabel.setText("YOU LOSE!!!");
 			}
-			
 
 		}
 
@@ -1080,7 +1114,7 @@ public class MainGUI extends JFrame {
 
 	static class opNoButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(question.lastIndexOf("?") != -1){
+			if (question.lastIndexOf("?") != -1) {
 				if (pvpMode) {// PVP Mode Confirming yes
 					if (!result) {
 						opAskPanel.setVisible(false);
@@ -1105,15 +1139,14 @@ public class MainGUI extends JFrame {
 						questionList.addItem(data[i]);
 					}
 				}
-			}else{
+			} else {
 				endGamePanel.setVisible(true);
 				pvc_win = true;
 				gamePanel.setVisible(false);
-				opAskPanel.setVisible(false); 
+				opAskPanel.setVisible(false);
 				resultLabel.setText("You Won!!!");
 			}
 
-			
 		}
 	}
 
@@ -1130,8 +1163,6 @@ public class MainGUI extends JFrame {
 			} else {
 				namepicture = "/resources/characters/" + p2_character + ".png";
 			}
-			// player_character.setIcon(new
-			// ImageIcon(MainGUI.class.getResource(namepicture)));
 			ImageIcon imageIcon = new ImageIcon(MainGUI.class.getResource(namepicture));
 			Image image = imageIcon.getImage();
 			Image newimg = image.getScaledInstance(283, 375, java.awt.Image.SCALE_SMOOTH);
@@ -1163,6 +1194,20 @@ public class MainGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			namePanel.setVisible(false);
 			selectorPanel.setVisible(true);
+		}
+	}
+
+	static class backInstructionsButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			instructionsPanel.setVisible(false);
+			mainPanel.setVisible(true);
+		}
+	}
+
+	static class instructionsButton implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			instructionsPanel.setVisible(true);
+			mainPanel.setVisible(false);
 		}
 	}
 }
