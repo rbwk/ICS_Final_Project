@@ -219,7 +219,7 @@ public class MainGUI extends JFrame {
 		avgLeader.setText(leader1);
 		avgLeaderUpdate();
 
-		gamesWon.setBounds(620,150,600,600);
+		gamesWon.setBounds(620, 150, 600, 600);
 		gamesWon.setBackground(Color.LIGHT_GRAY);
 		gamesWon.setEditable(false);
 		gamesWon.setFont(new Font("STXihei", Font.PLAIN, 20));
@@ -426,10 +426,9 @@ public class MainGUI extends JFrame {
 		instructions.setBounds(10, 11, 1420, 880);
 		instructions.setEditable(false);
 		instructions.setFont(new Font("STXihei", Font.PLAIN, 20));
-		instructions.setText
-		("1. XXX\n2. VVV\n3.ZZZ");
+		instructions.setText(
+				"1. Each player has a character that their opponent tries to guess\n2. Players take turns asking each other yes/no questions about their opponent's character\n3.Characters are eliminated from the board based on the answers to the questions\n4. If a player guesses their opponent's character correctly, they win\n5. If they guess incorrectly, they automatically lose");
 		instructionsPanel.add(instructions);
-
 
 		/////////////////////////////////// Difficulty
 		/////////////////////////////////// Screen///////////////////////////////////
@@ -1276,7 +1275,7 @@ public class MainGUI extends JFrame {
 		leader1 = "Name \t\t\t Average\n\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\average_questions_leaderboard");
 		for (List<String> player : update) {
-			leader1 = leader1 + (player.get(0) + " -                    \t\t"+player.get(1)+"\n");
+			leader1 = leader1 + (player.get(0) + " -                    \t\t" + player.get(1) + "\n");
 		}
 		avgLeader.setText(leader1);
 
@@ -1287,7 +1286,7 @@ public class MainGUI extends JFrame {
 		leader2 = "Name \t\t\t Won\n\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\games_won_leaderboard");
 		for (List<String> player : update) {
-			leader2 = leader2 + (player.get(0) + " -                    \t\t"+player.get(1)+"\n");
+			leader2 = leader2 + (player.get(0) + " -                    \t\t" + player.get(1) + "\n");
 		}
 		gamesWon.setText(leader2);
 
