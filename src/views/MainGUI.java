@@ -1192,6 +1192,7 @@ public class MainGUI extends JFrame {
 			}
 		}
 	}
+	
 
 	static void opAskingHide(boolean nah) {
 		characterButtons[8].setVisible(nah);
