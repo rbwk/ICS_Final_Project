@@ -276,6 +276,14 @@ public class MainGUI extends JFrame {
 		btnCredits.addActionListener(new creditsButton());
 		exitPanel.add(btnCredits);
 
+		JTextArea cred = new JTextArea();
+		cred.setBackground(Color.LIGHT_GRAY);
+		cred.setBounds(500, 400, 400, 200);
+		cred.setEditable(false);
+		cred.setFont(new Font("STXihei", Font.PLAIN, 26));
+		cred.setText("Nathan Chu - GUI+Logic\nVictoria - GUI\nAryan - Logic+AI");
+		creditsPanel.add(cred);
+
 		/////////////////////////////////// Main
 		/////////////////////////////////// Screen///////////////////////////////////
 
@@ -423,7 +431,7 @@ public class MainGUI extends JFrame {
 
 		JTextArea instructions = new JTextArea();
 		instructions.setBackground(Color.LIGHT_GRAY);
-		instructions.setBounds(150, 400, 1100, 200);
+		instructions.setBounds(125, 400, 1150, 200);
 		instructions.setEditable(false);
 		instructions.setFont(new Font("STXihei", Font.PLAIN, 26));
 		instructions.setText(
@@ -894,14 +902,22 @@ public class MainGUI extends JFrame {
 	static class PVPButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			selectorPanel.setVisible(false);
+			resetCharacter();
 			pvpMode = true;
 			playerselectionPanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
 
-			Questions = questions.getQuestions();
 			questionList.removeAllItems();
+			TextFileReader check_questions = new TextFileReader("src\\resources\\questions.txt");
+			check_questions.readFile();
+			Questions = check_questions.getQuestions();
+			data = Questions.toArray(new String[Questions.size()]);
+			questionList.addItem("Guess Character");
+			for (int i = 0; i < data.length; i++) {
+				questionList.addItem(data[i]);
+			}
 
 		}
 	}
@@ -986,7 +1002,9 @@ public class MainGUI extends JFrame {
 					pvc_win = false;
 					resultLabel.setText("YOU LOST!!!");
 				}
-			} else {
+			}else if(guess2 == true){ 
+			
+			}else {
 				if (pvpMode) {
 					if (p1_ongoing) {
 						p1_character = fileName;
@@ -1040,6 +1058,7 @@ public class MainGUI extends JFrame {
 						TextFileReader check_questions = new TextFileReader(
 								"src\\resources\\p2_questions_remaining.txt");
 						check_questions.readFile();
+						gameUpdateCharacter();
 						Questions = check_questions.getQuestions();
 						data = Questions.toArray(new String[Questions.size()]);
 						questionList.addItem("Guess Character");
@@ -1254,6 +1273,7 @@ public class MainGUI extends JFrame {
 	}
 
 	static void gameUpdateCharacter() {
+		resetCharacter();
 		if (!pvpMode) {
 			TextFileReader chara = new TextFileReader("src\\resources\\p1_characters_removed.txt");
 			chara.readFile();
@@ -1267,6 +1287,34 @@ public class MainGUI extends JFrame {
 					}
 				}
 			}
+		}else{
+			if(p1_ongoing){
+				TextFileReader chara = new TextFileReader("src\\resources\\p2_characters_removed.txt");
+				chara.readFile();
+				ArrayList<String> check = new ArrayList<String>();
+				check = chara.getname();
+				for (int x = 0; x < check.size(); x++) {
+					for (int i = 0; i < Characters.size(); i++) {
+						if (Characters.get(i).equals(check.get(x))) {
+							String namepicture = "/resources/eliminated_characters/elim_" + check.get(x) + ".png";
+							characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+						}
+					}
+				}
+			}else{
+				TextFileReader chara = new TextFileReader("src\\resources\\p1_characters_removed.txt");
+				chara.readFile();
+				ArrayList<String> check = new ArrayList<String>();
+				check = chara.getname();
+				for (int x = 0; x < check.size(); x++) {
+					for (int i = 0; i < Characters.size(); i++) {
+						if (Characters.get(i).equals(check.get(x))) {
+							String namepicture = "/resources/eliminated_characters/elim_" + check.get(x) + ".png";
+							characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -1275,7 +1323,7 @@ public class MainGUI extends JFrame {
 		leader1 = "Name \t\t\t Average\n\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\average_questions_leaderboard");
 		for (List<String> player : update) {
-			leader1 = leader1 + (player.get(0) + " -                    \t\t" + player.get(1) + "\n");
+			leader1 = leader1 + (player.get(0) + " -                        \t\t" + player.get(1) + "\n");
 		}
 		avgLeader.setText(leader1);
 
@@ -1286,7 +1334,7 @@ public class MainGUI extends JFrame {
 		leader2 = "Name \t\t\t Won\n\n";
 		update = TextFileReader.readLeaderboard("src\\resources\\games_won_leaderboard");
 		for (List<String> player : update) {
-			leader2 = leader2 + (player.get(0) + " -                    \t\t" + player.get(1) + "\n");
+			leader2 = leader2 + (player.get(0) + " -                        \t\t" + player.get(1) + "\n");
 		}
 		gamesWon.setText(leader2);
 
