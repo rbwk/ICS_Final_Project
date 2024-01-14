@@ -423,9 +423,9 @@ public class MainGUI extends JFrame {
 
 		JTextArea instructions = new JTextArea();
 		instructions.setBackground(Color.LIGHT_GRAY);
-		instructions.setBounds(10, 11, 1420, 880);
+		instructions.setBounds(150, 400, 1100, 200);
 		instructions.setEditable(false);
-		instructions.setFont(new Font("STXihei", Font.PLAIN, 20));
+		instructions.setFont(new Font("STXihei", Font.PLAIN, 26));
 		instructions.setText(
 				"1. Each player has a character that their opponent tries to guess\n2. Players take turns asking each other yes/no questions about their opponent's character\n3.Characters are eliminated from the board based on the answers to the questions\n4. If a player guesses their opponent's character correctly, they win\n5. If they guess incorrectly, they automatically lose");
 		instructionsPanel.add(instructions);
