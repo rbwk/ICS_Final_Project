@@ -118,6 +118,7 @@ public class MainGUI extends JFrame {
 	private static TextFileReader questions = new TextFileReader("src\\resources\\questions.txt");
 	private static ArrayList<String> Questions = new ArrayList<String>(); // Testing Purposes only
 	private static String[] data; // Testing Purposes only
+	private static long oetime;
 
 	/**
 	 * Launch the application.
@@ -663,9 +664,11 @@ public class MainGUI extends JFrame {
 		scorePanel.add(player_character);
 
 		// panel that shows how many characters the opponent has left
-		enemyPanel.setBackground(Color.RED);
 		enemyPanel.setBounds(45, 650, 340, 220);
 		scorePanel.add(enemyPanel);
+
+		JLabel time = new JLabel();
+		time.setText(String.valueOf(updateTime()));
 
 		/////////////////////////////////// Question Screen
 		/////////////////////////////////// ///////////////////////////////////
@@ -870,11 +873,12 @@ public class MainGUI extends JFrame {
 	static class EasyButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
-			playerselectionPanel.setVisible(true);
+			gamePanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
 			aiPlayer.setDifficulty(3);
+			oetime = System.currentTimeMillis();
 		}
 	}
 
@@ -882,11 +886,12 @@ public class MainGUI extends JFrame {
 	static class MedButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
-			playerselectionPanel.setVisible(true);
+			gamePanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
 			aiPlayer.setDifficulty(2);
+			oetime = System.currentTimeMillis();
 		}
 	}
 
@@ -894,11 +899,12 @@ public class MainGUI extends JFrame {
 	static class HardButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
-			playerselectionPanel.setVisible(true);
+			gamePanel.setVisible(true);
 			characterButtons[15].setVisible(true);
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
 			aiPlayer.setDifficulty(1);
+			oetime = System.currentTimeMillis();
 		}
 	}
 
@@ -1393,6 +1399,11 @@ public class MainGUI extends JFrame {
 			instructionsPanel.setVisible(true);
 			mainPanel.setVisible(false);
 		}
+	}
+
+	static long updateTime() {
+		System.out.println(oetime - System.currentTimeMillis());
+		return oetime - System.currentTimeMillis();
 	}
 
 }
