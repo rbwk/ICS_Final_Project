@@ -963,6 +963,7 @@ public class MainGUI extends JFrame {
 			characterButtons[16].setVisible(true);
 			characterButtons[17].setVisible(true);
 			gameExitPanel.setVisible(false);
+			opAskPanel.setVisible(false);
 		}
 	}
 
