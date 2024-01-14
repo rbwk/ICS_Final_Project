@@ -434,8 +434,7 @@ public class MainGUI extends JFrame {
 		instructions.setBounds(125, 400, 1150, 200);
 		instructions.setEditable(false);
 		instructions.setFont(new Font("STXihei", Font.PLAIN, 26));
-		instructions.setText(
-				"1. Each player has a character that their opponent tries to guess\n2. Players take turns asking each other yes/no questions about their opponent's character\n3.Characters are eliminated from the board based on the answers to the questions\n4. If a player guesses their opponent's character correctly, they win\n5. If they guess incorrectly, they automatically lose");
+		instructions.setText("1. Each player has a character that their opponent tries to guess\n2. Players take turns asking each other yes/no questions about their opponent's character\n3.Characters are eliminated from the board based on the answers to the questions\n4. If a player guesses their opponent's character correctly, they win\n5. If they guess incorrectly, they automatically lose");
 		instructionsPanel.add(instructions);
 
 		/////////////////////////////////// Difficulty
@@ -795,6 +794,7 @@ public class MainGUI extends JFrame {
 			avgLeaderUpdate();
 			gamesWonUpdate();
 			resetCharacter();
+			opAskPanel.setVisible(false);
 		}
 	}
 
@@ -807,6 +807,7 @@ public class MainGUI extends JFrame {
 			avgLeaderUpdate();
 			gamesWonUpdate();
 			resetCharacter();
+			opAskPanel.setVisible(false);
 		}
 	}
 
