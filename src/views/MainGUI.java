@@ -82,7 +82,6 @@ public class MainGUI extends JFrame {
 	private static String p2_questionAsked = null; // question player 2 asks player 1 in a turn
 	private static boolean result;
 	private static boolean guess1;
-	@SuppressWarnings("unused")
 	private static boolean guess2;
 	private static String playerName;
 	private static int amountCount = 0;
@@ -1026,6 +1025,7 @@ public class MainGUI extends JFrame {
 				} else {
 					playerselectionPanel.setVisible(false);
 					gamePanel.setVisible(true);
+					opAskPanel.setVisible(false);
 					game.characterChoice(2, p2_character);
 				}
 			}
