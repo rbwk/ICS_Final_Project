@@ -934,7 +934,6 @@ public class MainGUI extends JFrame {
 			Random rand = new Random();
 			int random = rand.nextInt(24);
 			p2_character = Characters.get(random);
-			System.out.println("AI Character - " + p2_character);
 			aiPlayer.logNewGame(); // Calls the method in mainAI to log the start of a new round.
 			aiPlayer.logCharacterChoice(p2_character); // Stores the Ai's character choice for the new round.
 			questionList.removeAllItems();
@@ -993,17 +992,19 @@ public class MainGUI extends JFrame {
 			if (guess1 == true) {
 				playerselectionPanel.setVisible(false);
 				endGamePanel.setVisible(true);
-				System.out.println("Character - " + p2_character);
-				System.out.println("File - " + fileName);
 				if (p2_character.equals(fileName)) {
-					pvc_win = true;
-					resultLabel.setText("YOU WIN!!!!");
+					resultLabel.setText("Player 1 Win");
 				} else {
-					pvc_win = false;
-					resultLabel.setText("YOU LOST!!!");
+					resultLabel.setText("Player 1 Lose");
 				}
 			}else if(guess2 == true){ 
-			
+				playerselectionPanel.setVisible(false);
+				endGamePanel.setVisible(true);
+				if(p1_character.equals(fileName)) {
+					resultLabel.setText("Player 2 Win");
+				}else{
+					resultLabel.setText("Player 2 Lose");
+				}
 			}else {
 				if (pvpMode) {
 					if (p1_ongoing) {
@@ -1038,10 +1039,8 @@ public class MainGUI extends JFrame {
 				questionList.removeAllItems();
 				if (p1_ongoing) {
 					guess1 = true;
-
 				} else {
 					guess2 = true;
-
 				}
 				gamePanel.setVisible(false);
 				playerselectionPanel.setVisible(true);
@@ -1069,7 +1068,6 @@ public class MainGUI extends JFrame {
 						gamePanel.setVisible(false);
 						p1_ongoing = false;
 						gameSetCharacterScreen();
-						System.out.print("Player 1 - "); // Testing
 					} else { // PVC Mode thing
 						amountCount++;
 						p1_questionAsked = question;
@@ -1079,9 +1077,6 @@ public class MainGUI extends JFrame {
 						result = game.checkAnswer(p1_questionAsked, 1);
 
 						gameUpdateCharacter();
-
-						System.out.println("Player Q - " + p1_questionAsked);
-						System.out.println("Result - " + result);
 
 						TextFileReader aiCharcaters = new TextFileReader("src\\resources\\p2_characters_remaining.txt");
 						TextFileReader aiQuestion = new TextFileReader("src\\resources\\p2_questions_remaining.txt");
@@ -1112,8 +1107,6 @@ public class MainGUI extends JFrame {
 
 						p2_questionAsked = question;
 
-						System.out.println("AI Q - " + question);
-
 						opAskPanel.setVisible(true);
 						opAskingHide(false);
 
@@ -1136,8 +1129,6 @@ public class MainGUI extends JFrame {
 					gamePanel.setVisible(false);
 					p1_ongoing = true;
 					gameSetCharacterScreen();
-					System.out.print("Player 2 - "); // Testing
-
 				}
 				opQuestion.setText(question);
 
@@ -1186,7 +1177,6 @@ public class MainGUI extends JFrame {
 				} else { // No Confirming
 					result = true;
 					game.checkAnswerPVC(p2_questionAsked, 2, result);
-					System.out.println("Result - " + result); // Testing Purposes
 					opAskPanel.setVisible(false);
 					opAskingHide(true);
 					p2_questionAsked = question;
@@ -1226,7 +1216,6 @@ public class MainGUI extends JFrame {
 				} else {// PVP Mode No Confirming
 					result = false;
 					game.checkAnswerPVC(p2_questionAsked, 2, result);
-					System.out.println("Result - " + result); // Testing Purposes
 					opAskPanel.setVisible(false);
 					opAskingHide(true);
 					p2_questionAsked = question;
@@ -1252,9 +1241,6 @@ public class MainGUI extends JFrame {
 	}
 
 	static void gameSetCharacterScreen() {
-		System.out.println("chara Q - " + p1_questionAsked);
-		System.out.println("P2 Q - " + p2_questionAsked);
-
 		if (!pvpMode) {
 			player_character.setFont(new Font("STXihei", Font.PLAIN, 30));
 		} else {

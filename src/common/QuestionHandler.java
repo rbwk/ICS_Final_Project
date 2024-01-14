@@ -78,28 +78,6 @@ public class QuestionHandler {
             characters.add(character);
         }
 
-        // Initialize TextFileReader for Eliminared characters
-        TextFileReader ElimReader = new TextFileReader(EliminatedPath);
-        characterReader.readFile();
-
-
-        // Dumping the users GameCharacter objects and add them to the players removed character list
-        for (int i = 0; i < ElimReader.getname().size(); i++) {
-            GameCharacter character2 = new GameCharacter();
-            character2.setName(ElimReader.getname().get(i));
-            character2.setGender(ElimReader.getgender().get(i));
-            character2.setEyeColour(ElimReader.geteye_color().get(i));
-            character2.setSkinTone(ElimReader.getskin_tone().get(i));
-            character2.setHairColour(ElimReader.gethair_color().get(i));
-            character2.setFacialHair(ElimReader.getfacial_hair().get(i));
-            character2.setGlasses(ElimReader.getglasses().get(i));
-            character2.setShowingTeeth(ElimReader.getshowing_teeth().get(i));
-            character2.setWearingHat(ElimReader.getwearing_hat().get(i));
-            character2.setHairLength(ElimReader.gethair_length().get(i));
-            character2.setPiercings(ElimReader.getpiercings().get(i));
-            eliminatedCharacters.add(character2);
-        }
-
         
         //First Question
         if(playerQuestion.equals("Is the person a male?")){
@@ -723,7 +701,7 @@ public class QuestionHandler {
             characterStrings.add(character.toFileString());
         }
 
-        writer.writeFile(characterStrings);
+        writer.appendArrayToFile(characterStrings);
     }
 
 

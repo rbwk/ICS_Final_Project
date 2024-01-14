@@ -11,6 +11,7 @@ package common;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TextFileWriter {
@@ -107,4 +108,16 @@ public class TextFileWriter {
             e.printStackTrace();
         }
     }
+
+    public void appendArrayToFile(ArrayList<String> lines) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+        for (String line : lines) {
+            writer.write(line);
+            writer.newLine();
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
 }
