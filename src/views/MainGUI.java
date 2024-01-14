@@ -901,6 +901,10 @@ public class MainGUI extends JFrame {
 
 	static class PVPButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			p2_select = false;
+			guess1 = false;
+			guess2 = false;
+			p2_questionAsked = null;
 			selectorPanel.setVisible(false);
 			resetCharacter();
 			pvpMode = true;
@@ -918,13 +922,15 @@ public class MainGUI extends JFrame {
 			for (int i = 0; i < data.length; i++) {
 				questionList.addItem(data[i]);
 			}
-
+			actualScore.setText("Player 1");
 		}
 	}
 
 	static class PVCButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			pvpMode = false;
+			guess1 = false;
+			guess2 = false;
 			resetCharacter();
 			selectorPanel.setVisible(false);
 			namePanel.setVisible(true);
