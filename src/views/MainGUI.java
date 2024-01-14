@@ -1049,6 +1049,7 @@ public class MainGUI extends JFrame {
 				characterButtons[17].setVisible(true);
 			} else {
 				questionList.removeAllItems();
+				gameUpdateCharacter();
 				if (p1_ongoing) { // Player 1
 					actualScore.setText("Player 1");
 					if (pvpMode) {
