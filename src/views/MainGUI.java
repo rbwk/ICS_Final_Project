@@ -866,6 +866,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	// Sets AI difficulty to Easy
 	static class EasyButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
@@ -877,6 +878,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	// Sets AI difficulty to Medium
 	static class MedButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
@@ -888,6 +890,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	// Sets AI difficulty to Hard
 	static class HardButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			difficultyPanel.setVisible(false);
@@ -899,6 +902,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	// Initializes a game of PVP
 	static class PVPButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			p2_select = false;
@@ -926,6 +930,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	// Logic to initiate PVC mode.
 	static class PVCButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			pvpMode = false;
@@ -940,8 +945,8 @@ public class MainGUI extends JFrame {
 			Random rand = new Random();
 			int random = rand.nextInt(24);
 			p2_character = Characters.get(random);
-			aiPlayer.logNewGame(); // Calls the method in mainAI to log the start of a new round.
-			aiPlayer.logCharacterChoice(p2_character); // Stores the Ai's character choice for the new round.
+			aiPlayer.logNewGame(); // Calls the method in mainAI to log the start of a new round in AI logs.
+			aiPlayer.logCharacterChoice(p2_character); // Stores the Ai's character choice for the new round in AI logs.
 			questionList.removeAllItems();
 			TextFileReader check_questions = new TextFileReader("src\\resources\\questions.txt");
 			check_questions.readFile();
@@ -1267,6 +1272,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	// Updates the array of characters in front of the player depending on who has been eliminated and who is still in play.
 	static void gameUpdateCharacter() {
 		resetCharacter();
 		if (!pvpMode) {
@@ -1313,6 +1319,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	// Updates the Questions leaderboard after a game in GUI.
 	static void avgLeaderUpdate() {
 		List<List<String>> update = new ArrayList<>();
 		leader1 = "Name \t\t\t Average\n\n";
@@ -1324,6 +1331,7 @@ public class MainGUI extends JFrame {
 
 	}
 
+	// Updates the Games Won leaderboard after a game in GUI.
 	static void gamesWonUpdate() {
 		List<List<String>> update = new ArrayList<>();
 		leader2 = "Name \t\t\t Won\n\n";
@@ -1334,6 +1342,7 @@ public class MainGUI extends JFrame {
 		gamesWon.setText(leader2);
 
 	}
+
 
 	static void opAskingHide(boolean nah) {
 		characterButtons[8].setVisible(nah);
@@ -1346,6 +1355,7 @@ public class MainGUI extends JFrame {
 		characterButtons[17].setVisible(nah);
 	}
 
+	// Returns all characters back to the default images.
 	static void resetCharacter() {
 		questionList.removeAllItems();
 		for (int i = 0; i < 24; i++) {
@@ -1355,6 +1365,7 @@ public class MainGUI extends JFrame {
 		}
 	}
 
+	
 	static class enterButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			namePanel.setVisible(false);
