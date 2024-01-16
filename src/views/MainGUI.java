@@ -1371,6 +1371,7 @@ public class MainGUI extends JFrame {
 			String name = Characters.get(i);
 			String namepicture = "/resources/characters/" + name + ".png";
 			characterButtons[i].setIcon(new ImageIcon(MainGUI.class.getResource(namepicture)));
+			characterButtons[i].setVisible(true);
 		}
 	}
 
