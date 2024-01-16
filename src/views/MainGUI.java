@@ -879,6 +879,7 @@ public class MainGUI extends JFrame {
 			characterButtons[17].setVisible(true);
 			aiPlayer.setDifficulty(3);
 			oetime = System.currentTimeMillis();
+			game.characterChoice(2, p2_character);
 		}
 	}
 
@@ -892,6 +893,7 @@ public class MainGUI extends JFrame {
 			characterButtons[17].setVisible(true);
 			aiPlayer.setDifficulty(2);
 			oetime = System.currentTimeMillis();
+			game.characterChoice(2, p2_character);
 		}
 	}
 
@@ -905,6 +907,7 @@ public class MainGUI extends JFrame {
 			characterButtons[17].setVisible(true);
 			aiPlayer.setDifficulty(1);
 			oetime = System.currentTimeMillis();
+			game.characterChoice(2, p2_character);
 		}
 	}
 
